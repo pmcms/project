@@ -13,12 +13,24 @@
             </div>
         </form>
         <!-- /.search form -->
+        
+        <!-- Menu  -->
+        <ui class="sidebar-menu">
+        	<li class="header">MAIN NAVIGATION</li>
+        	<li>
+        		<a href="/project/backend/web/example">
+        			<i class="fa fa-file"></i>
+        			<span>ตัวอย่าง</span>
+        		</a>
+        	</li>
+        </ui>
+        <!-- /Menu -->
 
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
-                    ['label' => 'MAIN NAVIGATION', 'options' => ['class' => 'header']],
+//                     ['label' => 'MAIN NAVIGATION', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
