@@ -1,0 +1,121 @@
+2017-01-25 04:31:55 [::1][-][oh9nf8uienlt7vvvjupibtqd94][error][yii\db\Exception] exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO)' in D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Connection.php:602
+Stack trace:
+#0 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Connection.php(602): PDO->__construct('mysql:host=loca...', 'root', '', NULL)
+#1 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Connection.php(544): yii\db\Connection->createPdoInstance()
+#2 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Connection.php(863): yii\db\Connection->open()
+#3 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Connection.php(850): yii\db\Connection->getMasterPdo()
+#4 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Command.php(219): yii\db\Connection->getSlavePdo()
+#5 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Command.php(894): yii\db\Command->prepare('<span class="ke...')
+#6 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Command.php(376): yii\db\Command->queryInternal('<span class="st...', '<span class="ke...')
+#7 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Query.php(247): yii\db\Command->queryOne()
+#8 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\ActiveQuery.php(295): yii\db\Query->one('<span class="ke...')
+#9 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\BaseActiveRecord.php(107): yii\db\ActiveQuery->one()
+#10 D:\project\yii2-advanced\common\models\User.php(64): yii\db\BaseActiveRecord::findOne('[<span class="s...')
+#11 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\User.php(665): common\models\User::findIdentity(Object(MongoDB\BSON\ObjectID))
+#12 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\User.php(188): yii\web\User->renewAuthStatus()
+#13 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\User.php(340): yii\web\User->getIdentity()
+#14 D:\project\yii2-advanced\vendor\yiisoft\yii2\filters\AccessRule.php(148): yii\web\User->getIsGuest()
+#15 D:\project\yii2-advanced\vendor\yiisoft\yii2\filters\AccessRule.php(103): yii\filters\AccessRule->matchRole(Object(yii\web\User))
+#16 D:\project\yii2-advanced\vendor\yiisoft\yii2\filters\AccessControl.php(118): yii\filters\AccessRule->allows(Object(yii\base\InlineAction), Object(yii\web\User), Object(yii\web\Request))
+#17 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\ActionFilter.php(73): yii\filters\AccessControl->beforeAction(Object(yii\base\InlineAction))
+#18 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#19 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Component.php(540): call_user_func('[<span class="t...', Object(yii\base\ActionEvent))
+#20 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Controller.php(269): yii\base\Component->trigger('<span class="st...', Object(yii\base\ActionEvent))
+#21 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\Controller.php(108): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#22 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Controller.php(152): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#23 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('<span class="st...', '[]')
+#24 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\Application.php(100): yii\base\Module->runAction('<span class="st...', '[]')
+#25 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#26 D:\project\yii2-advanced\backend\web\index.php(17): yii\base\Application->run()
+#27 {main}
+
+Next exception 'yii\db\Exception' with message 'SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO)' in D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Connection.php:549
+Stack trace:
+#0 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Connection.php(863): yii\db\Connection->open()
+#1 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Connection.php(850): yii\db\Connection->getMasterPdo()
+#2 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Command.php(219): yii\db\Connection->getSlavePdo()
+#3 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Command.php(894): yii\db\Command->prepare('<span class="ke...')
+#4 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Command.php(376): yii\db\Command->queryInternal('<span class="st...', '<span class="ke...')
+#5 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\Query.php(247): yii\db\Command->queryOne()
+#6 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\ActiveQuery.php(295): yii\db\Query->one('<span class="ke...')
+#7 D:\project\yii2-advanced\vendor\yiisoft\yii2\db\BaseActiveRecord.php(107): yii\db\ActiveQuery->one()
+#8 D:\project\yii2-advanced\common\models\User.php(64): yii\db\BaseActiveRecord::findOne('[<span class="s...')
+#9 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\User.php(665): common\models\User::findIdentity(Object(MongoDB\BSON\ObjectID))
+#10 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\User.php(188): yii\web\User->renewAuthStatus()
+#11 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\User.php(340): yii\web\User->getIdentity()
+#12 D:\project\yii2-advanced\vendor\yiisoft\yii2\filters\AccessRule.php(148): yii\web\User->getIsGuest()
+#13 D:\project\yii2-advanced\vendor\yiisoft\yii2\filters\AccessRule.php(103): yii\filters\AccessRule->matchRole(Object(yii\web\User))
+#14 D:\project\yii2-advanced\vendor\yiisoft\yii2\filters\AccessControl.php(118): yii\filters\AccessRule->allows(Object(yii\base\InlineAction), Object(yii\web\User), Object(yii\web\Request))
+#15 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\ActionFilter.php(73): yii\filters\AccessControl->beforeAction(Object(yii\base\InlineAction))
+#16 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#17 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Component.php(540): call_user_func('[<span class="t...', Object(yii\base\ActionEvent))
+#18 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Controller.php(269): yii\base\Component->trigger('<span class="st...', Object(yii\base\ActionEvent))
+#19 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\Controller.php(108): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#20 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Controller.php(152): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#21 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Module.php(454): yii\base\Controller->runAction('<span class="st...', '[]')
+#22 D:\project\yii2-advanced\vendor\yiisoft\yii2\web\Application.php(100): yii\base\Module->runAction('<span class="st...', '[]')
+#23 D:\project\yii2-advanced\vendor\yiisoft\yii2\base\Application.php(375): yii\web\Application->handleRequest(Object(yii\web\Request))
+#24 D:\project\yii2-advanced\backend\web\index.php(17): yii\base\Application->run()
+#25 {main}
+Additional Information:
+
+2017-01-25 04:31:54 [::1][-][oh9nf8uienlt7vvvjupibtqd94][info][application] $_COOKIE = [
+    '_csrf-backend' => 'dbc5b442f22b4ab9d137ec08c4f8066a7645a8532a0c23f353bfb73e287b0d77a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"3HrrA2LGBigv7s99WDdxozlZpk5emx0F\";}'
+    'advanced-backend' => 'oh9nf8uienlt7vvvjupibtqd94'
+    '_identity-backend' => '56c5cef4fb621175baf3e592982c6a26f90f585618fd32412310acf6237f5eb0a:2:{i:0;s:17:\"_identity-backend\";i:1;s:80:\"[{\"$oid\":\"5881b3f937d61b1ca000048d\"},\"zldtOqKxs9Feg9veZ3okMjIBmw3DSwIp\",2592000]\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => '/pm/backend/web/'
+    '__id' => MongoDB\BSON\ObjectID#1
+    (
+        [oid] => '5881b3f937d61b1ca000048d'
+    )
+]
+
+$_SERVER = [
+    'MIBDIRS' => 'C:/xampp/php/extras/mibs'
+    'MYSQL_HOME' => '\\xampp\\mysql\\bin'
+    'OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf'
+    'PHP_PEAR_SYSCONF_DIR' => '\\xampp\\php'
+    'PHPRC' => '\\xampp\\php'
+    'TMP' => '\\xampp\\tmp'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+    'HTTP_REFERER' => 'http://localhost/yii2-advanced/backend/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, sdch, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'th,en-US;q=0.8,en;q=0.6'
+    'HTTP_COOKIE' => '_csrf-backend=dbc5b442f22b4ab9d137ec08c4f8066a7645a8532a0c23f353bfb73e287b0d77a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%223HrrA2LGBigv7s99WDdxozlZpk5emx0F%22%3B%7D; advanced-backend=oh9nf8uienlt7vvvjupibtqd94; _identity-backend=56c5cef4fb621175baf3e592982c6a26f90f585618fd32412310acf6237f5eb0a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A80%3A%22%5B%7B%22%24oid%22%3A%225881b3f937d61b1ca000048d%22%7D%2C%22zldtOqKxs9Feg9veZ3okMjIBmw3DSwIp%22%2C2592000%5D%22%3B%7D'
+    'PATH' => 'C:\\ProgramData\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\Intel\\iCLS Client\\;C:\\Program Files\\Intel\\iCLS Client\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\DAL;C:\\Program Files (x86)\\Intel\\Intel(R) Management Engine Components\\IPT;C:\\Program Files (x86)\\Intel\\OpenCL SDK\\2.0\\bin\\x86;C:\\Program Files (x86)\\Intel\\OpenCL SDK\\2.0\\bin\\x64;C:\\Program Files\\TortoiseSVN\\bin;C:\\Program Files (x86)\\MySQL\\MySQL Fabric 1.5 & MySQL Utilities 1.5\\;C:\\Program Files (x86)\\MySQL\\MySQL Fabric 1.5 & MySQL Utilities 1.5\\Doctrine extensions for PHP\\;D:\\apache-maven-3.3.3\\bin;C:\\Python27;C:\\Python27\\Scripts;C:\\Program Files\\Git\\cmd;C:\\Program Files\\nodejs\\;C:\\ProgramData\\ComposerSetup\\bin;C:\\xampp\\php;C:\\Program Files (x86)\\Skype\\Phone\\;C:\\mongodb\\bin\\;C:\\Program Files\\Java\\jdk1.7.0_79\\bin;C:\\Users\\TUM-PC\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\TUM-PC\\AppData\\Roaming\\npm;C:\\Users\\TUM-PC\\AppData\\Roaming\\Composer\\vendor\\bin'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'COMSPEC' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\WINDOWS'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.23 (Win32) OpenSSL/1.0.2h PHP/5.6.28 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.23 (Win32) OpenSSL/1.0.2h PHP/5.6.28'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'D:/project'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'D:/project'
+    'SERVER_ADMIN' => 'postmaster@localhost'
+    'SCRIPT_FILENAME' => 'D:/project/yii2-advanced/backend/web/index.php'
+    'REMOTE_PORT' => '64437'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/yii2-advanced/backend/web/'
+    'SCRIPT_NAME' => '/yii2-advanced/backend/web/index.php'
+    'PHP_SELF' => '/yii2-advanced/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1485315113.985
+    'REQUEST_TIME' => 1485315113
+]
