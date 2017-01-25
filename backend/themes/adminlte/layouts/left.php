@@ -1,3 +1,4 @@
+<?php $baseUrl = \Yii::getAlias('@web'); ?>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -18,9 +19,9 @@
         <ui class="sidebar-menu">
         	<li class="header">MAIN NAVIGATION</li>
         	<li>
-        		<a href="/project/backend/web/example">
+        		<a href="<?php echo $baseUrl."/project"; ?>">
         			<i class="fa fa-file"></i>
-        			<span>ตัวอย่าง</span>
+        			<span>โครงการ</span>
         		</a>
         	</li>
         </ui>
