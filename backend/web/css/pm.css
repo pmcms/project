@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+.box-height{
+	height: 70px;
+}
+.skin-green-light .main-header .navbar {
+    background-color: #690 !important;
+}
+.skin-green-light .main-header .logo {
+    background-color: #690 !important;
+}
+.skin-green-light .main-header .navbar .sidebar-toggle:hover {
+    background-color: #507701 !important;
+}
+.box-body-height {
+	border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 1px;
+}
+
+/* kanit-regular - vietnamese_thai_latin_latin-ext */
+@font-face {
+  font-family: 'Kanit';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Kanit'), local('Kanit-Regular'),
+       url('../fonts/kanit-v1-vietnamese_thai_latin_latin-ext-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/kanit-v1-vietnamese_thai_latin_latin-ext-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+body {
+    font-family: 'Kanit' !important;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Kanit' !important;
+}
