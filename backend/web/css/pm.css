@@ -36,3 +36,23 @@ body {
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: 'Kanit' !important;
 }
+
+.content {
+	padding-top: 3px !important;
+}
+
+.content-modal {
+    min-height: 250px;
+    padding: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* comment */
+.nav-tabs-custom>.tab-content {
+    padding: 0px !important;
+}
+
+.label-gray{
+	background-color: #f4f4f4 !important;
+}
