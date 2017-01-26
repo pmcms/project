@@ -35,12 +35,17 @@ class ProjectController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Project::find(),
-        ]);
-
+    	$request = Yii::$app->request;
+    	$name = $request->post('name');
+    	$status = $request->post('status',null);
+    	$sort = $request->post('sort',null);
+		$userID = Yii::$app->user->identity->_id;
+    	$value = Project::findAllProject($name, $status, $sort, $userID);
+    	
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+ 			'value' => $value,'name' => $name,
+        	'status' => $status, 'sort' => $sort,
+        	'userId' => $userID,
         ]);
     }
 
@@ -80,17 +85,21 @@ class ProjectController extends Controller
      * @param integer $_id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => (string)$model->_id]);
-        } else {
+      
             return $this->render('update', [
-                'model' => $model,
+                
             ]);
-        }
+        
+    }
+    public function actionSetting()
+    {
+    
+    	return $this->render('settingProject', [
+    
+    	]);
+    
     }
 
     /**

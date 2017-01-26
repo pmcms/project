@@ -77,11 +77,14 @@ class Project extends \yii\mongodb\ActiveRecord
         ];
     }
     
-    public function findAllProject($name,$status,$sort){
+    public function findAllProject($name,$status,$sort,$userId){
     	$conditions = [];
     	$query = Project::find();
     	if(!empty($status)){
     		$conditions['status'] = $status;
+    	}
+    	if(!empty($userId)){
+    		$conditions['member.id_user'] = $userId;
     	}
     	if(!empty($sort)){
     		$conditions['sort'] = $sort;
