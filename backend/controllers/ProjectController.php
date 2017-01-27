@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\Category;
+use common\models\User;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -42,10 +44,26 @@ class ProjectController extends Controller
 		$userID = Yii::$app->user->identity->_id;
     	$value = Project::findAllProject($name, $status, $sort, $userID);
     	
+    	$category = Category::find()->all();
+    	$arrCategory = [];
+    	if($category){
+    		foreach ($category as $obj){
+    			$arrCategory[(string)$obj->_id] = $obj->category_name;
+    		}
+    	}
+    	
+    	$user = User::find()->all();
+    	$arrUser = [];
+    	if($user){
+    		foreach ($user as $obj){
+    			$arrUser[(string)$obj->_id] = $obj->firstname." ".$obj->lastname;
+    		}
+    	}
         return $this->render('index', [
  			'value' => $value,'name' => $name,
         	'status' => $status, 'sort' => $sort,
-        	'userId' => $userID,
+        	'userId' => $userID, 'arrCategory' => $arrCategory,
+        	'arrUser' => $arrUser,
         ]);
     }
 

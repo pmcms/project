@@ -80,14 +80,12 @@ class Project extends \yii\mongodb\ActiveRecord
     public function findAllProject($name,$status,$sort,$userId){
     	$conditions = [];
     	$query = Project::find();
+  
     	if(!empty($status)){
     		$conditions['status'] = $status;
     	}
     	if(!empty($userId)){
     		$conditions['member.id_user'] = $userId;
-    	}
-    	if(!empty($sort)){
-    		$conditions['sort'] = $sort;
     	}
     	if(!empty($conditions)){
     		$query->where($conditions);
@@ -95,8 +93,30 @@ class Project extends \yii\mongodb\ActiveRecord
     	if(!empty($name)){
     		$query->andWhere(['like', "project_name", $name]);
     	}
-    	
+    	if(!empty($sort)){
+    		if($sort == 1){
+    			$query->orderBy(['project_name'=>SORT_ASC]);
+    		}elseif ($sort == 2){
+    			$query->orderBy(['status'=>SORT_ASC]);
+    		}elseif ($sort == 3){
+    			$query->orderBy(['start_date'=>SORT_ASC]);
+    		}else{
+    			$query->orderBy(['end_date'=>SORT_ASC]);
+    		}
+    	}
     	$value = $query->all();
     	return $value;
     }
+    
+    const STATUS_OPEN = 1;
+    const STATUS_CLOSE = 2;
+    const STATUS_CANCEL = 3;
+    const STATUS_DELETED = 4;
+    
+    public static $arrSendStatus = array(
+    		self::STATUS_OPEN => "เปิด",
+    		self::STATUS_CLOSE => "ปิด",
+    		self::STATUS_CANCEL => "ยกเลิก",
+    		self::STATUS_DELETED => "ถูกลบ"
+    );
 }

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\View;
+use backend\models\Project;
 
 $baseUrl = \Yii::getAlias('@web');
 
@@ -70,12 +71,12 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				<div class="col-md-4">
 					<div class="input-group">
 						<span class="input-group-addon label-gray">จัดเรียง</span>
-						<select id="sort" name="sort" class="form-control input">
-							<option value="">จัดเรียง</option>
-	                        <option value="1">ชื่อโครงการ</option>
-							<option value="2">สถานะ</option>
-							<option value="3">วันที่เริ่ม</option>
-							<option value="4">วันที่สิ้นสุด</option>
+						<select id="sort" name="sort" class="form-control input" onchange="this.form.submit()">
+							<option value="" <?php if($sort == "") echo "selected";?>>จัดเรียง</option>
+	                        <option value="1" <?php if($sort == 1) echo "selected";?>>ชื่อโครงการ</option>
+							<option value="2" <?php if($sort == 2) echo "selected";?>>สถานะ</option>
+							<option value="3" <?php if($sort == 3) echo "selected";?>>วันที่เริ่ม</option>
+							<option value="4" <?php if($sort == 4) echo "selected";?>>วันที่สิ้นสุด</option>
 						</select>
 					</div>
 				</div>
@@ -113,10 +114,10 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 									project-description="<?=$field->description?>"
 									project-start-date="<?=$field->start_date?>"
 									project-end-date="<?=$field->end_date?>"
-									project-project-type="<?=$field->project_type?>"
-									project-status="<?=$field->status?>"
+									project-project-type="<?php echo $arrCategory[(string)$field->project_type];?>"
+									project-status="<?php echo Project::$arrSendStatus[$field->status]; ?>"
 									project-create-date="<?=$field->create_date?>"
-									project-create-by="<?=$field->create_by?>"
+									project-create-by="<?php echo $arrUser[(string)$field->create_by];?>"
 									title="ดูรายละเอียดโครงการ">
 									<span>รายละเอียด</span>
 									<i class="fa fa-angle-right"></i>&nbsp;
