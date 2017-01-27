@@ -54,6 +54,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 						<?php echo Html::textInput('name', $name, ['id'=> 'project_name', 'class'=> 'form-control', 'placeholder'=> 'ชื่อโครงการ', 'onchange'=>'this.form.submit()']);?>
 					</div>
 				</div>
+				
 				<div class="col-md-4">
 					<div class="input-group">
 						<span class="input-group-addon label-gray">สถานะ</span>
@@ -69,12 +70,12 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				<div class="col-md-4">
 					<div class="input-group">
 						<span class="input-group-addon label-gray">จัดเรียง</span>
-						<select id="status" name="status" class="form-control input">
-							<option value="" <?php if($status == "") echo "selected";?>>จัดเรียง</option>
-	                        <option value="1" <?php if($status == 1) echo "selected";?>>ชื่อโครงการ</option>
-							<option value="2" <?php if($status == 2) echo "selected";?>>สถานะ</option>
-							<option value="3" <?php if($status == 3) echo "selected";?>>วันที่เริ่ม</option>
-							<option value="4" <?php if($status == 4) echo "selected";?>>วันที่สิ้นสุด</option>
+						<select id="sort" name="sort" class="form-control input">
+							<option value="">จัดเรียง</option>
+	                        <option value="1">ชื่อโครงการ</option>
+							<option value="2">สถานะ</option>
+							<option value="3">วันที่เริ่ม</option>
+							<option value="4">วันที่สิ้นสุด</option>
 						</select>
 					</div>
 				</div>
@@ -104,7 +105,6 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 							</small>
 						</div>
 					</div></a>
-					
 					<div class="box-body-height">
 						<div class="">
 							<div class="text-right">
