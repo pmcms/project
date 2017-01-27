@@ -289,7 +289,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				                    <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
 				                  </div>
 				                  <!-- /.direct-chat-info -->
-				                  <img class="direct-chat-img" src="/project/backend/web/assets/c700e4c/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+				                  <img class="direct-chat-img" src="<?= $baseUrl; ?>/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
 				                  <div class="direct-chat-text">
 				                    Is this template really for free? That's unbelievable!
 				                  </div>
@@ -301,7 +301,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				                    <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
 				                  </div>
 				                  <!-- /.direct-chat-info -->
-				                  <img class="direct-chat-img" src="<?= $baseUrl; ?>/assets/c700e4c/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+				                  <img class="direct-chat-img" src="<?= $baseUrl; ?>/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
 				                  <div class="direct-chat-text">
 				                    Is this template really for free? That's unbelievable!
 				                  </div>
@@ -313,7 +313,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				                    <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
 				                  </div>
 				                  <!-- /.direct-chat-info -->
-				                  <img class="direct-chat-img" src="<?= $baseUrl; ?>/assets/c700e4c/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+				                  <img class="direct-chat-img" src="<?= $baseUrl; ?>/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
 				                  <div class="direct-chat-text">
 				                    Is this template really for free? That's unbelievable!
 				                  </div>
@@ -325,7 +325,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				                    <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
 				                  </div>
 				                  <!-- /.direct-chat-info -->
-				                  <img class="direct-chat-img" src="<?= $baseUrl; ?>/assets/c700e4c/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+				                  <img class="direct-chat-img" src="<?= $baseUrl; ?>/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
 				                  <div class="direct-chat-text">
 				                    Is this template really for free? That's unbelievable!
 				                  </div>
@@ -340,7 +340,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				                    <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
 				                  </div>
 				                  <!-- /.direct-chat-info -->
-				                  <img class="direct-chat-img" src="<?= $baseUrl; ?>/assets/c700e4c/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+				                  <img class="direct-chat-img" src="<?= $baseUrl; ?>/img/user2-160x160.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
 				                  <div class="direct-chat-text">
 				                    You better believe it!
 				                  </div>
@@ -355,7 +355,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				                <ul class="contacts-list">
 				                  <li>
 				                    <a href="#">
-				                      <img class="contacts-list-img" src="<?= $baseUrl; ?>/assets/c700e4c/img/user2-160x160.jpg" alt="User Image">
+				                      <img class="contacts-list-img" src="<?= $baseUrl; ?>/img/user2-160x160.jpg" alt="User Image">
 				
 				                      <div class="contacts-list-info">
 				                            <span class="contacts-list-name">
