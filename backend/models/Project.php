@@ -118,6 +118,12 @@ class Project extends \yii\mongodb\ActiveRecord
     const STATUS_CANCEL = 3;
     const STATUS_DELETED = 4;
     
+    
+    const SORT_PROJECT_NAME = 1;
+    const SORT_STATUS = 2;
+    const SORT_START_DATE = 3;
+    const SORT_END_DATE = 4;
+    
     public static $arrSendStatus = array(
     		self::STATUS_OPEN => "เปิด",
     		self::STATUS_CLOSE => "ปิด",
@@ -125,6 +131,12 @@ class Project extends \yii\mongodb\ActiveRecord
     		self::STATUS_DELETED => "ถูกลบ"
     );
     
+    public static $arrSort = array(
+    		self::SORT_PROJECT_NAME => "ชื่อโครงการ",
+    		self::SORT_STATUS => "สถานะ",
+    		self::SORT_START_DATE => "วันที่เริ่ม",
+    		self::SORT_END_DATE => "วันที่สิ้นสุด"
+    );
     public function findAllProjectByProjectName($projectName){
     	$conditions = [];
     	$query = Project::find();

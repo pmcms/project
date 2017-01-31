@@ -59,24 +59,13 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				<div class="col-md-4">
 					<div class="input-group">
 						<span class="input-group-addon label-gray">สถานะ</span>
-						<select id="status" name="status" class="form-control input" onchange="this.form.submit()">
-							<option value="" <?php if($status == "") echo "selected";?>>ทั้งหมด</option>
-	                        <option value="1" <?php if($status == 1) echo "selected";?>>เปิด</option>
-							<option value="2" <?php if($status == 2) echo "selected";?>>ปิด</option>
-							<option value="3" <?php if($status == 3) echo "selected";?>>ยกเลิก</option>
-							<option value="4" <?php if($status == 4) echo "selected";?>>ถูกลบ</option>
-						</select>
+							<?php echo Html::dropDownList('status', $status, [0=>'ทั้งหมด']+ Project::$arrSendStatus , ['id'=> 'status', 'class'=> 'form-control','onchange'=>'this.form.submit()'])?>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="input-group">
 						<span class="input-group-addon label-gray">จัดเรียง</span>
-						<select id="sort" name="sort" class="form-control input" onchange="this.form.submit()">
-	                        <option value="1" <?php if($sort == 1) echo "selected";?>>ชื่อโครงการ</option>
-							<option value="2" <?php if($sort == 2) echo "selected";?>>สถานะ</option>
-							<option value="3" <?php if($sort == 3) echo "selected";?>>วันที่เริ่ม</option>
-							<option value="4" <?php if($sort == 4) echo "selected";?>>วันที่สิ้นสุด</option>
-						</select>
+						<?php echo Html::dropDownList('sort', $sort,  Project::$arrSort , ['id'=> 'sort', 'class'=> 'form-control' ,'onchange'=>'this.form.submit()'])?>
 					</div>
 				</div>
 			</div>
