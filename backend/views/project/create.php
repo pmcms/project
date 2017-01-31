@@ -7,10 +7,38 @@ use richardfan\widget\JSRegister;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Project */
 CreateAsset::register ( $this );
-
+$baseUrl = \Yii::getAlias('@web');
 $this->title = 'สร้างโครงการ';
 $this->params['breadcrumbs'][] = ['label' => 'โครงการ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$str2 = <<<EOT
+$('#submit').click(function(){
+	
+		var formData = new FormData();
+		formData.append('name', $('input[name=projectname]').val());
+		formData.append('description', $('textarea[name=description]').val());
+		var request = new XMLHttpRequest();
+		request.open("POST", "$baseUrl/project/save", true);
+		request.onreadystatechange = function () {
+	        if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {\
+				debugger;
+	       	    var response = request.responseText;
+	            if(typeof(response) == "string"){
+	            	response = JSON.parse(request.responseText);
+	            }
+	            
+	          
+				
+	        }
+	    };
+		request.send(formData);
+		
+	
+});
+EOT;
+
+$this->registerJs($str2, View::POS_END);
 ?>
 <?php JSRegister::begin(); ?>
 <script>
@@ -20,7 +48,7 @@ $("#projectname").change(function(){
 
 		if(projectname != ""){
 			$.ajax({
-			       url: '<?php echo Yii::$app->request->baseUrl. '/project/duplicate' ?>',
+			       url: '<?php echo $baseUrl. '/project/duplicate' ?>',
 			       type: 'post',
 			       data: {searchname: projectname},
 			       dataType: "json",
@@ -41,6 +69,7 @@ $("#projectname").change(function(){
 			$("#next").show();
 		}
 });
+
 </script>
 <?php JSRegister::end(); ?>
 <div class="project-create">

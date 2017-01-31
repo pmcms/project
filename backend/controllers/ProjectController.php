@@ -70,6 +70,38 @@ class ProjectController extends Controller
         	'arrUser' => $arrUser,
         ]);
     }
+    
+    public function actionSave(){
+    
+    	$request = \Yii::$app->request;
+    	$response = Yii::$app->response;
+    	$response->format = \yii\web\Response::FORMAT_JSON;
+    
+    	$name = $request->post('name', null);
+    	$description = $request->post('description', null);
+    
+    	$model = null;
+    
+    	   
+    	if ($model == null){
+    		$model = new Project();
+    		$model->project_name = $name;
+    		$model->description =  $description;
+    		
+    			
+    	}
+    	
+    	
+    	if($model->save()){
+    		   			
+    		$retData['success'] = true;
+    		
+    	}else{
+    		$retData = ['success' => false];
+    	}
+    	echo json_encode($retData);
+    
+    }
 
     /**
      * Displays a single Project model.
