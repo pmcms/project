@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use backend\assets\CreateAsset;
 use yii\web\View;
 use richardfan\widget\JSRegister;
+use app\Entity;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Project */
 CreateAsset::register ( $this );
@@ -21,7 +22,7 @@ $('#submit').click(function(){
 		var request = new XMLHttpRequest();
 		request.open("POST", "$baseUrl/project/save", true);
 		request.onreadystatechange = function () {
-	        if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {\
+	        if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
 				debugger;
 	       	    var response = request.responseText;
 	            if(typeof(response) == "string"){
@@ -156,7 +157,6 @@ $("#projectname").change(function(){
                                                                 <textarea class="form-control" name="description" rows="3" placeholder="คำอธิบาย" id="description"></textarea>
                                                             </div>
                                                         </div>
-
                                                         <div class="form-group">
                                                             <label class="control-label col-md-3">ประเภทโครงการ
                                                             </label>
