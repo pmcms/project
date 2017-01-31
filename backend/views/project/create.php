@@ -18,7 +18,10 @@ $('#submit').click(function(){
 	
 		var formData = new FormData();
 		formData.append('name', $('input[name=projectname]').val());
+		formData.append('startdate', $('input[id=from]').val()+" "+$('input[id=fromTime]').val());
+		formData.append('enddate', $('input[id=to]').val()+" "+$('input[id=toTime]').val());
 		formData.append('description', $('textarea[name=description]').val());
+		
 		var request = new XMLHttpRequest();
 		request.open("POST", "$baseUrl/project/save", true);
 		request.onreadystatechange = function () {
@@ -27,10 +30,8 @@ $('#submit').click(function(){
 	       	    var response = request.responseText;
 	            if(typeof(response) == "string"){
 	            	response = JSON.parse(request.responseText);
+					console.log(response);
 	            }
-	            
-	          
-				
 	        }
 	    };
 		request.send(formData);

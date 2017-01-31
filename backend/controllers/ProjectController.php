@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Category;
 use common\models\User;
+use \MongoDate;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -79,6 +80,8 @@ class ProjectController extends Controller
     
     	$name = $request->post('name', null);
     	$description = $request->post('description', null);
+    	$startdate = $request->post('startdate', null);
+    	$enddate = $request->post('enddate', null);
     
     	$model = null;
     
@@ -86,7 +89,10 @@ class ProjectController extends Controller
     	if ($model == null){
     		$model = new Project();
     		$model->project_name = $name;
+    		$model->start_date = $startdate;
+    		$model->end_date =  $enddate;
     		$model->description =  $description;
+    		
     		
     			
     	}
