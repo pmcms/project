@@ -16,6 +16,10 @@ use common\models\User;
  */
 class ProjectController extends Controller
 {
+	const SORT_PROJECT_NAME = 1;
+	const SORT_STATUS = 2;
+	const SORT_START_DATE = 3;
+	const SORT_END_DATE = 4;
     /**
      * @inheritdoc
      */
@@ -40,7 +44,7 @@ class ProjectController extends Controller
     	$request = Yii::$app->request;
     	$name = $request->post('name');
     	$status = $request->post('status',null);
-    	$sort = $request->post('sort',null);
+    	$sort = $request->post('sort',self::SORT_END_DATE);
 		$userID = Yii::$app->user->identity->_id;
     	$value = Project::findAllProject($name, $status, $sort, $userID);
     	

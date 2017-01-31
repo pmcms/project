@@ -36,6 +36,8 @@ class CreateAsset extends AssetBundle
     		'createasset/js/form-wizard.js',
     		'createasset/js/validate-date-time.js',
     		'createasset/js/setting-date-time.js',
+    		'createasset/js/jquery.inputmask.bundle.js',
+    		'createasset/js/form-input-mask.js',
     ];
     public $jsOptions = ['position' => \yii\web\View::POS_END];
     

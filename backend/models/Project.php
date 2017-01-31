@@ -93,17 +93,22 @@ class Project extends \yii\mongodb\ActiveRecord
     	if(!empty($name)){
     		$query->andWhere(['like', "project_name", $name]);
     	}
+    	
+    	$query->orderBy(['status'=>SORT_ASC]);
+    	
     	if(!empty($sort)){
     		if($sort == 1){
-    			$query->orderBy(['project_name'=>SORT_ASC]);
+    			$query->addOrderBy(['project_name'=>SORT_ASC]);
     		}elseif ($sort == 2){
-    			$query->orderBy(['status'=>SORT_ASC]);
+    			$query->addOrderBy(['status'=>SORT_ASC]);
     		}elseif ($sort == 3){
-    			$query->orderBy(['start_date'=>SORT_ASC]);
+    			$query->addOrderBy(['start_date'=>SORT_ASC]);
     		}else{
-    			$query->orderBy(['end_date'=>SORT_ASC]);
+    			$query->addOrderBy(['end_date'=>SORT_DESC]);
     		}
     	}
+    	
+    	
     	$value = $query->all();
     	return $value;
     }
@@ -134,4 +139,5 @@ class Project extends \yii\mongodb\ActiveRecord
     	$listProject = $query->all();
     	return $listProject;
     }
+   
 }

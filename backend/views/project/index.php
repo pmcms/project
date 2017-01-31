@@ -72,7 +72,6 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 					<div class="input-group">
 						<span class="input-group-addon label-gray">จัดเรียง</span>
 						<select id="sort" name="sort" class="form-control input" onchange="this.form.submit()">
-							<option value="" <?php if($sort == "") echo "selected";?>>จัดเรียง</option>
 	                        <option value="1" <?php if($sort == 1) echo "selected";?>>ชื่อโครงการ</option>
 							<option value="2" <?php if($sort == 2) echo "selected";?>>สถานะ</option>
 							<option value="3" <?php if($sort == 3) echo "selected";?>>วันที่เริ่ม</option>
