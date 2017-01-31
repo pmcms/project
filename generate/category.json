@@ -1,0 +1,12 @@
+{
+    "_id" : ObjectId("5881bbc76f57895703f01617"),
+    "category_name" : "อีเวนท์",
+    "description" : "โครงการเป็นแบบอีเว้นท์",
+    "status" : "1"
+}
+{
+    "_id" : ObjectId("5881bbfa6f57895703f01618"),
+    "category_name" : "โครงการ",
+    "description" : "ประเภทโครงการเป็นแบบโครงการ",
+    "status" : "1"
+}
