@@ -31,7 +31,6 @@ $(function() {
       },
       startdate: {
         required : true,
-        formatDate : true,
       },
       starttime: {
         required : true,
@@ -39,7 +38,6 @@ $(function() {
       },
       stopdate: {
         required : true,
-        formatDate : true,
       },
       stoptime: {
         required : true,
