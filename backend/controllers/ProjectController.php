@@ -9,8 +9,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Category;
+use backend\models\Department;
 use common\models\User;
 use \MongoDate;
+use yii\helpers\ArrayHelper;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -21,6 +23,9 @@ class ProjectController extends Controller
 	const SORT_STATUS = 2;
 	const SORT_START_DATE = 3;
 	const SORT_END_DATE = 4;
+	
+	const STATUS_ACTIVE = 1;
+	const STATUS_INACTIVE = 0;
     /**
      * @inheritdoc
      */
@@ -128,15 +133,17 @@ class ProjectController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Project();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => (string)$model->_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+    	// drop down Category
+    	$categoryModel = new Category;
+    	$listCategory = Category::findAllCategoryByStatus(self::STATUS_ACTIVE);
+    	$arrCategory = ArrayHelper::map($listCategory,function ($categoryModel){return  (string)$categoryModel->_id;},'category_name');
+		
+    	$departmentModel = new Department;
+    	$arrDepartment = ArrayHelper::map(Department::find()->all(),function ($departmentModel){return  (string)$departmentModel->_id;},'department_name');
+		return $this->render('create', [
+	     	'arrCategory' => $arrCategory,
+			'arrDepartment' => $arrDepartment,
+		]);
     }
 
     /**

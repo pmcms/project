@@ -5,6 +5,7 @@ use backend\assets\CreateAsset;
 use yii\web\View;
 use richardfan\widget\JSRegister;
 use app\Entity;
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Project */
 CreateAsset::register ( $this );
@@ -35,22 +36,14 @@ $('#submit').click(function(){
 	        }
 	    };
 		request.send(formData);
-		
-	
 });
-EOT;
-
-$this->registerJs($str2, View::POS_END);
-?>
-<?php JSRegister::begin(); ?>
-<script>
 
 $("#projectname").change(function(){
 	var projectname = $("#projectname").val();
 
 		if(projectname != ""){
 			$.ajax({
-			       url: '<?php echo $baseUrl. '/project/duplicate' ?>',
+			       url: '$baseUrl/project/duplicate',
 			       type: 'post',
 			       data: {searchname: projectname},
 			       dataType: "json",
@@ -71,9 +64,10 @@ $("#projectname").change(function(){
 			$("#next").show();
 		}
 });
+EOT;
 
-</script>
-<?php JSRegister::end(); ?>
+$this->registerJs($str2, View::POS_END);
+?>
 <div class="project-create">
  <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
@@ -162,22 +156,26 @@ $("#projectname").change(function(){
                                                             <label class="control-label col-md-3">ประเภทโครงการ
                                                             </label>
                                                             <div class="col-md-4">
-                                                                <select class="form-control">
-                                                                    <option class="form-control">โครงการ</option>
-                                                                    <option class="form-control">อีเว้นท์</option>
-                                                                </select>
+	                                                            <?php 
+																    echo  Html::dropDownList( 'category',
+																      'selected option',  
+																       $arrCategory, 
+																       ['class' => 'form-control', 'id' => 'category']
+																    )
+																?>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="control-label col-md-3">แผนก
-                                                            </label>
+                                                            <label class="control-label col-md-3">แผนก</label>
                                                             <div class="col-md-4">
-                                                                <select class="form-control">
-                                                                    <option class="form-control">วิจัยและพัฒนาเทคโนโลยี</option>
-                                                                    <option class="form-control">บุคคล</option>
-                                                                    <option class="form-control">บัญชี</option>
-                                                                </select>
+                                                                <?php 
+																    echo  Html::dropDownList( 'department',
+																      'selected option',  
+																       $arrDepartment, 
+																       ['class' => 'form-control', 'id' => 'department']
+																    )
+																?>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -57,4 +57,19 @@ class Category extends \yii\mongodb\ActiveRecord
             'status' => 'Status',
         ];
     }
+    
+ public function findAllCategoryByStatus($status){
+    	$conditions = [];
+    	$query = Category::find();
+    	
+    	if(!empty($status)){
+    		$conditions['status'] = $status;
+    	}
+    
+    	if(!empty($conditions)){
+    		$query->where($conditions);
+    	}
+    	$listCategory = $query->all();
+    	return $listCategory;
+    }
 }
