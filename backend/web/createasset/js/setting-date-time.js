@@ -1,7 +1,5 @@
 $(function(){
 
-   $.datetimepicker.setLocale('th');
-
     var optsDate = {  
         format:'d/m/Y', // รูปแบบวันที่ 
         formatDate:'d/m/Y',
@@ -11,7 +9,7 @@ $(function(){
     } 
     var optsTime = {
         format:'H:i', // รูปแบบเวลา
-        step:30,  // step เวลาของนาที แสดงค่าทุก 30 นาที 
+        step:15,  // step เวลาของนาที แสดงค่าทุก 30 นาที 
         formatTime:'H:i',
         datepicker:false,
     }    

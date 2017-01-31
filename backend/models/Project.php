@@ -119,4 +119,19 @@ class Project extends \yii\mongodb\ActiveRecord
     		self::STATUS_CANCEL => "ยกเลิก",
     		self::STATUS_DELETED => "ถูกลบ"
     );
+    
+    public function findAllProjectByProjectName($projectName){
+    	$conditions = [];
+    	$query = Project::find();
+    	
+    	if(!empty($projectName)){
+    		$conditions['project_name'] = $projectName;
+    	}
+    
+    	if(!empty($conditions)){
+    		$query->where($conditions);
+    	}
+    	$listProject = $query->all();
+    	return $listProject;
+    }
 }

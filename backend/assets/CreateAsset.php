@@ -31,7 +31,7 @@ class CreateAsset extends AssetBundle
     		'createasset/js/additional-methods.min.js',
     		'createasset/js/jquery.bootstrap.wizard.min.js',
     		'createasset/js/form-validate.js',
-    		'createasset/js/jquery.datetimepicker.full.js',
+    		'createasset/js/jquery.datetimepicker.js',
     		'createasset/js/app.js',
     		'createasset/js/form-wizard.js',
     		'createasset/js/validate-date-time.js',

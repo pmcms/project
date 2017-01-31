@@ -1,4 +1,28 @@
 $(function(){
+			
+			$("#from,#to").change(function(){
+				var value=($(this).val()).trim();
+				if(value.length == 8) {
+					var d = value[0]+""+value[1];
+					var m =  value[2]+""+value[3];
+					var y = value[4]+""+value[5]+value[6]+value[7];
+					if(d == 0){
+						d = "01";
+					}
+					if(m == 0){
+						m = "01";
+					}
+					if(y < 1950){
+						y = "1950";
+					}
+					value = d + "/" + m + "/" + y;
+					var test = new Date(value);
+					console.log(test == undefined);
+					$(this).val(value);
+				}else{
+					$(this).val(value);
+				}
+		    });
 
             $("#next").click(function(){
                 Calculate();
@@ -43,7 +67,7 @@ $(function(){
                 Calculate();
             });
 
-            $("#projectname,#description,#teamname").keyup(function(){
+            $("#projectname,#description,#teamname").change(function(){
                 var value=($(this).val()).trim();
                 $(this).val(value);
             });

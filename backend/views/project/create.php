@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use backend\assets\CreateAsset;
-
+use yii\web\View;
+use richardfan\widget\JSRegister;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Project */
 CreateAsset::register ( $this );
@@ -11,6 +12,37 @@ $this->title = 'สร้างโครงการ';
 $this->params['breadcrumbs'][] = ['label' => 'โครงการ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php JSRegister::begin(); ?>
+<script>
+
+$("#projectname").change(function(){
+	var projectname = $("#projectname").val();
+
+		if(projectname != ""){
+			$.ajax({
+			       url: '<?php echo Yii::$app->request->baseUrl. '/project/duplicate' ?>',
+			       type: 'post',
+			       data: {searchname: projectname},
+			       dataType: "json",
+			       success: function (data) {
+			          console.log(data.isDuplicate);
+			          if(data.isDuplicate){
+			        	  $("#error-name").html("ชื่อโครงการซ้ำ");
+		                  $("#error-name").show();
+		                  $("#next").hide();
+			          }else{
+			        	  $("#error-name").hide();
+			        	  $("#next").show();
+			          }
+			       }
+			  });
+		}else{
+			$("#error-name").hide();
+			$("#next").show();
+		}
+});
+</script>
+<?php JSRegister::end(); ?>
 <div class="project-create">
  <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
@@ -58,6 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             </label>
                                                             <div class="col-md-4">
                                                                 <input type="text" class="form-control" name="projectname" placeholder="ชื่อโครงการ" id="projectname" maxlength="30"/>
+                                                            	<span id="error-name" class="error-date"></span>
                                                             </div>
                                                         </div>
                                                         
@@ -78,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                                 <span class="required"> * </span>
                                                             </label>
                                                             <div class="col-md-2">
-                                                                <input type="text" class="form-control date-picker" name="stopdate" placeholder="วันที่สิ้นสุด" id="to" />
+                                                                <input type="text" class="form-control date-picker" name="stopdate" placeholder="วันที่สิ้นสุด" id="to"/>
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <input type="text" id="toTime" class="form-control date-picker" name="stoptime" placeholder="เวลาสิ้นสุด" />
@@ -303,7 +336,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <div class="tab-pane" id="tab3">
                                                         <div class="col-md-12" >
                                                             <div class="row">
-                                                                <div class="col-md-2" >ต้องการสร้างทีมใหม่หรือไม่ </div>
+                                                               	<label class="col-md-3 control-label" style="align:right;">
+                                                               		ต้องการสร้างทีมใหม่หรือไม่
+                                                               	</label>
                                                                 <div class="col-md-3" >
                                                                 	<input type="radio" name="want" id="want" checked/>    
                                                                     <span>ต้องการสร้างทีมใหม่</span><br/>
@@ -314,7 +349,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         </div>
                                                         <div class="col-md-12" >
                                                             <div class="row">
-                                                                <label class="col-md-2 control-label" style="align:right;">
+                                                                <label class="col-md-3 control-label" style="align:right;">
                                                                     <span>ชื่อทีม</span>
                                                                     <span class="required"> * </span>
                                                                 </label>
@@ -351,7 +386,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <!-- END CONTENT BODY -->
             </div>
-            <!-- END CONTENT -->
-   
-
+	<!-- END CONTENT -->
 </div>

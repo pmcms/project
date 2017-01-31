@@ -35,7 +35,7 @@ $(function() {
       },
       starttime: {
         required : true,
-        formatTime : true,
+        formatTime: true,
       },
       stopdate: {
         required : true,
@@ -68,11 +68,11 @@ $(function() {
           formatDate : jQuery.validator.format("กรุณากรอกวันที่ในรูปแบบ dd/mm/yyyy"),
         },
         starttime:  {
-          required : "กรุณากรอกวันที่",
+          required : "กรุณากรอกเวลา",
           formatTime : jQuery.validator.format("กรุณากรอกเวลาในรูปแบบ hh:mm"),
         },
         stoptime: {
-          required : "กรุณากรอกวันที่",
+          required : "กรุณากรอกเวลา",
           formatTime : jQuery.validator.format("กรุณากรอกเวลาในรูปแบบ hh:mm"),
         },
     },

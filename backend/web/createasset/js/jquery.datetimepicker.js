@@ -288,12 +288,12 @@
 		
 		scrollMonth:true,
 		scrollTime:true,
-		scrollInput:true,
+		scrollInput:false,
 		
 		lazyInit:false,
 		
 		mask:false,
-		validateOnBlur:true,
+		validateOnBlur:false,
 		allowBlank:true,
 		
 		yearStart:1950,

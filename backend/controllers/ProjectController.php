@@ -119,6 +119,16 @@ class ProjectController extends Controller
     	]);
     
     }
+    
+    public function isDuplicateProjectName($projectName){
+    	$listProject = Project::findAllProjectByProjectName($projectName);
+    	if($listProject){
+    		$isDuplicate = true;
+    	}else{
+    		$isDuplicate = false;
+    	}
+    	return $isDuplicate;
+    }
 
     /**
      * Deletes an existing Project model.
@@ -148,4 +158,28 @@ class ProjectController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function beforeAction($action) {
+    	$this->enableCsrfValidation = false;
+    	return parent::beforeAction($action);
+    }
+    
+	public function actionDuplicate()
+	{
+		if (Yii::$app->request->isAjax) {
+		    $data = Yii::$app->request->post();
+		    $projectname = explode(":", $data['searchname']);
+		    $search = Project::findAllProjectByProjectName($projectname[0]);
+		    if($search){
+		    	$isDuplicate = true;
+		    }else{
+		    	$isDuplicate = false;
+		    }
+		    \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		    return [
+		        'isDuplicate' => $isDuplicate,
+		    ];
+		}
+	}
+	    
 }
