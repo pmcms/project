@@ -119,16 +119,6 @@ class ProjectController extends Controller
     	]);
     
     }
-    
-    public function isDuplicateProjectName($projectName){
-    	$listProject = Project::findAllProjectByProjectName($projectName);
-    	if($listProject){
-    		$isDuplicate = true;
-    	}else{
-    		$isDuplicate = false;
-    	}
-    	return $isDuplicate;
-    }
 
     /**
      * Deletes an existing Project model.
