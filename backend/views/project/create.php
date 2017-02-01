@@ -291,14 +291,14 @@ $this->registerJs($str2, View::POS_END);
 											                        	<div id="tab_0" class="tab-pane active">
 											                              	<div class="row">
 											                               		<div class="col-md-8">
-											                                       	<div class="col-md-8">
+											                                       	<div class="col-md-11">
 											                                             <input id="teamName" name="teamName" type="text" placeholder="ชื่อทีม" class="form-control input-circle">
 											                                       	</div>
 											                                 	</div>
 											                              	</div>
 											                               	<br>
 											                                <div class="col-md-8">
-											                                    <table  width="100%" id="team">
+											                                    <table  width="93%" id="team">
 											                                        <thead>
 											                                            <tr>
 											                                                <th width="30%">ชื่อทีม</th>
@@ -328,14 +328,14 @@ $this->registerJs($str2, View::POS_END);
 											        					<div id="tab_1" class="tab-pane">
 											                              	<div class="row">
 											                                  	<div class="col-md-8">
-											                                       	<div class="col-md-8">
+											                                       	<div class="col-md-11">
 											                                             <input id="nameUser" name="m" type="nameUser" placeholder="ชื่อ-สกุล" class="form-control input-circle">
 											                                       	</div>
 																				</div>
 											                             	</div>
 											                               	<br>
 											                                <div class="col-md-8">
-											                                	<table  width="100%" id="user">
+											                                	<table  width="93%" id="user">
 											                                        <thead>
 											                                            <tr>
 											                                                <th width="30%">ชื่อ-นามสกุล</th>
@@ -396,7 +396,7 @@ $this->registerJs($str2, View::POS_END);
                                                                     <span>ชื่อทีม</span>
                                                                     <span class="required"> * </span>
                                                                 </label>
-                                                                <div class="col-md-3" >
+                                                                <div class="col-md-4" >
                                                                     <input class="form-control" type="text"  name="teamname" id="teamname" placeholder="ชื่อทีม" />
                                                                     <span id="teamrequire" class="error-date"><span>
                                                                 </div>

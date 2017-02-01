@@ -103,7 +103,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 									project-description="<?=$field->description?>"
 									project-start-date="<?=$field->start_date?>"
 									project-end-date="<?=$field->end_date?>"
-									project-project-type="<?php echo $arrCategory[(string)$field->project_type];?>"
+									project-project-type="<?php echo $arrCategory[(string)$field->category];?>"
 									project-status="<?php echo Project::$arrSendStatus[$field->status]; ?>"
 									project-create-date="<?=$field->create_date?>"
 									project-create-by="<?php echo $arrUser[(string)$field->create_by];?>"
