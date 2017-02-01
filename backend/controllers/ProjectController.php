@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Category;
 use backend\models\Department;
+use backend\models\Team;
 use common\models\User;
 use \MongoDate;
 use yii\helpers\ArrayHelper;
@@ -97,16 +98,10 @@ class ProjectController extends Controller
     		$model->start_date = $startdate;
     		$model->end_date =  $enddate;
     		$model->description =  $description;
-    		
-    		
-    			
     	}
     	
-    	
     	if($model->save()){
-    		   			
     		$retData['success'] = true;
-    		
     	}else{
     		$retData = ['success' => false];
     	}
@@ -134,15 +129,24 @@ class ProjectController extends Controller
     public function actionCreate()
     {
     	// drop down Category
-    	$categoryModel = new Category;
+    	$categoryModel = new Category();
     	$listCategory = Category::findAllCategoryByStatus(self::STATUS_ACTIVE);
     	$arrCategory = ArrayHelper::map($listCategory,function ($categoryModel){return  (string)$categoryModel->_id;},'category_name');
 		
-    	$departmentModel = new Department;
+    	$departmentModel = new Department();
     	$arrDepartment = ArrayHelper::map(Department::find()->all(),function ($departmentModel){return  (string)$departmentModel->_id;},'department_name');
+		
+		$user = new User();
+		$listUser  = User::findAllUserByStatus(10);
+		
+		$team = new Team();
+		$listTeam  = Team::findAllTeamByStatus(self::STATUS_ACTIVE);
+		
 		return $this->render('create', [
 	     	'arrCategory' => $arrCategory,
 			'arrDepartment' => $arrDepartment,
+			'listUser' => $listUser,
+			'listTeam' => $listTeam,
 		]);
     }
 

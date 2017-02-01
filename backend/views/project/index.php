@@ -25,6 +25,7 @@ $str = <<<EOT
 		var status = $(this).attr('project-status');
 		var createDate = $(this).attr('project-create-date');
 		var createBy = $(this).attr('project-create-by');
+		var project = $(this).attr('project');
 		$('.modal-title').text(name);
 		$('#modal-description').text(description);
 		$('#modal-start-date').text(startDate);

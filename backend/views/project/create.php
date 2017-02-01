@@ -14,7 +14,83 @@ $this->title = 'สร้างโครงการ';
 $this->params['breadcrumbs'][] = ['label' => 'โครงการ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+$userId = Yii::$app->user->identity->_id;
+
 $str2 = <<<EOT
+var data = [];
+
+function addUserMenber(value, child) {
+	data.push(value);
+	child.removeClass('fa fa-plus').addClass('fa fa-minus');
+	console.log(data);
+}
+
+function removeUserMember(id, child){
+	child.removeClass('fa fa-minus').addClass('fa fa-plus');
+	$.each(data, function( index, value ) {
+		if(id === value.id){
+			data.splice(index,1);
+			return false;
+		}
+	});
+	console.log(data);
+}
+
+$('a.btn-icon-only ').click(function(){
+	var id = $(this).attr('arr-id');
+	var name = $(this).attr('arr-name');
+	var temp = {
+		id : id,
+		name : name
+	};
+	var child = $(this).children();
+	var color = $(this).attr('class');;
+	if(color.includes("selected")){
+		$(this).removeClass('btn btn-circle btn-icon-only red selected').addClass('btn btn-circle btn-icon-only green');
+		removeUserMember(id, child);
+	}else{
+		$(this).removeClass('btn btn-circle btn-icon-only green').addClass('btn btn-circle btn-icon-only red selected');
+		addUserMenber(temp,child);
+	}
+	
+});
+
+$('#teamName').keyup(function(){
+	var value = $(this).val();
+	var row = "";
+	$("table[id=team] tr").each(function(index) {
+		if (index !== 0) {
+// 		debugger;
+			row = $(this);
+			var id = row.find("td:first").text();
+			if (id.includes(value) == true) {
+                row.show();
+            }
+            else {
+                row.hide();
+            }
+		}
+	});
+});
+
+$('#nameUser').keyup(function(){
+	var value = $(this).val();
+	var row = "";
+	$("table[id=user] tr").each(function(index) {
+		if (index !== 0) {
+// 		debugger;
+			row = $(this);
+			var id = row.find("td:first").text();
+			if (id.includes(value) == true) {
+                row.show();
+            }
+            else {
+                row.hide();
+            }
+		}
+	});
+});
+
 $('#submit').click(function(){
 	
 		var formData = new FormData();
@@ -64,6 +140,7 @@ $("#projectname").change(function(){
 			$("#next").show();
 		}
 });
+
 EOT;
 
 $this->registerJs($str2, View::POS_END);
@@ -197,13 +274,13 @@ $this->registerJs($str2, View::POS_END);
 											                              	<div class="row">
 											                               		<div class="col-md-8">
 											                                       	<div class="col-md-8">
-											                                             <input id="mepEmnNo" name="mepEmnNo" type="text" placeholder="ชื่อทีม" class="form-control input-circle">
+											                                             <input id="teamName" name="teamName" type="text" placeholder="ชื่อทีม" class="form-control input-circle">
 											                                       	</div>
 											                                 	</div>
 											                              	</div>
 											                               	<br>
 											                                <div class="col-md-8">
-											                                    <table  width="100%" >
+											                                    <table  width="100%" id="team">
 											                                        <thead>
 											                                            <tr>
 											                                                <th width="30%">ชื่อทีม</th>
@@ -211,36 +288,21 @@ $this->registerJs($str2, View::POS_END);
 											                                            </tr>
 											                                        </thead>
 											                                        <tbody>
+											                                        <?php foreach ($listTeam as $fieldTeam): ?>
 											                                            <tr>
-											                                             	<td>ทีมการจัดการโปรเจค</td>
+											                                             	<td><?=$fieldTeam->team_name ?></td>
 											                                              	<td>
 											                                              		<p align="center">
-											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only red">
-											                                                        	<i class="fa fa-minus" style="font-size:20px"></i>
+											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green"
+											                                              				arr-id="<?php echo (string)$fieldTeam->_id;?>"
+											                                              				arr-name="<?php echo $fieldTeam->team_name;?>"
+											                                              			>
+											                                                        	<i class="fa fa-plus" style="font-size:20px"></i>
 											                                                  		</a>
 											                                                  	</p>
 											                                              	</td>
 											                                            </tr>
-											                                            <tr>
-											                                                <td>ทีมปฏิทิน</td>
-											                                                <td>
-											                                              		<p align="center">
-											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green">
-											                                                      		<i class="fa fa-plus" style="font-size:20px"></i>
-																									</a>
-																								</p>
-																							</td>
-											                                            </tr>
-											                                            <tr>
-											                                                <td>ทีมออกแบบ</td>
-											                                           		<td>
-											                                              		<p align="center">
-											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green">
-																										<i class="fa fa-plus" style="font-size:20px"></i>
-											                                                     	</a>
-											                                                   	</p>
-																							</td>
-											                                            </tr>
+											                                        <?php endforeach; ?>
 											                                   		</tbody>
 											                             		</table>
 											                             	</div>
@@ -249,13 +311,13 @@ $this->registerJs($str2, View::POS_END);
 											                              	<div class="row">
 											                                  	<div class="col-md-8">
 											                                       	<div class="col-md-8">
-											                                             <input id="mepEmnNo" name="mepEmnNo" type="text" placeholder="ชื่อ-สกุล" class="form-control input-circle">
+											                                             <input id="nameUser" name="m" type="nameUser" placeholder="ชื่อ-สกุล" class="form-control input-circle">
 											                                       	</div>
 																				</div>
 											                             	</div>
 											                               	<br>
 											                                <div class="col-md-8">
-											                                	<table  width="100%" >
+											                                	<table  width="100%" id="user">
 											                                        <thead>
 											                                            <tr>
 											                                                <th width="30%">ชื่อ-นามสกุล</th>
@@ -263,36 +325,21 @@ $this->registerJs($str2, View::POS_END);
 											                                            </tr>
 											                                        </thead>
 											                                        <tbody>
+											                                        	<?php foreach ($listUser as $fieldUser): ?>
 											                                            <tr>
-											                                             	<td>เจนสันต์ ริยาพันธ์</td>
+											                                             	<td><?php echo $fieldUser->firstname." ".$fieldUser->lastname;?></td>
 											                                              	<td>
 											                                              		<p align="center">
-											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only red">
-											                                                        	<i class="fa fa-minus" style="font-size:20px"></i>
+											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green"
+											                                              				arr-id="<?php echo (string)$fieldUser->_id;?>"
+											                                              				arr-name="<?php echo $fieldUser->firstname." ".$fieldUser->lastname;?>"
+											                                              			>
+											                                                        	<i class="fa fa-plus" style="font-size:20px"></i>
 											                                                  		</a>
 											                                                  	</p>
 											                                              	</td>
 											                                            </tr>
-											                                            <tr>
-											                                                <td>กฤษต เหนือคลอง</td>
-											                                                <td>
-											                                              		<p align="center">
-											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green">
-											                                                      		<i class="fa fa-plus" style="font-size:20px"></i>
-																									</a>
-																								</p>
-																							</td>
-											                                            </tr>
-											                                            <tr>
-											                                                <td>ชัยสิทธิ์ ลิ่มสกุล</td>
-											                                           		<td>
-											                                              		<p align="center">
-											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green">
-																										<i class="fa fa-plus" style="font-size:20px"></i>
-											                                                     	</a>
-											                                                   	</p>
-																							</td>
-											                                            </tr>
+											                                            <?php endforeach; ?>
 											                                   		</tbody>
 											                             		</table>
 											                          		</div>

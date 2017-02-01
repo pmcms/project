@@ -215,4 +215,18 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+    
+    public function findAllUserByStatus($status){
+    	$conditions = [];
+    	$query = User::find();
+    	if(!empty($status)){
+    		$conditions['status'] = $status;
+    	}
+    	if(!empty($conditions)){
+    		$query->where($conditions);
+    	}
+    
+    	$listUser = $query->all();
+    	return $listUser;
+    }
 }
