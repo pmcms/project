@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use backend\models\Category;
 use backend\models\Department;
 use backend\models\Team;
+use MongoDB\BSON\ObjectID;
 use common\models\User;
 use \MongoDate;
 use yii\helpers\ArrayHelper;
@@ -88,16 +89,28 @@ class ProjectController extends Controller
     	$description = $request->post('description', null);
     	$startdate = $request->post('startdate', null);
     	$enddate = $request->post('enddate', null);
-    
+    	$member = $request->post('member', null);
+    	$categoty = $request->post('category', null);
+    	$department = $request->post('department', null);
     	$model = null;
-    
-    	   
+    	
+    	// add Member
+    	$member = json_decode($member);
+    	$nummberMember = count($member);
+    	for ($i = 0; $i < $nummberMember; $i++) {
+    		$userId = $member[$i]->userId;
+    		$member[$i]->userId = new ObjectID($userId);
+    	}
+
     	if ($model == null){
     		$model = new Project();
     		$model->project_name = $name;
     		$model->start_date = $startdate;
     		$model->end_date =  $enddate;
     		$model->description =  $description;
+    		$model->category = new ObjectID($categoty);
+    		$model->department = new ObjectID($department);
+    		$model->member = $member;
     	}
     	
     	if($model->save()){
@@ -224,5 +237,5 @@ class ProjectController extends Controller
 		    ];
 		}
 	}
-	    
+	
 }

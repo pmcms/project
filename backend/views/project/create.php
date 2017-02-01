@@ -17,39 +17,54 @@ $this->params['breadcrumbs'][] = $this->title;
 $userId = Yii::$app->user->identity->_id;
 
 $str2 = <<<EOT
+
 var data = [];
+
+function getData(){
+	return data;
+}
 
 function addUserMenber(value, child) {
 	data.push(value);
 	child.removeClass('fa fa-plus').addClass('fa fa-minus');
 	console.log(data);
+	lenderMember();
 }
 
 function removeUserMember(id, child){
 	child.removeClass('fa fa-minus').addClass('fa fa-plus');
 	$.each(data, function( index, value ) {
-		if(id === value.id){
+		if(id === value.userId){
 			data.splice(index,1);
 			return false;
 		}
 	});
 	console.log(data);
+	lenderMember();
+}
+
+function lenderMember(){
+	var lender = "";
+	$.each(data, function(index, value) {
+		lender = lender.concat('<tr height=20><td style=\"text-align:center\"><input type=\"checkbox\" name=\"checkbox-1\" checked/></td><td>'+value.name+'<i class=\"fa fa-user\" style=\"color:#32c5d2\"></i></td></tr>');
+	});
+	$('#memberOfProject').html(lender);
 }
 
 $('a.btn-icon-only ').click(function(){
 	var id = $(this).attr('arr-id');
 	var name = $(this).attr('arr-name');
 	var temp = {
-		id : id,
-		name : name
+		userId : id,
+		name : name,
 	};
 	var child = $(this).children();
-	var color = $(this).attr('class');;
-	if(color.includes("selected")){
-		$(this).removeClass('btn btn-circle btn-icon-only red selected').addClass('btn btn-circle btn-icon-only green');
+	var strClass = $(this).attr('class');;
+	if(strClass.includes("user selected")){
+		$(this).removeClass('btn btn-circle btn-icon-only red user selected').addClass('btn btn-circle btn-icon-only green user');
 		removeUserMember(id, child);
-	}else{
-		$(this).removeClass('btn btn-circle btn-icon-only green').addClass('btn btn-circle btn-icon-only red selected');
+	}else if(strClass.includes("user")){
+		$(this).removeClass('btn btn-circle btn-icon-only green user').addClass('btn btn-circle btn-icon-only red user selected');
 		addUserMenber(temp,child);
 	}
 	
@@ -98,6 +113,9 @@ $('#submit').click(function(){
 		formData.append('startdate', $('input[id=from]').val()+" "+$('input[id=fromTime]').val());
 		formData.append('enddate', $('input[id=to]').val()+" "+$('input[id=toTime]').val());
 		formData.append('description', $('textarea[name=description]').val());
+		formData.append('member', JSON.stringify(data));
+		formData.append('category', $('select[name=category]').val());
+		formData.append('department', $('select[name=department]').val());
 		
 		var request = new XMLHttpRequest();
 		request.open("POST", "$baseUrl/project/save", true);
@@ -330,7 +348,7 @@ $this->registerJs($str2, View::POS_END);
 											                                             	<td><?php echo $fieldUser->firstname." ".$fieldUser->lastname;?></td>
 											                                              	<td>
 											                                              		<p align="center">
-											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green"
+											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green user"
 											                                              				arr-id="<?php echo (string)$fieldUser->_id;?>"
 											                                              				arr-name="<?php echo $fieldUser->firstname." ".$fieldUser->lastname;?>"
 											                                              			>
@@ -349,59 +367,9 @@ $this->registerJs($str2, View::POS_END);
 											                    <div class="col-md-4">
 											                     	<div class="portlet light portlet-fit portlet-form bordered">
 											                        <center><h5>พนักงานภายในโครงการ</h5></center>
-											                        <table  width="100%">
-											                        	<thead>
-											                              	<tr>
-											                               		<th ></th>
-											                                	<th ></th>
-											                             	</tr>
-											                           	</thead>
-											                           	<tbody>
-											                            	<tr  height=20>
-											                                	<td style="text-align:center">
-											                                		<input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>
-											                                	</td>
-																				<td>
-																					ทีมการจัดการโครงการ 
-																					<i class="fa fa-users" style="color:green"></i>
-																				</td>
-																			</tr>
-											                              	<tr>
-											                                  	<td >
-											                                  	</td>
-											                                    <td>
-											                                   		<input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>ประทีป คงกล้า 
-											                                       		<i class="fa fa-user" style="color:#32c5d2"></i><br>
-											                                       	<input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>กฤษฎา หมัดอะดัม
-											                                            <i class="fa fa-user" style="color:#32c5d2"></i><br>
-											                                       	<input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>สากีริน ขามิ๊
-											                                           	<i class="fa fa-user" style="color:#32c5d2"></i><br>
-											                                        <input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>อัศม์เดช โส้สมัน
-											                                           	<i class="fa fa-user" style="color:#32c5d2"></i><br>
-											                                        <input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>นัทธพงศ์ ซุ่นสั้น
-											                                            <i class="fa fa-user" style="color:#32c5d2"></i><br>
-											                                   	</td>
-											                           		</tr>
-											                                <tr height=50>
-											                                    <td style="text-align:center">
-											                                    	<input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>
-											                                    </td>
-											                                    <td>
-											                                    	เจนสันต์ ริยาพันธ์ 
-											                                    	<i class="fa fa-user" style="color:#32c5d2"></i>
-											                                    </td>
-											                               	</tr>
-											                                <tr height=50>
-											                                	<td style="text-align:center">
-											                                		<input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>
-											                                	</td>
-											                                   	<td>
-											                                   		ชัยสิทธิ์ ลิ่มสกุล
-											                                   		<i class="fa fa-user" style="color:#32c5d2"></i>
-											                                   	</td>                
-											                              	</tr>
-											                          	</tbody>
+											                        <table  width="100%" id="memberOfProject">
 											                     	</table>
+											                     	</br>
 											               			</div>
 											           			</div>
 											           		</div>

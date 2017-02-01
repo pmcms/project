@@ -13,10 +13,11 @@ use GuzzleHttp\Psr7\PumpStream;
  * @property mixed $start_date
  * @property mixed $end_date
  * @property mixed $description
- * @property mixed $project_type
+ * @property mixed $category
  * @property mixed $status
  * @property mixed $create_date
  * @property mixed $create_by
+ * @property mixed department
  * @property mixed $member
  */
 class Project extends \yii\mongodb\ActiveRecord
@@ -40,10 +41,11 @@ class Project extends \yii\mongodb\ActiveRecord
             'start_date',
             'end_date',
             'description',
-            'project_type',
+            'category',
             'status',
             'create_date',
             'create_by',
+        	'department',
             'member',
         ];
     }
@@ -54,7 +56,7 @@ class Project extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['project_name', 'start_date', 'end_date', 'description', 'project_type', 'status', 'create_date', 'create_by', 'member'], 'safe']
+            [['project_name', 'start_date', 'end_date', 'description', 'category', 'status', 'create_date', 'create_by', 'department', 'member'], 'safe']
         ];
     }
 
@@ -69,7 +71,7 @@ class Project extends \yii\mongodb\ActiveRecord
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
             'description' => 'Description',
-            'project_type' => 'Project Type',
+            'category' => 'Project Type',
             'status' => 'Status',
             'create_date' => 'Create Date',
             'create_by' => 'Create By',
