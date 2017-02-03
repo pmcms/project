@@ -225,6 +225,8 @@ class User extends ActiveRecord implements IdentityInterface
     	if(!empty($conditions)){
     		$query->where($conditions);
     	}
+    	
+    	$query->addOrderBy(['firstname'=>SORT_ASC]);
     
     	$listUser = $query->all();
     	return $listUser;

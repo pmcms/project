@@ -61,3 +61,7 @@ label.error, .error-date {
     color: red !important;
     font-size: 12px !important;
 }
+
+.portlet.light.portlet-fit {
+    padding: 10px !important;
+}

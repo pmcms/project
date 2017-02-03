@@ -95,7 +95,7 @@ class Team extends \yii\mongodb\ActiveRecord
     	if(!empty($conditions)){
     		$query->where($conditions);
     	}
-    
+    	$query->addOrderBy(['team_name'=>SORT_ASC]);
     	$listTeam = $query->all();
     	return $listTeam;
     }

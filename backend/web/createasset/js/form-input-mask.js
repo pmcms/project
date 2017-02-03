@@ -9,6 +9,6 @@ $('#toTime,#fromTime').inputmask("hh:mm", {
     placeholder: "__:__", 
     insertMode: false, 
     showMaskOnHover: true,
-    hourFormat: 24
+    hourFormat: "24"
   }
 );

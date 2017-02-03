@@ -15,6 +15,7 @@ use MongoDB\BSON\ObjectID;
 use common\models\User;
 use \MongoDate;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -96,10 +97,14 @@ class ProjectController extends Controller
     	
     	// add Member
     	$member = json_decode($member);
-    	$nummberMember = count($member);
+    	$nummberMember = sizeof($member);
     	for ($i = 0; $i < $nummberMember; $i++) {
-    		$userId = $member[$i]->userId;
-    		$member[$i]->userId = new ObjectID($userId);
+    		$userId = $member[$i]->user_id;
+    		$member[$i]->user_id = new ObjectID($userId);
+    		if(isset ($member[$i]->team_id)){
+    			$teamId = $member[$i]->team_id;
+    			$member[$i]->team_id = new ObjectID($teamId);
+    		}
     	}
 
     	if ($model == null){
@@ -152,14 +157,41 @@ class ProjectController extends Controller
 		$user = new User();
 		$listUser  = User::findAllUserByStatus(10);
 		
+		$arrUser = [];
+		if($listUser){
+			foreach ($listUser as $obj){
+				$arrUser[(string)$obj->_id] = $obj->firstname." ".$obj->lastname;
+			}
+		}
+		
 		$team = new Team();
 		$listTeam  = Team::findAllTeamByStatus(self::STATUS_ACTIVE);
 		
+		// Json MemberOfTeam
+    	$arrTeamMember = "{";
+    	foreach ($listTeam as $obj){
+    		$member = $obj->member;
+    		$arrTeamMember .= "\"".(string)$obj->_id."\""." : ";
+    		$arrTeamMember .= "[";
+    		$size = sizeof($member);
+    		for($i = 0; $i < $size;$i++)
+    		{
+    			$arrTeamMember .= "{ \"user_id\" : ";
+    			$arrTeamMember .= "\"".$member[$i]["user_id"]."\",";
+    			$arrTeamMember .= "\"name\" : \"".$arrUser[(string)$member[$i]["user_id"]]."\"";
+    			$arrTeamMember .= "},";
+    		}
+    		$arrTeamMember .= "],";
+    	}
+    	$arrTeamMember .= "}";
+
 		return $this->render('create', [
 	     	'arrCategory' => $arrCategory,
 			'arrDepartment' => $arrDepartment,
 			'listUser' => $listUser,
 			'listTeam' => $listTeam,
+			'arrTeamMember' => $arrTeamMember,
+			'member' => $member,
 		]);
     }
 
@@ -237,5 +269,23 @@ class ProjectController extends Controller
 		    ];
 		}
 	}
+	
+// 	public function actionMember()
+// 	{
+// 		if (Yii::$app->request->isAjax) {
+// 			$data = Yii::$app->request->post();
+// 			$projectname = explode(":", $data['teamId']);
+			
+// 			$conditions = [];
+// 			$query = Team::find();
+// 			$conditions['_id'] = new ObjectID($projectname[0]);
+// 			$query->where($conditions);
+// 			$value = $query->all();
+// 			\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+// 			return [
+// 					'isDuplicate' => $value,
+// 			];
+// 		}
+// 	}
 	
 }

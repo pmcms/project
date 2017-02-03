@@ -72,4 +72,13 @@ $(function(){
                     $("#teamrequire").show();
                 }
             });
+            
+            $("li.user-menu").click(function(){
+            	var strClass = $(this).attr('class');
+            	if(strClass.includes("user-menu open")){
+            		$(this).removeClass('dropdown user user-menu open').addClass('dropdown user user-menu');
+            	}else{
+            		$(this).removeClass('dropdown user user-menu').addClass('dropdown user user-menu open');
+            	}
+            });
         });

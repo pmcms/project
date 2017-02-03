@@ -18,54 +18,95 @@ $userId = Yii::$app->user->identity->_id;
 
 $str2 = <<<EOT
 
-var data = [];
-
-function getData(){
-	return data;
-}
+var dataUser = [];
+var dataTeam = [];
+var dataTeamMemer = $arrTeamMember;
 
 function addUserMenber(value, child) {
-	data.push(value);
+	dataUser.push(value);
 	child.removeClass('fa fa-plus').addClass('fa fa-minus');
-	console.log(data);
+	console.log(dataUser);
 	lenderMember();
 }
 
 function removeUserMember(id, child){
 	child.removeClass('fa fa-minus').addClass('fa fa-plus');
-	$.each(data, function( index, value ) {
+	$.each(dataUser, function( index, value ) {
 		if(id === value.userId){
-			data.splice(index,1);
+			dataUser.splice(index,1);
 			return false;
 		}
 	});
-	console.log(data);
+	console.log(dataUser);
 	lenderMember();
 }
 
 function lenderMember(){
 	var lender = "";
-	$.each(data, function(index, value) {
-		lender = lender.concat('<tr height=20><td style=\"text-align:center\"><input type=\"checkbox\" name=\"checkbox-1\" checked/></td><td>'+value.name+'<i class=\"fa fa-user\" style=\"color:#32c5d2\"></i></td></tr>');
+	$.each(dataUser, function(index, value) {
+		lender = lender.concat('<tr height=20><td style=\"text-align:center\"></td><td>'+value.name+'</td><td width="50%"><div class="text-right"><i class=\"fa fa-user\" style=\"color:#32c5d2\"></i></div></td></tr>');
 	});
 	$('#memberOfProject').html(lender);
+}
+
+function addTeamMenber(value, child) {
+	dataTeam.push(value);
+	child.removeClass('fa fa-plus').addClass('fa fa-minus');
+	console.log(dataTeam);
+	lenderTeamMember();
+}
+
+function removeTeamMember(id, child){
+	child.removeClass('fa fa-minus').addClass('fa fa-plus');
+	$.each(dataTeam, function( index, value ) {
+		if(id === value.teamId){
+			dataTeam.splice(index,1);
+			return false;
+		}
+	});
+	console.log(dataTeam);
+	lenderTeamMember();
+}
+
+function lenderTeamMember(){
+	var lender = "";
+	$.each(dataTeam, function(index, value) {
+		lender = lender.concat('<tr height=20><td colspan="2"><b>'+value.name+'</b></td><td width="50%"><div class="text-right"><i class=\"fa fa-users\" style=\"color:green\"></i></div></td></tr>');
+		debugger;
+		$.each(value.member, function(indexMember, valueMember) {
+			lender = lender.concat('<tr height=20><td style=\"text-align:center\">&nbsp;&nbsp;</td><td><input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>&nbsp;'+valueMember.name+'</td><td width="50%"><div class="text-right"><i class=\"fa fa-user\" style=\"color:#32c5d2\"></i></div></td></tr>');
+		});
+	});
+	$('#teamOfProject').html(lender);
 }
 
 $('a.btn-icon-only ').click(function(){
 	var id = $(this).attr('arr-id');
 	var name = $(this).attr('arr-name');
-	var temp = {
-		userId : id,
-		name : name,
-	};
+
 	var child = $(this).children();
-	var strClass = $(this).attr('class');;
+	var strClass = $(this).attr('class');
 	if(strClass.includes("user selected")){
 		$(this).removeClass('btn btn-circle btn-icon-only red user selected').addClass('btn btn-circle btn-icon-only green user');
 		removeUserMember(id, child);
 	}else if(strClass.includes("user")){
 		$(this).removeClass('btn btn-circle btn-icon-only green user').addClass('btn btn-circle btn-icon-only red user selected');
+		var temp = {
+			userId : id,
+			name : name,
+		};
 		addUserMenber(temp,child);
+	}else if(strClass.includes("team selected")){
+		$(this).removeClass('btn btn-circle btn-icon-only red team selected').addClass('btn btn-circle btn-icon-only green team');
+		removeTeamMember(id, child);
+	}else{
+		var temp = {
+			teamId : id,
+			name : name,
+			member : dataTeamMemer[id]
+		};
+		$(this).removeClass('btn btn-circle btn-icon-only green team').addClass('btn btn-circle btn-icon-only red team selected');
+		addTeamMenber(temp,child);
 	}
 	
 });
@@ -107,13 +148,13 @@ $('#nameUser').keyup(function(){
 });
 
 $('#submit').click(function(){
-	
+		
 		var formData = new FormData();
 		formData.append('name', $('input[name=projectname]').val());
 		formData.append('startdate', $('input[id=from]').val()+" "+$('input[id=fromTime]').val());
 		formData.append('enddate', $('input[id=to]').val()+" "+$('input[id=toTime]').val());
 		formData.append('description', $('textarea[name=description]').val());
-		formData.append('member', JSON.stringify(data));
+		formData.append('member', JSON.stringify(getMember()));
 		formData.append('category', $('select[name=category]').val());
 		formData.append('department', $('select[name=department]').val());
 		
@@ -121,7 +162,7 @@ $('#submit').click(function(){
 		request.open("POST", "$baseUrl/project/save", true);
 		request.onreadystatechange = function () {
 	        if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-				debugger;
+// 				debugger;
 	       	    var response = request.responseText;
 	            if(typeof(response) == "string"){
 	            	response = JSON.parse(request.responseText);
@@ -133,6 +174,7 @@ $('#submit').click(function(){
 });
 
 $("#projectname").change(function(){
+	getMember();
 	var projectname = $("#projectname").val();
 
 		if(projectname != ""){
@@ -158,6 +200,33 @@ $("#projectname").change(function(){
 			$("#next").show();
 		}
 });
+
+function getMember(){
+
+	var dataMemberOfProject = [];
+	var user = {};
+	var team = {};
+	$.each(dataUser, function( index, value ) {
+		user = {
+			user_id : value.userId,
+		};
+		dataMemberOfProject.push(user);
+	});
+	
+	$.each(dataTeam, function( index, value ) {
+		var teamId = value.teamId;
+		$.each(value.member, function( indexMember, valueMember ) {
+			team = {
+				user_id : valueMember.user_id,
+				team_id : teamId,
+			}
+			dataMemberOfProject.push(team);
+		});	
+	});
+	
+	console.log(dataMemberOfProject);
+	return dataMemberOfProject;
+};
 
 EOT;
 
@@ -278,7 +347,7 @@ $this->registerJs($str2, View::POS_END);
                                                     <div class="tab-pane" id="tab2">
 											        	<div class="row">
 											              	<div class="col-md-12" >
-											                   	<div class="col-md-8" >
+											                   	<div class="col-md-7" >
 											                        <ul class="nav nav-tabs">
 												                        <li class="active">
 												                        	<a href="#tab_0" data-toggle="tab" aria-expanded="true"> ทีม </a>
@@ -297,8 +366,8 @@ $this->registerJs($str2, View::POS_END);
 											                                 	</div>
 											                              	</div>
 											                               	<br>
-											                                <div class="col-md-8">
-											                                    <table  width="93%" id="team">
+											                                <div class="col-md-10">
+											                                    <table id="team">
 											                                        <thead>
 											                                            <tr>
 											                                                <th width="30%">ชื่อทีม</th>
@@ -311,10 +380,10 @@ $this->registerJs($str2, View::POS_END);
 											                                             	<td><?=$fieldTeam->team_name ?></td>
 											                                              	<td>
 											                                              		<p align="center">
-											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green"
+											                                              			<a href="javascript:;" class="btn btn-circle btn-icon-only green team"
 											                                              				arr-id="<?php echo (string)$fieldTeam->_id;?>"
 											                                              				arr-name="<?php echo $fieldTeam->team_name;?>"
-											                                              			>
+											                                              				>
 											                                                        	<i class="fa fa-plus" style="font-size:20px"></i>
 											                                                  		</a>
 											                                                  	</p>
@@ -334,8 +403,8 @@ $this->registerJs($str2, View::POS_END);
 																				</div>
 											                             	</div>
 											                               	<br>
-											                                <div class="col-md-8">
-											                                	<table  width="93%" id="user">
+											                                <div class="col-md-10">
+											                                	<table  id="user">
 											                                        <thead>
 											                                            <tr>
 											                                                <th width="30%">ชื่อ-นามสกุล</th>
@@ -364,11 +433,31 @@ $this->registerJs($str2, View::POS_END);
 											                        	</div>
 											                    	</div>
 											                    </div>
-											                    <div class="col-md-4">
+											                    <div class="col-md-5">
 											                     	<div class="portlet light portlet-fit portlet-form bordered">
-											                        <center><h5>พนักงานภายในโครงการ</h5></center>
-											                        <table  width="100%" id="memberOfProject">
+											                        <center><h5><b>ทีมภายในโครงการ</b></h5></center>
+											                        <table width="100%" id="teamOfProject">
+<!-- 											                     		<tr  height="20px"> -->
+                                              								<td style="text-align:center"></td>
+<!--                                                                     		<td>ทีมการจัดการโครงการ </td> -->
+<!--                                                                     		<td width="50%"> -->
+<!--                                                                    			<div class="text-right"><i class="fa fa-users" style="color:green"></i></div> -->
+<!--                                                                     		</td> -->
+<!--                                             							</tr> -->
+<!--                                             							<tr> -->
+<!--                                               								<td></td> -->
+<!--                                                                     		<td> -->
+<!-- 			                                                                    <input type="checkbox" name="checkbox-1" id="checkbox-1" checked/> -->
+<!-- 			                                                                    	ประทีป คงกล้า  -->
+<!-- 		                                                                    </td> -->
+<!-- 		                                                                    <td> -->
+<!--		                                                                    	 <div class="text-right"><i class="fa fa-user" style="color:#32c5d2"></i></div> -->
+<!-- 		                                                                    </td> -->
+<!--                                             							</tr> -->
 											                     	</table>
+											                     	<hr width="100%" align="center" size="3" noshade color="#bbbbbb"></hr>
+											                     	<center><h5><b>พนักงานภายในโครงการ</h5></b></center>
+											                        <table  width="100%" id="memberOfProject"></table>
 											                     	</br>
 											               			</div>
 											           			</div>
