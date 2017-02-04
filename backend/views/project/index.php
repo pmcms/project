@@ -36,12 +36,32 @@ $str = <<<EOT
 		$('#modal-create-by').text(createBy);
 		$('.modal').modal('show');
 	})
+
+	var alert = $alert;
+	lenderAlert(alert);		
+	function lenderAlert(alert){
+		if(alert == 1){
+			lenderAlert = "<div class=\"alert alert-success alert-dismissible\">"+
+						  "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>"+
+						  "Success alert preview. This alert is dismissable."+"</div>";
+		}else if(alert == 0){
+			lenderAlert = "<div class=\"alert alert-danger alert-dismissible\">"+
+						  "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>"+
+						  "Danger alert preview. This alert is dismissable."+"</div>";
+		}else{
+			lenderAlert = "";
+		}
+		$('#alert').html(lenderAlert);
+		$('#alert').show;
+		setTimeout(function() { $('#alert').hide(); }, 5000);
+	};
 EOT;
 
 $this->registerJs($str, View::POS_LOAD, 'form-js');
 
 ?>
 <div class="project-index">
+	<span id="alert"></span>
     <p align="right">
         <?= Html::a('<i class="fa fa-plus"></i> สร้างโครงการ', ['create'], ['class' => 'btn btn-success','style'=>'text-align: right;']) ?>
     </p>

@@ -50,6 +50,7 @@ class ProjectController extends Controller
      */
     public function actionIndex()
     {
+    	$alert = Yii::$app->session->getFlash('alert');
     	$request = Yii::$app->request;
     	$name = $request->post('name');
     	$status = $request->post('status',null);
@@ -72,11 +73,18 @@ class ProjectController extends Controller
     			$arrUser[(string)$obj->_id] = $obj->firstname." ".$obj->lastname;
     		}
     	}
+    	
+    	if($alert != null){
+    		$alert = ($alert)?true:false;
+    	}else{
+    		$alert = "undefined";
+    	}
+    	
         return $this->render('index', [
  			'value' => $value,'name' => $name,
         	'status' => $status, 'sort' => $sort,
         	'userId' => $userID, 'arrCategory' => $arrCategory,
-        	'arrUser' => $arrUser,
+        	'arrUser' => $arrUser, 'alert' => $alert,
         ]);
     }
     
@@ -117,12 +125,15 @@ class ProjectController extends Controller
     		$model->department = new ObjectID($department);
     		$model->member = $member;
     	}
-    	
     	if($model->save()){
+    		$message = true;
     		$retData['success'] = true;
     	}else{
+    		$message = false;
     		$retData = ['success' => false];
     	}
+    	Yii::$app->session->setFlash('alert', $message);
+    	 
     	echo json_encode($retData);
     
     }

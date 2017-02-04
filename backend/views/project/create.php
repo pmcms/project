@@ -147,7 +147,7 @@ $('#nameUser').keyup(function(){
 	});
 });
 
-$('#submit').click(function(){
+function submitCreate(){
 		
 		var formData = new FormData();
 		formData.append('name', $('input[name=projectname]').val());
@@ -171,10 +171,13 @@ $('#submit').click(function(){
 	        }
 	    };
 		request.send(formData);
-});
+		window.location.assign("$baseUrl/project");
+// 		window.location.href = "$baseUrl/project";
+//     	location.reload(true);
+};
 
 $("#projectname").change(function(){
-	getMember();
+
 	var projectname = $("#projectname").val();
 
 		if(projectname != ""){
@@ -472,9 +475,9 @@ $this->registerJs($str2, View::POS_END);
                                                                		ต้องการสร้างทีมใหม่หรือไม่
                                                                	</label>
                                                                 <div class="col-md-3" >
-                                                                	<input type="radio" name="want" id="want" checked/>    
+                                                                	<input type="radio" name="want" id="want"/>    
                                                                     <span>ต้องการสร้างทีมใหม่</span><br/>
-                                                                    <input type="radio" name="want" id="nowant" />
+                                                                    <input type="radio" name="want" id="nowant" checked/>
                                                                     <span>ไม่ต้องการสร้างทีมใหม่</span>
                                                                 </div>
                                                             </div><br>
@@ -486,7 +489,7 @@ $this->registerJs($str2, View::POS_END);
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-4" >
-                                                                    <input class="form-control" type="text"  name="teamname" id="teamname" placeholder="ชื่อทีม" />
+                                                                    <input class="form-control" type="text"  name="teamname" id="teamname" placeholder="ชื่อทีม" disabled/>
                                                                     <span id="teamrequire" class="error-date"><span>
                                                                 </div>
                                                             </div><br> <br> <br>

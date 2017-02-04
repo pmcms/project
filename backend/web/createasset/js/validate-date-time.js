@@ -66,7 +66,7 @@ $(function(){
                 var teamname = ($("#teamname").val()).trim();
 
                 if(isDisabled || teamname != ""){
-                    alert("success");
+                    submitCreate();
                 }else{
                     $("#teamrequire").html("<font color=\"red\">กรุณากรอกชื่อทีม</font>");
                     $("#teamrequire").show();
