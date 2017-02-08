@@ -1,9 +1,11 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use yii\web\View;
 use backend\models\Project;
+use yii\helpers\Html;
+use yii\web\View;
+use yii\widgets\ActiveForm;
+use yii\base\Widget;
+use yii\widgets\LinkPager;
 
 $baseUrl = \Yii::getAlias('@web');
 
@@ -16,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 include 'extend.php';
 
 $str = <<<EOT
+
 	$('.project-detail').click(function(){
 		var name = $(this).attr('project-name');
 		var description = $(this).attr('project-description');
@@ -140,6 +143,18 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 		</div>
 		<?php } ?>
 	<?php endforeach; ?>
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<?php $lastRecordNo = (($pagination->page+1) * $pagination->limit); 
+					if ($lastRecordNo > $pagination->totalCount) $lastRecordNo = $pagination->totalCount?>
+					<div class="dataTables_info" role="status" aria-live="polite" style="padding-left: 10px;">
+						รายการที่  <?= $pagination->offset + 1?> ถึง   <?= $lastRecordNo ?> จาก  <?= $pagination->totalCount?> รายการ
+					</div>
+					<div class="dataTables_paginate paging_bootstrap_full_number text-center">
+						<?= LinkPager::widget(['pagination' => $pagination,]);?>
+					</div>
+				</div>
+			</div>
 	</div>
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

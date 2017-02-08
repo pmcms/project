@@ -16,6 +16,7 @@ use common\models\User;
 use \MongoDate;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use yii\data\Pagination;
 
 /**
  * ProjectController implements the CRUD actions for Project model.
@@ -56,8 +57,51 @@ class ProjectController extends Controller
     	$status = $request->post('status',null);
     	$sort = $request->post('sort',self::SORT_END_DATE);
 		$userID = Yii::$app->user->identity->_id;
-    	$value = Project::findAllProject($name, $status, $sort, $userID);
+		$conditions = [];
+		$query = Project::find();
+		
+		if(!empty($status)){
+			$conditions['status'] = $status;
+		}
+		if(!empty($userId)){
+			$conditions['member.id_user'] = $userId;
+		}
+		if(!empty($conditions)){
+			$query->where($conditions);
+		}
+		if(!empty($name)){
+			$query->andWhere(['like', "project_name", $name]);
+		}
+		$pagination = new Pagination([
+				'defaultPageSize' => 15,
+				'totalCount' => $query->count(),
+		]);
+		$query->offset($pagination->offset);
+		$query->limit($pagination->limit);
+		$query->orderBy(['status'=>SORT_ASC]);
+		 
+		if(!empty($sort)){
+			if($sort == 1){
+				$query->addOrderBy(['project_name'=>SORT_ASC]);
+			}elseif ($sort == 2){
+				$query->addOrderBy(['status'=>SORT_ASC]);
+			}elseif ($sort == 3){
+				$query->addOrderBy(['start_date'=>SORT_ASC]);
+			}else{
+				$query->addOrderBy(['end_date'=>SORT_DESC]);
+			}
+		}
+		 
+		 
+		
     	
+    	
+    	$value = $query->all();
+    	
+    	
+    	$pagination->params = ['page'=> $pagination->page, 
+    			
+    	];
     	$category = Category::find()->all();
     	$arrCategory = [];
     	if($category){
@@ -82,6 +126,7 @@ class ProjectController extends Controller
     	
         return $this->render('index', [
  			'value' => $value,'name' => $name,
+        	"pagination"=>$pagination,
         	'status' => $status, 'sort' => $sort,
         	'userId' => $userID, 'arrCategory' => $arrCategory,
         	'arrUser' => $arrUser, 'alert' => $alert,
