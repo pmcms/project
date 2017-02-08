@@ -20,7 +20,6 @@ $str2 = <<<EOT
 
 var dataUser = [];
 var dataTeam = [];
-var dataTeamMemer = $arrTeamMember;
 
 function addUserMenber(value, child) {
 	dataUser.push(value);
@@ -49,15 +48,23 @@ function lenderMember(){
 	$('#memberOfProject').html(lender);
 }
 
-function addTeamMenber(value, child) {
-	dataTeam.push(value);
-	child.removeClass('fa fa-plus').addClass('fa fa-minus');
+function addTeamMenber(newTeam) {
+	$.each(dataTeam, function( index, value ) {
+		if(newTeam.teamId === value.teamId){
+			removeTeam(value.teamId);
+			return false;
+		}
+	});
+	dataTeam.push(newTeam);
+// 	child.removeClass('fa fa-plus').addClass('fa fa-minus');
 	console.log(dataTeam);
 	lenderTeamMember();
+	hideColumnTeam(newTeam.name);
+	
 }
 
-function removeTeamMember(id, child){
-	child.removeClass('fa fa-minus').addClass('fa fa-plus');
+function removeTeam(id){
+// 	child.removeClass('fa fa-minus').addClass('fa fa-plus');
 	$.each(dataTeam, function( index, value ) {
 		if(id === value.teamId){
 			dataTeam.splice(index,1);
@@ -68,13 +75,65 @@ function removeTeamMember(id, child){
 	lenderTeamMember();
 }
 
+function removeTeamMember(id, parentId){
+// 	child.removeClass('fa fa-minus').addClass('fa fa-plus');
+	$.each(dataTeam, function( index, value ) {
+		if(parentId == value.teamId){
+			$.each(value.member, function(indexMember, valueMember) {
+				if(id === valueMember.user_id){
+					value.member.splice(indexMember,1);
+					return false;
+				}
+			});
+		}
+	});
+	console.log(dataTeam);
+	lenderTeamMember();
+}
+
+$(document).on('click', "a.right-team", function() {
+    var id = $(this).attr('arr-id');
+    var name = $(this).attr('arr-name');
+    showColumnTeam(name);
+    removeTeam(id); 
+});
+
+
+$(document).on('click', "a.right-member-team", function() {
+	var id = $(this).attr('arr-id');
+	var parentId = $(this).attr('arr-team-id');
+	var teamName = "";
+	$.each(dataTeam, function( index, value ) {
+		if(value.teamId == parentId){
+			teamName = value.name;
+			return false;
+		}
+	});
+    showColumnTeam(teamName);   
+    removeTeamMember(id, parentId);    
+});
+
 function lenderTeamMember(){
 	var lender = "";
 	$.each(dataTeam, function(index, value) {
-		lender = lender.concat('<tr height=20><td colspan="2"><b>'+value.name+'</b></td><td width="50%"><div class="text-right"><i class=\"fa fa-users\" style=\"color:green\"></i></div></td></tr>');
-		debugger;
+		lender = lender.concat('<tr height=20><td colspan="2"><b>'+
+				 value.name+'</b></td>'+
+				 '<td width="50%"><div class="text-right">'+
+				 '<a href="javascript:;" type="button" class="right-team btn red btn-outline" style="padding:6px 10px 6px !important; font-size:15px;"'+
+				 'arr-id=\"'+value.teamId+'\"'+
+				 'arr-name=\"'+value.name+"\""+'>'+
+				 '<i class=\"fa fa-minus\"></i></a>'+
+				 '</div></td></tr>');
+// 		debugger;
 		$.each(value.member, function(indexMember, valueMember) {
-			lender = lender.concat('<tr height=20><td style=\"text-align:center\">&nbsp;&nbsp;</td><td><input type="checkbox" name="checkbox-1" id="checkbox-1" checked/>&nbsp;'+valueMember.name+'</td><td width="50%"><div class="text-right"><i class=\"fa fa-user\" style=\"color:#32c5d2\"></i></div></td></tr>');
+			lender = lender.concat('<tr height=20><td style=\"text-align:center\">&nbsp;&nbsp;</td>'+
+					'<td>&nbsp;'+valueMember.name+'</td>'+
+					'<td width="50%"><div class="text-right">'+
+					'<a href="javascript:;" type="button" class="right-member-team btn red btn-outline" style="padding:6px 10px 6px !important;font-size:15px;"'+
+					'arr-id=\"'+valueMember.user_id+'\" '+
+					'arr-team-id=\"'+value.teamId+'\">'+
+					'<i class=\"fa fa-minus\"></i>'+
+					'</a></div></td></tr>');
 		});
 	});
 	$('#teamOfProject').html(lender);
@@ -83,7 +142,7 @@ function lenderTeamMember(){
 $('a.btn-icon-only ').click(function(){
 	var id = $(this).attr('arr-id');
 	var name = $(this).attr('arr-name');
-
+	var temp = {};
 	var child = $(this).children();
 	var strClass = $(this).attr('class');
 	if(strClass.includes("user selected")){
@@ -91,40 +150,74 @@ $('a.btn-icon-only ').click(function(){
 		removeUserMember(id, child);
 	}else if(strClass.includes("user")){
 		$(this).removeClass('btn btn-circle btn-icon-only green user').addClass('btn btn-circle btn-icon-only red user selected');
-		var temp = {
+		temp = {
 			userId : id,
 			name : name,
 		};
 		addUserMenber(temp,child);
-	}else if(strClass.includes("team selected")){
-		$(this).removeClass('btn btn-circle btn-icon-only red team selected').addClass('btn btn-circle btn-icon-only green team');
-		removeTeamMember(id, child);
-	}else{
-		var temp = {
+	}else if(strClass.includes("team")){
+		var team  = $arrTeamMember;
+		temp = {
 			teamId : id,
 			name : name,
-			member : dataTeamMemer[id]
+			member : team[id]
 		};
-		$(this).removeClass('btn btn-circle btn-icon-only green team').addClass('btn btn-circle btn-icon-only red team selected');
-		addTeamMenber(temp,child);
+		debugger;
+		addTeamMenber(temp);
 	}
-	
 });
+
+function showColumnTeam(teamName){
+	$.each(dataTeam, function(index, value) {
+		var row = "";
+		$("table[id=team] tr").each(function(index) {
+			if (index !== 0) {
+			debugger;
+				row = $(this);
+				var id = row.find("td:first").text();
+				if (id.includes(teamName) == true) {
+					row.removeClass('hiden');
+	                row.show();
+	                return false;
+	            }
+			}
+		});
+	});
+};
+
+function hideColumnTeam(teamName){
+	var row = "";
+	$("table[id=team] tr").each(function(index) {
+		if (index !== 0) {
+// 		debugger;
+			row = $(this);
+			var rowTeamName = row.find("td:first").text();
+			if (teamName.includes(rowTeamName) == true) {
+				row.addClass('hiden');
+	            row.hide();
+	          	return false;
+	      	}
+		}
+	});
+};
 
 $('#teamName').keyup(function(){
 	var value = $(this).val();
 	var row = "";
 	$("table[id=team] tr").each(function(index) {
 		if (index !== 0) {
-// 		debugger;
+		debugger;
 			row = $(this);
-			var id = row.find("td:first").text();
-			if (id.includes(value) == true) {
-                row.show();
-            }
-            else {
-                row.hide();
-            }
+			var strClass = $(this).attr('class');
+			if(strClass == undefined){
+				var id = row.find("td:first").text();
+				if (id.includes(value) == true) {
+		       		row.show();
+				}
+				else {
+		       		row.hide();
+				}
+			}
 		}
 	});
 });
