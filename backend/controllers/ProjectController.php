@@ -92,16 +92,9 @@ class ProjectController extends Controller
 			}
 		}
 		 
-		 
-		
-    	
-    	
     	$value = $query->all();
     	
-    	
-    	$pagination->params = ['page'=> $pagination->page, 
-    			
-    	];
+    	$pagination->params = ['page'=> $pagination->page];
     	$category = Category::find()->all();
     	$arrCategory = [];
     	if($category){
@@ -159,16 +152,21 @@ class ProjectController extends Controller
     			$member[$i]->team_id = new ObjectID($teamId);
     		}
     	}
-
+    	
+    	$userId = Yii::$app->user->identity->_id;
+    	
     	if ($model == null){
     		$model = new Project();
     		$model->project_name = $name;
     		$model->start_date = $startdate;
-    		$model->end_date =  $enddate;
+    		$model->end_date = $enddate;
     		$model->description =  $description;
+    		$model->status = self::STATUS_ACTIVE;
     		$model->category = new ObjectID($categoty);
     		$model->department = new ObjectID($department);
     		$model->member = $member;
+    		$model->create_by = new ObjectID($userId);
+    		$model->create_date = new \MongoDate();
     	}
     	if($model->save()){
     		$message = true;
@@ -207,6 +205,14 @@ class ProjectController extends Controller
     	$listCategory = Category::findAllCategoryByStatus(self::STATUS_ACTIVE);
     	$arrCategory = ArrayHelper::map($listCategory,function ($categoryModel){return  (string)$categoryModel->_id;},'category_name');
 		
+    	$project = Project::find()->all();
+    	$arrProject = [];
+    	if($project){
+    		foreach ($project as $obj){
+    			$arrProject[] = $obj->project_name;
+    		}
+    	}
+    	
     	$departmentModel = new Department();
     	$arrDepartment = ArrayHelper::map(Department::find()->all(),function ($departmentModel){return  (string)$departmentModel->_id;},'department_name');
 		
@@ -248,6 +254,7 @@ class ProjectController extends Controller
 			'listTeam' => $listTeam,
 			'arrTeamMember' => $arrTeamMember,
 			'member' => $member,
+			'arrProject' => json_encode($arrProject),
 		]);
     }
 

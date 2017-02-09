@@ -10,6 +10,9 @@ use yii\helpers\ArrayHelper;
 /* @var $model backend\models\Project */
 CreateAsset::register ( $this );
 $baseUrl = \Yii::getAlias('@web');
+$user = Yii::$app->user->identity;
+$userID = $user->_id;
+$userName = $user->firstname." ".$user->lastname;
 $this->title = 'สร้างโครงการ';
 $this->params['breadcrumbs'][] = ['label' => 'โครงการ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,18 +21,24 @@ $userId = Yii::$app->user->identity->_id;
 
 $str2 = <<<EOT
 
-var dataUser = [];
+var dataUser = [
+	{
+		name : "$userName",
+		userId : "$userId"
+	}
+];
 var dataTeam = [];
 
-function addUserMenber(value, child) {
-	dataUser.push(value);
-	child.removeClass('fa fa-plus').addClass('fa fa-minus');
+function addUserMenber(newUser) {
+	dataUser.push(newUser);
+// 	child.removeClass('fa fa-plus').addClass('fa fa-minus');
 	console.log(dataUser);
 	lenderMember();
+	hideColumnUser(newUser.name);
 }
 
-function removeUserMember(id, child){
-	child.removeClass('fa fa-minus').addClass('fa fa-plus');
+function removeUserMember(id){
+// 	child.removeClass('fa fa-minus').addClass('fa fa-plus');
 	$.each(dataUser, function( index, value ) {
 		if(id === value.userId){
 			dataUser.splice(index,1);
@@ -43,20 +52,31 @@ function removeUserMember(id, child){
 function lenderMember(){
 	var lender = "";
 	$.each(dataUser, function(index, value) {
-		lender = lender.concat('<tr height=20><td style=\"text-align:center\"></td><td>'+value.name+'</td><td width="50%"><div class="text-right"><i class=\"fa fa-user\" style=\"color:#32c5d2\"></i></div></td></tr>');
+		lender = lender.concat('<tr height=20><td style=\"text-align:center\"></td>'+
+		'<td>'+value.name+'</td><td width="50%"><div class="text-right">'+
+		'<a href="javascript:;" type="button" class="right-user btn red btn-outline" style="padding:6px 10px 6px !important; font-size:15px;"'+
+		'arr-id=\"'+value.userId+'\" '+
+		'arr-name=\"'+value.name+'\">'+
+		'<i class=\"fa fa-minus\"></i></a>'+
+		'</div>'+
+		'</td></tr>');
 	});
 	$('#memberOfProject').html(lender);
 }
 
 function addTeamMenber(newTeam) {
+	var isNewTeam = true;
 	$.each(dataTeam, function( index, value ) {
 		if(newTeam.teamId === value.teamId){
-			removeTeam(value.teamId);
+			isNewTeam = false;
+			value.member = [];
+			value.member = newTeam.member;
 			return false;
 		}
 	});
-	dataTeam.push(newTeam);
-// 	child.removeClass('fa fa-plus').addClass('fa fa-minus');
+	if(isNewTeam){
+		dataTeam.push(newTeam);
+	}
 	console.log(dataTeam);
 	lenderTeamMember();
 	hideColumnTeam(newTeam.name);
@@ -82,9 +102,13 @@ function removeTeamMember(id, parentId){
 			$.each(value.member, function(indexMember, valueMember) {
 				if(id === valueMember.user_id){
 					value.member.splice(indexMember,1);
+					if(value.member.length === 0){
+						removeTeam(parentId);
+					}
 					return false;
 				}
 			});
+			return false;
 		}
 	});
 	console.log(dataTeam);
@@ -111,6 +135,13 @@ $(document).on('click', "a.right-member-team", function() {
 	});
     showColumnTeam(teamName);   
     removeTeamMember(id, parentId);    
+});
+
+$(document).on('click', "a.right-user", function() {
+    var id = $(this).attr('arr-id');
+    var name = $(this).attr('arr-name');
+    showColumnUser(name);
+    removeUserMember(id); 
 });
 
 function lenderTeamMember(){
@@ -143,18 +174,13 @@ $('a.btn-icon-only ').click(function(){
 	var id = $(this).attr('arr-id');
 	var name = $(this).attr('arr-name');
 	var temp = {};
-	var child = $(this).children();
 	var strClass = $(this).attr('class');
-	if(strClass.includes("user selected")){
-		$(this).removeClass('btn btn-circle btn-icon-only red user selected').addClass('btn btn-circle btn-icon-only green user');
-		removeUserMember(id, child);
-	}else if(strClass.includes("user")){
-		$(this).removeClass('btn btn-circle btn-icon-only green user').addClass('btn btn-circle btn-icon-only red user selected');
+	if(strClass.includes("user")){
 		temp = {
 			userId : id,
 			name : name,
 		};
-		addUserMenber(temp,child);
+		addUserMenber(temp);
 	}else if(strClass.includes("team")){
 		var team  = $arrTeamMember;
 		temp = {
@@ -162,7 +188,6 @@ $('a.btn-icon-only ').click(function(){
 			name : name,
 			member : team[id]
 		};
-		debugger;
 		addTeamMenber(temp);
 	}
 });
@@ -172,10 +197,28 @@ function showColumnTeam(teamName){
 		var row = "";
 		$("table[id=team] tr").each(function(index) {
 			if (index !== 0) {
-			debugger;
+// 			debugger;
 				row = $(this);
 				var id = row.find("td:first").text();
 				if (id.includes(teamName) == true) {
+					row.removeClass('hiden');
+	                row.show();
+	                return false;
+	            }
+			}
+		});
+	});
+};
+
+function showColumnUser(userName){
+	$.each(dataUser, function(index, value) {
+		var row = "";
+		$("table[id=user] tr").each(function(index) {
+			if (index !== 0) {
+// 			debugger;
+				row = $(this);
+				var id = row.find("td:first").text();
+				if (id.includes(userName) == true) {
 					row.removeClass('hiden');
 	                row.show();
 	                return false;
@@ -189,10 +232,24 @@ function hideColumnTeam(teamName){
 	var row = "";
 	$("table[id=team] tr").each(function(index) {
 		if (index !== 0) {
-// 		debugger;
 			row = $(this);
 			var rowTeamName = row.find("td:first").text();
 			if (teamName.includes(rowTeamName) == true) {
+				row.addClass('hiden');
+	            row.hide();
+	          	return false;
+	      	}
+		}
+	});
+};
+
+function hideColumnUser(userName){
+	var row = "";
+	$("table[id=user] tr").each(function(index) {
+		if (index !== 0) {
+			row = $(this);
+			var rowUserName = row.find("td:first").text();
+			if (userName.includes(rowUserName) == true) {
 				row.addClass('hiden');
 	            row.hide();
 	          	return false;
@@ -264,14 +321,14 @@ function submitCreate(){
 	        }
 	    };
 		request.send(formData);
-		window.location.assign("$baseUrl/project");
+// 		window.location.assign("$baseUrl/project");
 // 		window.location.href = "$baseUrl/project";
 //     	location.reload(true);
 };
 
 $("#projectname").change(function(){
 
-	var projectname = $("#projectname").val();
+	var projectname = ($("#projectname").val()).trim();
 
 		if(projectname != ""){
 			$.ajax({
@@ -324,6 +381,19 @@ function getMember(){
 	return dataMemberOfProject;
 };
 
+$("#from,#to").prop("readonly", true);
+
+$( "#projectname" ).autoComplete({
+  	minChars: 1,
+   	source: function(term, suggest){
+		term = term.toLowerCase();
+		var choices = $arrProject;
+		var suggestions = [];
+		for (i=0;i<choices.length;i++)
+			if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+		suggest(suggestions);
+	}
+});
 EOT;
 
 $this->registerJs($str2, View::POS_END);
@@ -373,7 +443,7 @@ $this->registerJs($str2, View::POS_END);
                                                             <label class="control-label col-md-3">ชื่อโครงการ
                                                                 <span class="required"> * </span>
                                                             </label>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-5">
                                                                 <input type="text" class="form-control" name="projectname" placeholder="ชื่อโครงการ" id="projectname" maxlength="30"/>
                                                             	<span id="error-name" class="error-date"></span>
                                                             </div>
@@ -383,11 +453,11 @@ $this->registerJs($str2, View::POS_END);
                                                             <label class="control-label col-md-3">วันที่เริ่มต้น
                                                                 <span class="required"> * </span>
                                                             </label>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <input type="text" class="form-control date-picker" name="startdate" placeholder="วันที่เริ่มต้น" id="from" />
                                                             </div>
                                                             <div class="col-md-2">
-                                                                <input type="text" id="fromTime" class="form-control date-picker" name="starttime" placeholder="เวลาเริ่มต้น" />
+                                                               	<input type="text" id="fromTime" class="form-control date-picker" name="starttime" placeholder="เวลาเริ่มต้น" />
                                                             </div>
                                                         </div>
                                                         
@@ -395,7 +465,7 @@ $this->registerJs($str2, View::POS_END);
                                                             <label class="control-label col-md-3">วันที่สิ้นสุด
                                                                 <span class="required"> * </span>
                                                             </label>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-3">
                                                                 <input type="text" class="form-control date-picker" name="stopdate" placeholder="วันที่สิ้นสุด" id="to"/>
                                                             </div>
                                                             <div class="col-md-2">
@@ -404,23 +474,24 @@ $this->registerJs($str2, View::POS_END);
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-3"></div>
-                                                            <div class="col-md-4"><span id="requireDate" class="error-date"></span></div>
+                                                            <div class="col-md-6"><span id="requireDate" class="error-date"></span></div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label col-md-3">คำอธิบาย</label>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-5">
                                                                 <textarea class="form-control" name="description" rows="3" placeholder="คำอธิบาย" id="description"></textarea>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label col-md-3">ประเภทโครงการ
+                                                            	<span class="required"> * </span>
                                                             </label>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-5">
 	                                                            <?php 
 																    echo  Html::dropDownList( 'category',
 																      'selected option',  
 																       $arrCategory, 
-																       ['class' => 'form-control', 'id' => 'category']
+																       ['class' => 'form-control', 'id' => 'category','prompt'=>'เลือกประเภทโครงการ']
 																    )
 																?>
                                                             </div>
@@ -428,11 +499,11 @@ $this->registerJs($str2, View::POS_END);
 
                                                         <div class="form-group">
                                                             <label class="control-label col-md-3">แผนก</label>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-5">
                                                                 <?php 
 																    echo  Html::dropDownList( 'department',
-																      'selected option',  
-																       $arrDepartment, 
+																      'selected optionkk',  
+																       $arrDepartment,
 																       ['class' => 'form-control', 'id' => 'department']
 																    )
 																?>
@@ -532,28 +603,21 @@ $this->registerJs($str2, View::POS_END);
 											                    <div class="col-md-5">
 											                     	<div class="portlet light portlet-fit portlet-form bordered">
 											                        <center><h5><b>ทีมภายในโครงการ</b></h5></center>
-											                        <table width="100%" id="teamOfProject">
-<!-- 											                     		<tr  height="20px"> -->
-                                              								<td style="text-align:center"></td>
-<!--                                                                     		<td>ทีมการจัดการโครงการ </td> -->
-<!--                                                                     		<td width="50%"> -->
-<!--                                                                    			<div class="text-right"><i class="fa fa-users" style="color:green"></i></div> -->
-<!--                                                                     		</td> -->
-<!--                                             							</tr> -->
-<!--                                             							<tr> -->
-<!--                                               								<td></td> -->
-<!--                                                                     		<td> -->
-<!-- 			                                                                    <input type="checkbox" name="checkbox-1" id="checkbox-1" checked/> -->
-<!-- 			                                                                    	ประทีป คงกล้า  -->
-<!-- 		                                                                    </td> -->
-<!-- 		                                                                    <td> -->
-<!--		                                                                    	 <div class="text-right"><i class="fa fa-user" style="color:#32c5d2"></i></div> -->
-<!-- 		                                                                    </td> -->
-<!--                                             							</tr> -->
-											                     	</table>
+											                        <table width="100%" id="teamOfProject"></table>
 											                     	<hr width="100%" align="center" size="3" noshade color="#bbbbbb"></hr>
 											                     	<center><h5><b>พนักงานภายในโครงการ</h5></b></center>
-											                        <table  width="100%" id="memberOfProject"></table>
+											                        <table  width="100%" id="memberOfProject">
+												                        <tr height=20><td style=\"text-align:center\">
+																			<td><?=$userName ?></td>
+																			<td width="50%">
+																				<div class="text-right">
+																					<a href="javascript:;" type="button" class="right-user btn red btn-outline" style="padding:6px 10px 6px !important; font-size:15px;">
+																						<i class=\"fa fa-minus\"></i>
+																					</a>
+																				</div>
+																			</td>
+																		</tr>
+											                        </table>
 											                     	</br>
 											               			</div>
 											           			</div>

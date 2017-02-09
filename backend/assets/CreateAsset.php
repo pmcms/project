@@ -18,7 +18,7 @@ class CreateAsset extends AssetBundle
     		'createasset/css/plugins-md.min.css',
     		'createasset/css/jquery-ui.css',
     		'createasset/css/jquery.datetimepicker.css',
-    		'createasset/css/jquery.datetimepicker.css',
+    		'createasset/css/jquery.auto-complete.css',
     ];
    public $cssOptions = ['position' => \yii\web\View::POS_HEAD];
     
@@ -38,6 +38,7 @@ class CreateAsset extends AssetBundle
     		'createasset/js/setting-date-time.js',
     		'createasset/js/jquery.inputmask.bundle.js',
     		'createasset/js/form-input-mask.js',
+    		'createasset/js/jquery.auto-complete.js',
     ];
     public $jsOptions = ['position' => \yii\web\View::POS_END];
     
