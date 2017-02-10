@@ -56,21 +56,27 @@ class ProjectController extends Controller
     	$name = $request->post('name');
     	$status = $request->post('status',null);
     	$sort = $request->post('sort',self::SORT_END_DATE);
-		$userID = Yii::$app->user->identity->_id;
+    	$type = $request->post('type',null);
+		$userId = Yii::$app->user->identity->_id;
 		$conditions = [];
 		$query = Project::find();
 		
 		if(!empty($status)){
 			$conditions['status'] = $status;
 		}
-		if(!empty($userId)){
-			$conditions['member.id_user'] = $userId;
-		}
 		if(!empty($conditions)){
 			$query->where($conditions);
 		}
 		if(!empty($name)){
 			$query->andWhere(['like', "project_name", $name]);
+		}
+		if(!empty($userId)){
+			if(!empty($type)){
+				$query->andwhere(array('member.id_user' => $userId,'member.type' =>  (int)$type));
+			}
+			else{
+				$query->andwhere(array('member.id_user' => $userId));
+			}
 		}
 		$pagination = new Pagination([
 				'defaultPageSize' => 15,
@@ -91,17 +97,8 @@ class ProjectController extends Controller
 				$query->addOrderBy(['end_date'=>SORT_DESC]);
 			}
 		}
-		 
-		 
-		
-    	
-    	
-    	$value = $query->all();
-    	
-    	
-    	$pagination->params = ['page'=> $pagination->page, 
-    			
-    	];
+	   	$value = $query->all();
+    	$pagination->params = ['page'=> $pagination->page,];
     	$category = Category::find()->all();
     	$arrCategory = [];
     	if($category){
@@ -128,8 +125,9 @@ class ProjectController extends Controller
  			'value' => $value,'name' => $name,
         	"pagination"=>$pagination,
         	'status' => $status, 'sort' => $sort,
-        	'userId' => $userID, 'arrCategory' => $arrCategory,
+        	'userId' => $userId, 'arrCategory' => $arrCategory,
         	'arrUser' => $arrUser, 'alert' => $alert,
+        	'type' =>	$type,
         ]);
     }
     

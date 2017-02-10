@@ -73,23 +73,29 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 		<div class="box-header with-border">
 		<?php $form = ActiveForm::begin(); ?>
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="input-group">
 						<span class="input-group-addon label-gray">ชื่อโครงการ</span>
 						<?php echo Html::textInput('name', $name, ['id'=> 'project_name', 'class'=> 'form-control', 'placeholder'=> 'ชื่อโครงการ', 'onchange'=>'this.form.submit()']);?>
 					</div>
 				</div>
 				
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="input-group">
 						<span class="input-group-addon label-gray">สถานะ</span>
 							<?php echo Html::dropDownList('status', $status, [0=>'ทั้งหมด']+ Project::$arrSendStatus , ['id'=> 'status', 'class'=> 'form-control','onchange'=>'this.form.submit()'])?>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="input-group">
 						<span class="input-group-addon label-gray">จัดเรียง</span>
 						<?php echo Html::dropDownList('sort', $sort,  Project::$arrSort , ['id'=> 'sort', 'class'=> 'form-control' ,'onchange'=>'this.form.submit()'])?>
+					</div>
+					</div>
+					<div class="col-md-3">
+					<div class="input-group">
+						<span class="input-group-addon label-gray">ตำแหน่ง</span>
+						<?php echo Html::dropDownList('type', $type,[0=>'ทั้งหมด']+ Project::$arrType, ['id'=> 'type', 'class'=> 'form-control', 'placeholder'=> 'ตำแหน่ง', 'onchange'=>'this.form.submit()']);?>
 					</div>
 				</div>
 			</div>

@@ -126,6 +126,11 @@ class Project extends \yii\mongodb\ActiveRecord
     const SORT_START_DATE = 3;
     const SORT_END_DATE = 4;
     
+    const TYPE_PROJECT_MANAGER = 1;
+    const TYPE_DEVELOPER = 2;
+    const TYPE_REPORTER = 3;
+   
+    
     public static $arrSendStatus = array(
     		self::STATUS_OPEN => "เปิด",
     		self::STATUS_CLOSE => "ปิด",
@@ -138,6 +143,12 @@ class Project extends \yii\mongodb\ActiveRecord
     		self::SORT_STATUS => "สถานะ",
     		self::SORT_START_DATE => "วันที่เริ่ม",
     		self::SORT_END_DATE => "วันที่สิ้นสุด"
+    );
+    public static $arrType = array(
+    		self::TYPE_PROJECT_MANAGER => "ProjectManager",
+    		self::TYPE_DEVELOPER => "Developer",
+    		self::TYPE_REPORTER => "Reporter"
+    		
     );
     public function findAllProjectByProjectName($projectName){
     	$conditions = [];
