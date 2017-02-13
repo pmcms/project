@@ -183,7 +183,7 @@ class ProjectController extends Controller
     		$message = false;
     		$retData = ['success' => false];
     	}
-    	Yii::$app->session->setFlash('alert', $message);
+//     	Yii::$app->session->setFlash('alert', $message);
     	 
     	echo json_encode($retData);
     

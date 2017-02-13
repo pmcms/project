@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+
+.content-modal {
+    min-height: 0px !important;
+}

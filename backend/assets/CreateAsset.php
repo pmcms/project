@@ -19,6 +19,7 @@ class CreateAsset extends AssetBundle
     		'createasset/css/jquery-ui.css',
     		'createasset/css/jquery.datetimepicker.css',
     		'createasset/css/jquery.auto-complete.css',
+    		'createasset/css/create.css'
     ];
    public $cssOptions = ['position' => \yii\web\View::POS_HEAD];
     

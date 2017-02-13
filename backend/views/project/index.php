@@ -167,7 +167,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="ปิด"><span aria-hidden="true">&times;</span></button>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="ปิด"><span>&times;</span></button>
 	        <div>
 	        	<span class="modal-title" id="myModalLabel"></span>
 	        	<a class="btn-sm" href="javascript:;" title="เข้าสู่งานในโครงการ">

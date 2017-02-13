@@ -13,6 +13,7 @@ $baseUrl = \Yii::getAlias('@web');
 $user = Yii::$app->user->identity;
 $userID = $user->_id;
 $userName = $user->firstname." ".$user->lastname;
+$departmentId = $user->departmentId;
 $this->title = 'สร้างโครงการ';
 $this->params['breadcrumbs'][] = ['label' => 'โครงการ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -103,15 +104,14 @@ function removeTeam(id){
 }
 
 function removeTeamMember(id, parentId){
-//  child.removeClass('fa fa-minus').addClass('fa fa-plus');
     $.each(dataTeam, function( index, value ) {
+    	var teamName = "";
         if(parentId == value.teamId){
             $.each(value.member, function(indexMember, valueMember) {
                 if(id === valueMember.user_id){
                     value.member.splice(indexMember,1);
-                    if(value.member.length === 0){
-                        removeTeam(parentId);
-                    }
+                    teamName = value.name;
+                    showColumnTeam(teamName);
                     return false;
                 }
             });
@@ -131,17 +131,36 @@ $(document).on('click', "a.right-team", function() {
 
 
 $(document).on('click', "a.right-member-team", function() {
-    var id = $(this).attr('arr-id');
-    var parentId = $(this).attr('arr-team-id');
-    var teamName = "";
-    $.each(dataTeam, function( index, value ) {
-        if(value.teamId == parentId){
-            teamName = value.name;
-            return false;
-        }
-    });
-    showColumnTeam(teamName);   
-    removeTeamMember(id, parentId);    
+	var id = $(this).attr('arr-id');
+	var parentId = $(this).attr('arr-team-id');
+	$('.modal').modal('show');
+	$('#accept').click(function(){
+		if($('#deleteTeam').is(':checked')){
+			var teamName = "";
+		    $.each(dataTeam, function( index, value ) {
+		        if(value.teamId == parentId){
+		            teamName = value.name;
+		            return false;
+		        }
+		    }); 
+		    removeTeamMember(id, parentId); 
+		}else{
+			 $.each(dataTeam, function( index, value ) {
+			 	if(value != undefined){
+				 	parentId = value.teamId;
+				 	teamName = value.name;
+			    	removeTeamMember(id,parentId);
+				 }
+			});
+		}
+// 		 $.each(dataTeam, function( index, value ) {
+// 		 	var parentId = value.teamId;
+// 			if(value.member.length === 0){
+//            		removeTeam(parentId);
+//           	}
+// 		 });
+// 		 lenderTeamMember();
+	});  
 });
 
 $(document).on('click', "a.right-user", function() {
@@ -152,6 +171,9 @@ $(document).on('click', "a.right-user", function() {
 });
 
 function lenderTeamMember(){
+	dataTeam = dataTeam.filter(function(item, idx) {
+	    return item.member.length != 0;
+	});
     var lender = "";
     $.each(dataTeam, function(index, value) {
         lender = lender.concat('<tr height=20><td colspan="2"><b>'+
@@ -324,13 +346,12 @@ function submitCreate(){
                 if(typeof(response) == "string"){
                     response = JSON.parse(request.responseText);
                     console.log(response);
+                    alert("บันทึกสำเร็จ");
                 }
             }
         };
         request.send(formData);
-//      window.location.assign("$baseUrl/project");
-//      window.location.href = "$baseUrl/project";
-//      location.reload(true);
+     	window.location.assign("$baseUrl/project");
 };
 
 $("#projectname").change(function(){
@@ -383,7 +404,10 @@ function getMember(){
             var teamId = valueTeam.teamId;
             $.each(valueTeam.member, function( indexMember, valueMember ) {
                 if(valueMember.user_id == value.userId){
-                    user.team.push(valueMember.user_id);
+                	team = {
+                		teamId : valueTeam.teamId
+                	}
+                    user.team.push(team);
                     valueTeam.member.splice(indexMember,1);
                     return false;
                 }
@@ -393,28 +417,41 @@ function getMember(){
         dataMemberOfProject.push(user);
     });
     
+    var tempDataMember = jQuery.extend({}, dataTeam);
+    var uniqueTeamMember = jQuery.unique(uniqueMember(tempDataMember));
     // add member in team map team
-//  $.each(dataTeam, function( index, value ) {
-//      var teamId = value.teamId;
-//      $.each(value.member, function( indexMember, valueMember ) {
-//          team = {
-//              user_id : valueMember.user_id,
-//              team : [teamId],
-//          }
-//          $.each(dataTeam, function( indexTeam, valueTeam ) {
-//              if(value.teamId != valueTeam.teamId){
-//                  $.each(valueTeam.member, function( indexTeamMember, valueTeamMember ) {
-//                      team.team.push(valueTeamMember.user_id);
-//                  });
-//              }
-//          });
-//          dataMemberOfProject.push(team);
-//      }); 
-//  });
+	$.each(uniqueTeamMember, function( index, userId ) {
+		team = {
+	      	user_id : userId,
+	       	team : []
+	    }
+		$.each(tempDataMember, function( index, value ) {
+			$.each(value.member, function( indexMember, valueMember ) {
+			 	if(userId == valueMember.user_id){
+			 		var teamId = {
+			 			teamId : value.teamId
+			 		}
+			 		team.team.push(teamId);
+			 		return false;
+			 	}
+			});
+		});
+		dataMemberOfProject.push(team);
+	});
     
     console.log(dataMemberOfProject);
     return dataMemberOfProject;
 };
+
+function uniqueMember(tempDataMember){
+	var userList = [];
+	$.each(tempDataMember, function( index, value ) {
+	  	$.each(value.member, function( indexMember, valueMember ) {
+	     	userList.push(valueMember.user_id);
+	  	}); 	
+	});
+	return userList;
+}
 
 $("#from,#to").prop("readonly", true);
 
@@ -539,7 +576,13 @@ $this->registerJs($str2, View::POS_END);
                                                                     echo  Html::dropDownList( 'department',
                                                                       'selected optionkk',  
                                                                        $arrDepartment,
-                                                                       ['class' => 'form-control', 'id' => 'department']
+                                                                       ['class' => 'form-control', 'id' => 'department',
+                                                                       		['options' =>
+	                                                                       		[
+	                                                                       				(string)$departmentId => ['selected' => true]
+	                                                                       		]
+                                                                       		]
+                                                                    	]
                                                                     )
                                                                 ?>
                                                             </div>
@@ -712,34 +755,23 @@ $this->registerJs($str2, View::POS_END);
                 <!-- END CONTENT BODY -->
             </div>
     <!-- END CONTENT -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-target=".bs-example-modal-sm">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="ปิด"><span aria-hidden="true">&times;</span></button>
-	        <div>
-	        	<span class="modal-title" id="myModalLabel"></span>
-	        	<a class="btn-sm" href="javascript:;" title="เข้าสู่งานในโครงการ">
-					<i class="fa fa-folder-open-o"></i>
-				</a>
-				<a class="btn-sm" href="<?php echo $baseUrl."/project/update";?>" title="แก้ไขโครงการ">
-					<i class="fa fa-edit"></i>
-				</a>
-				<a class="btn-sm" href="javascript:;" title="ลบโครงการ">
-					<i class="fa fa-archive"></i>
-				</a>
-				<a class="btn-sm" href="javascript:;" title="ยกเลิกโครงการ">
-					<i class="fa fa-ban"></i>
-				</a>
-				<a class="btn-sm" href="<?php echo $baseUrl."/project/setting";?>" title="ตั้งค่าโครงการ">
-					<i class="fa fa-cogs"></i>
-				</a>
-	        </div>
-	      </div>
 	     <!-- ********** BODY MODAL ********** -->
 	      <div class="modal-body">
 	        <section class="content-modal">
-		        
+	        	คุณต้องการลบออกจากทีมหรือออกจากโครงการ<br>
+	        	<div>
+			        &nbsp;&nbsp;&nbsp;<input type="radio" name="delete" id="deleteTeam" checked/>    
+	                   	<span>ลบออกจากทีม</span><br/>
+					&nbsp;&nbsp;&nbsp;<input type="radio" name="delete" id="deleteAllTeam"/>
+						<span>ลบออกจากโครงการ</span><br>
+				</div>
+				<div class="text-right">
+				 	<button id="accept" class="btn btn-primary" data-dismiss="modal" aria-label="Close">ตกลง</button>
+				 	<button id="cancel" class="btn btn-default" data-dismiss="modal" aria-label="Close">ยกเลิก</button>
+				</div>
 		    </section>
 	      </div>
 	    </div>

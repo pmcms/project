@@ -66,6 +66,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'role',
         		'firstname',
         		'lastname',
+        		'departmentId',
                 'status',
                 'created_at',
                 'updated_at',
