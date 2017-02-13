@@ -712,4 +712,37 @@ $this->registerJs($str2, View::POS_END);
                 <!-- END CONTENT BODY -->
             </div>
     <!-- END CONTENT -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="ปิด"><span aria-hidden="true">&times;</span></button>
+	        <div>
+	        	<span class="modal-title" id="myModalLabel"></span>
+	        	<a class="btn-sm" href="javascript:;" title="เข้าสู่งานในโครงการ">
+					<i class="fa fa-folder-open-o"></i>
+				</a>
+				<a class="btn-sm" href="<?php echo $baseUrl."/project/update";?>" title="แก้ไขโครงการ">
+					<i class="fa fa-edit"></i>
+				</a>
+				<a class="btn-sm" href="javascript:;" title="ลบโครงการ">
+					<i class="fa fa-archive"></i>
+				</a>
+				<a class="btn-sm" href="javascript:;" title="ยกเลิกโครงการ">
+					<i class="fa fa-ban"></i>
+				</a>
+				<a class="btn-sm" href="<?php echo $baseUrl."/project/setting";?>" title="ตั้งค่าโครงการ">
+					<i class="fa fa-cogs"></i>
+				</a>
+	        </div>
+	      </div>
+	     <!-- ********** BODY MODAL ********** -->
+	      <div class="modal-body">
+	        <section class="content-modal">
+		        
+		    </section>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>

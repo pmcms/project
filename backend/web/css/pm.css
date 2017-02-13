@@ -65,3 +65,8 @@ label.error, .error-date {
 .portlet.light.portlet-fit {
     padding: 10px !important;
 }
+
+.form-control[readonly] {
+    background-color: #fff;
+    opacity: 1;
+}

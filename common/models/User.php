@@ -6,6 +6,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\mongodb\ActiveRecord;
 use yii\web\IdentityInterface;
+use MongoDB\BSON\ObjectID;
 
 /**
  * User model
@@ -217,6 +218,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
     
     public function findAllUserByStatus($status){
+    	$userId = Yii::$app->user->identity->_id;
     	$conditions = [];
     	$query = User::find();
     	if(!empty($status)){
