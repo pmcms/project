@@ -52,6 +52,9 @@ $(function() {
       password: {
         required: true,
         minlength: 5
+      },
+      category : {
+    	  required: true
       }
     },
     // Specify validation error messages
@@ -73,6 +76,9 @@ $(function() {
           required : "กรุณากรอกเวลา",
           formatTime : jQuery.validator.format("กรุณากรอกเวลาในรูปแบบ hh:mm"),
         },
+        category: {
+        	required : "กรุณาเลือกประเภทโครงการ",
+        }
     },
     // Make sure the form is submitted to the destination defined
     // in the "action" attribute of the form when valid

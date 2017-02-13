@@ -4,6 +4,9 @@
  * (c) 2014, Chupurnov Valeriy.
  */
 (function( $ ) {
+	var date = new Date();
+	y = date.getFullYear();
+	minYear = y-2;
 	'use strict';
 	var default_options  = {
 		i18n:{
@@ -296,7 +299,7 @@
 		validateOnBlur:false,
 		allowBlank:true,
 		
-		yearStart:1950,
+		yearStart:minYear,
 		yearEnd:2050,
 		
 		style:'',

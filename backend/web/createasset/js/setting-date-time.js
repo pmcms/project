@@ -1,5 +1,8 @@
 $(function(){
-
+	var date = new Date();
+		y = date.getFullYear();
+		minYear = y-2;
+		minDate = "01/01/"+minYear;
     var optsDate = {  
         format:'d/m/Y', // รูปแบบวันที่ 
         formatDate:'d/m/Y',
@@ -19,7 +22,7 @@ $(function(){
          
         if($(obj).attr("id")=="from"){
             this.setOptions({
-                minDate:false,
+                minDate:minDate,
                 maxDate:maxDateSet?maxDateSet:false
             })                   
         }
