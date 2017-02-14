@@ -72,10 +72,10 @@ class ProjectController extends Controller
 		}
 		if(!empty($userId)){
 			if(!empty($type)){
-				$query->andwhere(array('member.id_user' => $userId,'member.type' =>  (int)$type));
+				$query->andwhere(array('member.userId' => $userId,'member.type' =>  (int)$type));
 			}
 			else{
-				$query->andwhere(array('member.id_user' => $userId));
+				$query->andwhere(array('member.userId' => $userId));
 			}
 		}
 		$pagination = new Pagination([
@@ -174,7 +174,8 @@ class ProjectController extends Controller
     		$model->department = new ObjectID($department);
     		$model->member = $member;
     		$model->create_by = new ObjectID($userId);
-    		$model->create_date = new \MongoDate();
+    		$model->create_date = date('d/m/Y H:i:s',(new MongoDate())->sec);
+//     		(new \DateTime())->format('d/m/Y H:i:s');
     	}
     	if($model->save()){
     		$message = true;

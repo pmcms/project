@@ -351,7 +351,7 @@ function submitCreate(){
             }
         };
         request.send(formData);
-     	window.location.assign("$baseUrl/project");
+//      	window.location.assign("$baseUrl/project");
 };
 
 $("#projectname").change(function(){
