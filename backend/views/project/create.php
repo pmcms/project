@@ -118,8 +118,6 @@ function removeTeamMember(id, parentId){
             return false;
         }
     });
-    console.log(dataTeam);
-    lenderTeamMember();
 }
 
 $(document).on('click', "a.right-team", function() {
@@ -133,41 +131,50 @@ $(document).on('click', "a.right-team", function() {
 $(document).on('click', "a.right-member-team", function() {
 	var id = $(this).attr('arr-id');
 	var parentId = $(this).attr('arr-team-id');
+
+    $("#accept").attr('arr-id', id);
+    $("#accept").attr('arr-team-id', parentId);
+    $("#question").html('คุณต้องลบผู้ใช้งานออกจากทีมหรือลบผู้ใฃ้งานออกจากโครงการ');
+    $("#choice1").html("ลบออกจากทีม");
+    $("#choice2").html("ลบออกจากโครงการ");
 	$('.modal').modal('show');
-	$('#accept').click(function(){
-		if($('#deleteTeam').is(':checked')){
-			var teamName = "";
-		    $.each(dataTeam, function( index, value ) {
-		        if(value.teamId == parentId){
-		            teamName = value.name;
-		            return false;
-		        }
-		    }); 
-		    removeTeamMember(id, parentId); 
-		}else{
-			 $.each(dataTeam, function( index, value ) {
-			 	if(value != undefined){
-				 	parentId = value.teamId;
-				 	teamName = value.name;
-			    	removeTeamMember(id,parentId);
-				 }
-			});
-		}
-// 		 $.each(dataTeam, function( index, value ) {
-// 		 	var parentId = value.teamId;
-// 			if(value.member.length === 0){
-//            		removeTeam(parentId);
-//           	}
-// 		 });
-// 		 lenderTeamMember();
-	});  
 });
+
+
+$('#accept').click(function(){
+	var id = $(this).attr('arr-id');
+    var parentId = $(this).attr('arr-team-id');
+	if($('#deleteTeam').is(':checked')){
+	    removeTeamMember(id, parentId); 
+	}else{
+		 $.each(dataTeam, function( index, value ) {
+		 	$.each(value.member, function(indexMember, valueMember) {
+                if(id === valueMember.user_id){
+                    value.member.splice(indexMember,1);
+                    teamName = value.name;
+                    showColumnTeam(teamName);
+                    return false;
+                }
+            });
+		});
+	}
+	console.log(dataTeam);
+    lenderTeamMember();
+});  
 
 $(document).on('click', "a.right-user", function() {
     var id = $(this).attr('arr-id');
     var name = $(this).attr('arr-name');
-    showColumnUser(name);
-    removeUserMember(id); 
+
+    var parentId = "";
+    $("#accept").attr('arr-id', id);
+    $("#accept").attr('arr-team-id', parentId);
+    $("#question").html('คุณต้องลบผู้ใช้งานออกจากผู้ใช้งานในโครงการหรือลบผู้ใฃ้งานออกจากโครงการ');
+    $("#choice1").html("ลบผู้ใช้งานออกจากผู้ใช้งานในโครงการ");
+    $("#choice2").html("ลบออกจากโครงการ");
+	$('.modal').modal('show');
+//     showColumnUser(name);
+//     removeUserMember(id); 
 });
 
 function lenderTeamMember(){
@@ -761,12 +768,12 @@ $this->registerJs($str2, View::POS_END);
 	     <!-- ********** BODY MODAL ********** -->
 	      <div class="modal-body">
 	        <section class="content-modal">
-	        	คุณต้องการลบออกจากทีมหรือออกจากโครงการ<br>
+	        	<span id="question">คุณต้องการลบออกจากทีมหรือออกจากโครงการ</span><br>
 	        	<div>
 			        &nbsp;&nbsp;&nbsp;<input type="radio" name="delete" id="deleteTeam" checked/>    
-	                   	<span>ลบออกจากทีม</span><br/>
+	                   	<span id="choice1">ลบออกจากทีม</span><br/>
 					&nbsp;&nbsp;&nbsp;<input type="radio" name="delete" id="deleteAllTeam"/>
-						<span>ลบออกจากโครงการ</span><br>
+						<span id="choice2">ลบออกจากโครงการ</span><br>
 				</div>
 				<div class="text-right">
 				 	<button id="accept" class="btn btn-primary" data-dismiss="modal" aria-label="Close">ตกลง</button>
