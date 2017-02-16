@@ -112,9 +112,18 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				<div class="box box-solid">
 				<a href="<?php echo $baseUrl."/index.php?r=task"?>" title="เข้าสู่งานในโครงการ">  
 					<div class="box-header with-border box-height">
-						<div class="text-right">
-							<?php echo $lebel[$field->status]; ?>
-						</div>
+						<table style="width:100%" class="col-md-12">
+							<tr>
+								<td >
+									<small class="text-muted">
+										<?php echo "ผู้สร้าง"." : ".$arrUser[(string)$field->create_by]; ?>
+									</small>
+								</td>
+								<td align="right">
+									<span ><?php echo $lebel[$field->status]; ?></span>
+								</td>
+							</tr>
+						</table>
 						<div class="text-left">
 							<?php echo $field->project_name; ?>
 						</div>

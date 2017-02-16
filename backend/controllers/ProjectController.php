@@ -94,7 +94,7 @@ class ProjectController extends Controller
 			}elseif ($sort == 3){
 				$query->addOrderBy(['start_date'=>SORT_ASC]);
 			}else{
-				$query->addOrderBy(['end_date'=>SORT_DESC]);
+				$query->addOrderBy(['end_date'=>SORT_ASC]);
 			}
 		}
 
@@ -147,21 +147,53 @@ class ProjectController extends Controller
     	$member = $request->post('member', null);
     	$categoty = $request->post('category', null);
     	$department = $request->post('department', null);
+    	$isCreateTeam = $request->post('isCreateTeam', null);
+    	$teamName = $request->post('teamName', null);
     	$model = null;
     	
-    	// add Member
+    	$userId = Yii::$app->user->identity->_id;
     	$member = json_decode($member);
     	$nummberMember = sizeof($member);
-    	for ($i = 0; $i < $nummberMember; $i++) {
-    		$userId = $member[$i]->user_id;
-    		$member[$i]->user_id = new ObjectID($userId);
-    		if(isset ($member[$i]->team_id)){
-    			$teamId = $member[$i]->team_id;
-    			$member[$i]->team_id = new ObjectID($teamId);
+    	
+    	if($isCreateTeam){
+    		$teamModel = new Team();
+    		$teamModel->teamName = $teamName;
+    		$teamModel->description = $teamName;
+    		$teamModel->createDate = "";
+    		$teamModel->createBy = $userId;
+    		
+    		$teamMember = [];
+    		for ($i = 0; $i < $nummberMember; $i++) {
+    			$teamMember[$i]['userId'] = new ObjectID($member[$i]->userId);
     		}
+    		$teamModel->member = $teamMember;
+    		
+    		$teamModel->save();
+    		
+    		$newTeamQuery = Team::findOne(['teamName' => $teamName]);
+    		
+    		$newTeamId = $newTeamQuery->_id;
+    		
+    		$projectMember = [];
+    		for ($i = 0; $i < $nummberMember; $i++) {
+    			$projectMember[$i]['userId'] = new ObjectID($member[$i]->userId);
+    			$projectMember[$i]['teamId'] = new ObjectID($newTeamId);
+    		}
+    		$member = $projectMember;
+    	}else{
+    		// add Member
+    		for ($i = 0; $i < $nummberMember; $i++) {
+    			$userId = $member[$i]->userId;
+    			$member[$i]->userId = new ObjectID($userId);
+    		
+    			$team = $member[$i]->team;
+    			$nummberTeam = sizeof($team);
+    			for ($j = 0; $j < $nummberTeam; $j++) {
+    				$member[$i]->team[$j]->teamId = new ObjectID($team[$j]->teamId);
+    			}
+    		}	
     	}
     	
-    	$userId = Yii::$app->user->identity->_id;
     	
     	if ($model == null){
     		$model = new Project();
@@ -174,7 +206,7 @@ class ProjectController extends Controller
     		$model->department = new ObjectID($department);
     		$model->member = $member;
     		$model->create_by = new ObjectID($userId);
-    		$model->create_date = date('d/m/Y H:i:s',(new MongoDate())->sec);
+//     		$model->create_date = new \MongoDate();
 //     		(new \DateTime())->format('d/m/Y H:i:s');
     	}
     	if($model->save()){
@@ -247,9 +279,9 @@ class ProjectController extends Controller
     		$size = sizeof($member);
     		for($i = 0; $i < $size;$i++)
     		{
-    			$arrTeamMember .= "{ \"user_id\" : ";
-    			$arrTeamMember .= "\"".$member[$i]["user_id"]."\",";
-    			$arrTeamMember .= "\"name\" : \"".$arrUser[(string)$member[$i]["user_id"]]."\"";
+    			$arrTeamMember .= "{ \"userId\" : ";
+    			$arrTeamMember .= "\"".$member[$i]["userId"]."\",";
+    			$arrTeamMember .= "\"name\" : \"".$arrUser[(string)$member[$i]["userId"]]."\"";
     			$arrTeamMember .= "},";
     		}
     		$arrTeamMember .= "],";

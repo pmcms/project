@@ -32,11 +32,11 @@ class Team extends \yii\mongodb\ActiveRecord
     {
         return [
             '_id',
-            'team_name',
+            'teamName',
             'description',
             'status',
-            'create_date',
-            'create_by',
+            'createDate',
+            'createBy',
             'member',
         ];
     }
@@ -47,7 +47,7 @@ class Team extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['team_name', 'description', 'status', 'create_date', 'create_by', 'member'], 'safe']
+            [['teamName', 'description', 'status', 'createDate', 'createBy', 'member'], 'safe']
         ];
     }
 
@@ -58,11 +58,11 @@ class Team extends \yii\mongodb\ActiveRecord
     {
         return [
             '_id' => 'ID',
-            'team_name' => 'Team Name',
+            'teamName' => 'Team Name',
             'description' => 'Description',
             'status' => 'Status',
-            'create_date' => 'Create Date',
-            'create_by' => 'Create By',
+            'createDate' => 'Create Date',
+            'createBy' => 'Create By',
             'member' => 'Member',
         ];
     }
@@ -79,7 +79,7 @@ class Team extends \yii\mongodb\ActiveRecord
     		$query->where($conditions);
     	}
     	if(!empty($name)){
-    		$query->andWhere(['like', "team_name", $name]);
+    		$query->andWhere(['like', "teamName", $name]);
     	}
     	 
     	$value = $query->all();
@@ -95,7 +95,7 @@ class Team extends \yii\mongodb\ActiveRecord
     	if(!empty($conditions)){
     		$query->where($conditions);
     	}
-    	$query->addOrderBy(['team_name'=>SORT_ASC]);
+    	$query->addOrderBy(['teamName'=>SORT_ASC]);
     	$listTeam = $query->all();
     	return $listTeam;
     }

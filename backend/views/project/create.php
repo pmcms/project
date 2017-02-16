@@ -11,14 +11,12 @@ use yii\helpers\ArrayHelper;
 CreateAsset::register ( $this );
 $baseUrl = \Yii::getAlias('@web');
 $user = Yii::$app->user->identity;
-$userID = $user->_id;
+$userId = $user->_id;
 $userName = $user->firstname." ".$user->lastname;
 $departmentId = $user->departmentId;
 $this->title = 'สร้างโครงการ';
 $this->params['breadcrumbs'][] = ['label' => 'โครงการ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
-$userId = Yii::$app->user->identity->_id;
 
 $str2 = <<<EOT
 
@@ -43,6 +41,8 @@ function removeUserMember(id){
     $.each(dataUser, function( index, value ) {
         if(id === value.userId){
             dataUser.splice(index,1);
+            var name = value.name;
+            showColumnUser(name);
             return false;
         }
     });
@@ -108,7 +108,7 @@ function removeTeamMember(id, parentId){
     	var teamName = "";
         if(parentId == value.teamId){
             $.each(value.member, function(indexMember, valueMember) {
-                if(id === valueMember.user_id){
+                if(id === valueMember.userId){
                     value.member.splice(indexMember,1);
                     teamName = value.name;
                     showColumnTeam(teamName);
@@ -131,11 +131,12 @@ $(document).on('click', "a.right-team", function() {
 $(document).on('click', "a.right-member-team", function() {
 	var id = $(this).attr('arr-id');
 	var parentId = $(this).attr('arr-team-id');
+	var teamName = $(this).attr('arr-team-name');
 
     $("#accept").attr('arr-id', id);
     $("#accept").attr('arr-team-id', parentId);
-    $("#question").html('คุณต้องลบผู้ใช้งานออกจากทีมหรือลบผู้ใฃ้งานออกจากโครงการ');
-    $("#choice1").html("ลบออกจากทีม");
+    $("#question").html('คุณต้องลบผู้ใช้งานออกจากทีม \"'+teamName+'\" หรือลบผู้ใฃ้งานออกจากโครงการ');
+    $("#choice1").html('ลบออกจากทีม \"'+teamName+'\"');
     $("#choice2").html("ลบออกจากโครงการ");
 	$('.modal').modal('show');
 });
@@ -144,23 +145,45 @@ $(document).on('click', "a.right-member-team", function() {
 $('#accept').click(function(){
 	var id = $(this).attr('arr-id');
     var parentId = $(this).attr('arr-team-id');
-	if($('#deleteTeam').is(':checked')){
-	    removeTeamMember(id, parentId); 
-	}else{
-		 $.each(dataTeam, function( index, value ) {
-		 	$.each(value.member, function(indexMember, valueMember) {
-                if(id === valueMember.user_id){
-                    value.member.splice(indexMember,1);
-                    teamName = value.name;
-                    showColumnTeam(teamName);
-                    return false;
-                }
-            });
-		});
-	}
-	console.log(dataTeam);
+    var isOne = $('#deleteTeam').is(':checked');
+    if(parentId == ""){
+    	if(isOne){
+    		removeUserMember(id);
+    	}else{
+    		removeUserProject(id);
+    	}
+    }else{
+    	if(isOne){
+		    removeTeamMember(id, parentId); 
+		}else{
+			removeUserProject(id);
+		}
+    }
     lenderTeamMember();
-});  
+    lenderMember();
+}); 
+
+function removeUserProject(id){
+	$.each(dataTeam, function( index, value ) {
+		$.each(value.member, function(indexMember, valueMember) {
+			if(id === valueMember.userId){
+				value.member.splice(indexMember,1);
+				teamName = value.name;
+				showColumnTeam(teamName);
+	         	return false;
+			}
+	   	});
+	});
+			
+	$.each(dataUser, function( index, value ) {
+		if('$userId' != id  && id == value.userId){
+			dataUser.splice(index,1);
+			var name = value.name;
+			showColumnUser(name);
+			return false;
+		}
+	});
+}
 
 $(document).on('click', "a.right-user", function() {
     var id = $(this).attr('arr-id');
@@ -173,8 +196,6 @@ $(document).on('click', "a.right-user", function() {
     $("#choice1").html("ลบผู้ใช้งานออกจากผู้ใช้งานในโครงการ");
     $("#choice2").html("ลบออกจากโครงการ");
 	$('.modal').modal('show');
-//     showColumnUser(name);
-//     removeUserMember(id); 
 });
 
 function lenderTeamMember(){
@@ -197,8 +218,9 @@ function lenderTeamMember(){
                     '<td>&nbsp;'+valueMember.name+'</td>'+
                     '<td width="50%"><div class="text-right">'+
                     '<a href="javascript:;" type="button" class="right-member-team btn red btn-outline" style="padding:6px 10px 6px !important;font-size:15px;"'+
-                    'arr-id=\"'+valueMember.user_id+'\" '+
-                    'arr-team-id=\"'+value.teamId+'\">'+
+                    'arr-id=\"'+valueMember.userId+'\" '+
+                    'arr-team-id=\"'+value.teamId+'\"'+
+                    'arr-team-name=\"'+value.name+'\">'+
                     '<i class=\"fa fa-minus\"></i>'+
                     '</a></div></td></tr>');
         });
@@ -207,8 +229,8 @@ function lenderTeamMember(){
 }
 
 $('a.btn-icon-only ').click(function(){
-    var id = $(this).attr('arr-id');
-    var name = $(this).attr('arr-name');
+    var id = $(this).data('arr-id');
+    var name = $(this).data('arr-name');
     var temp = {};
     var strClass = $(this).attr('class');
     if(strClass.includes("user")){
@@ -334,6 +356,8 @@ $('#nameUser').keyup(function(){
 });
 
 function submitCreate(){
+
+		var isCreateTeam = $("#want").is(':checked');
         
         var formData = new FormData();
         formData.append('name', $('input[name=projectname]').val());
@@ -344,6 +368,11 @@ function submitCreate(){
         formData.append('category', $('select[name=category]').val());
         formData.append('department', $('select[name=department]').val());
         
+        if(isCreateTeam){
+        	formData.append('isCreateTeam', isCreateTeam);
+        	formData.append('teamName', $('input[name=newteamname]').val());
+        }
+        
         var request = new XMLHttpRequest();
         request.open("POST", "$baseUrl/project/save", true);
         request.onreadystatechange = function () {
@@ -352,13 +381,16 @@ function submitCreate(){
                 var response = request.responseText;
                 if(typeof(response) == "string"){
                     response = JSON.parse(request.responseText);
-                    console.log(response);
-                    alert("บันทึกสำเร็จ");
+                    if(response.success = true){
+                    	alert("บันทึกสำเร็จ");
+                    	window.location.assign("$baseUrl/project");
+                    }else{
+                    	alert("บันทึกไม่สำเร็จ");
+                    }
                 }
             }
         };
         request.send(formData);
-//      	window.location.assign("$baseUrl/project");
 };
 
 $("#projectname").change(function(){
@@ -404,13 +436,13 @@ function getMember(){
     // add user and map user in team
     $.each(dataUser, function( index, value ) {
         user = {
-            user_id : value.userId,
+            userId : value.userId,
             team : [],
         };
         $.each(dataTeam, function( indexTeam, valueTeam ) {
             var teamId = valueTeam.teamId;
             $.each(valueTeam.member, function( indexMember, valueMember ) {
-                if(valueMember.user_id == value.userId){
+                if(valueMember.userId == value.userId){
                 	team = {
                 		teamId : valueTeam.teamId
                 	}
@@ -429,12 +461,12 @@ function getMember(){
     // add member in team map team
 	$.each(uniqueTeamMember, function( index, userId ) {
 		team = {
-	      	user_id : userId,
+	      	userId : userId,
 	       	team : []
 	    }
 		$.each(tempDataMember, function( index, value ) {
 			$.each(value.member, function( indexMember, valueMember ) {
-			 	if(userId == valueMember.user_id){
+			 	if(userId == valueMember.userId){
 			 		var teamId = {
 			 			teamId : value.teamId
 			 		}
@@ -454,7 +486,7 @@ function uniqueMember(tempDataMember){
 	var userList = [];
 	$.each(tempDataMember, function( index, value ) {
 	  	$.each(value.member, function( indexMember, valueMember ) {
-	     	userList.push(valueMember.user_id);
+	     	userList.push(valueMember.userId);
 	  	}); 	
 	});
 	return userList;
@@ -536,7 +568,7 @@ $this->registerJs($str2, View::POS_END);
                                                                 <input type="text" class="form-control date-picker" name="startdate" placeholder="วันที่เริ่มต้น" id="from" />
                                                             </div>
                                                             <div class="col-md-2">
-                                                                <input type="text" id="fromTime" class="form-control date-picker" name="starttime" placeholder="เวลาเริ่มต้น" />
+                                                                <input type="text" id="fromTime" class="form-control date-picker" name="starttime" placeholder="เวลาเริ่มต้น" value="09:00"/>
                                                             </div>
                                                         </div>
                                                         
@@ -548,7 +580,7 @@ $this->registerJs($str2, View::POS_END);
                                                                 <input type="text" class="form-control date-picker" name="stopdate" placeholder="วันที่สิ้นสุด" id="to"/>
                                                             </div>
                                                             <div class="col-md-2">
-                                                                <input type="text" id="toTime" class="form-control date-picker" name="stoptime" placeholder="เวลาสิ้นสุด" />
+                                                                <input type="text" id="toTime" class="form-control date-picker" name="stoptime" placeholder="เวลาสิ้นสุด" value="18:00"/>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -629,12 +661,12 @@ $this->registerJs($str2, View::POS_END);
                                                                                     <tbody>
                                                                                     <?php foreach ($listTeam as $fieldTeam): ?>
                                                                                         <tr>
-                                                                                            <td><?=$fieldTeam->team_name ?></td>
+                                                                                            <td><?=$fieldTeam->teamName ?></td>
                                                                                             <td>
                                                                                                 <p align="center">
                                                                                                     <a href="javascript:;" class="btn btn-circle btn-icon-only green team"
-                                                                                                        arr-id="<?php echo (string)$fieldTeam->_id;?>"
-                                                                                                        arr-name="<?php echo $fieldTeam->team_name;?>"
+                                                                                                        data-arr-id="<?php echo (string)$fieldTeam->_id;?>"
+                                                                                                        data-arr-name="<?php echo $fieldTeam->teamName;?>"
                                                                                                         >
                                                                                                         <i class="fa fa-plus" style="font-size:20px"></i>
                                                                                                     </a>
@@ -671,8 +703,8 @@ $this->registerJs($str2, View::POS_END);
                                                                                             <td>
                                                                                                 <p align="center">
                                                                                                     <a href="javascript:;" class="btn btn-circle btn-icon-only green user"
-                                                                                                        arr-id="<?php echo (string)$fieldUser->_id;?>"
-                                                                                                        arr-name="<?php echo $fieldUser->firstname." ".$fieldUser->lastname;?>"
+                                                                                                        data-arr-id="<?php echo (string)$fieldUser->_id;?>"
+                                                                                                        data-arr-name="<?php echo $fieldUser->firstname." ".$fieldUser->lastname;?>"
                                                                                                     >
                                                                                                         <i class="fa fa-plus" style="font-size:20px"></i>
                                                                                                     </a>
@@ -729,7 +761,7 @@ $this->registerJs($str2, View::POS_END);
                                                                     <span class="required"> * </span>
                                                                 </label>
                                                                 <div class="col-md-4" >
-                                                                    <input class="form-control" type="text"  name="teamname" id="teamname" placeholder="ชื่อทีม" disabled/>
+                                                                    <input class="form-control" type="text"  name="newteamname" id="teamname" placeholder="ชื่อทีม" disabled/>
                                                                     <span id="teamrequire" class="error-date"><span>
                                                                 </div>
                                                             </div><br> <br> <br>
