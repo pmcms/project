@@ -150,12 +150,15 @@ class Project extends \yii\mongodb\ActiveRecord
     		self::TYPE_REPORTER => "Reporter"
     		
     );
-    public function findAllProjectByProjectName($projectName){
+    public function findAllProjectByProjectNameAndDepartmentId($projectName, $departmentId){
     	$conditions = [];
     	$query = Project::find();
     	
     	if(!empty($projectName)){
     		$conditions['project_name'] = $projectName;
+    	}
+    	if(!empty($departmentId)){
+    		$conditions['departmentId'] = $departmentId;
     	}
     
     	if(!empty($conditions)){

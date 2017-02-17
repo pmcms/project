@@ -6,7 +6,7 @@
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                <input type="text" name="q" class="form-control" placeholder="ค้นหา"/>
               <span class="input-group-btn">
                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
@@ -18,6 +18,12 @@
         <!-- Menu  -->
         <ui class="sidebar-menu">
         	<li class="header">MAIN NAVIGATION</li>
+        	<li>
+        		<a href="<?php echo $baseUrl."/team"; ?>">
+        			<i class="fa fa-file"></i>
+        			<span>ทีม</span>
+        		</a>
+        	</li>
         	<li>
         		<a href="<?php echo $baseUrl."/project"; ?>">
         			<i class="fa fa-file"></i>

@@ -103,7 +103,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 		</div>
 	</div>
 	<?php $count = 0; ?>
-	<?php foreach ($value as $field): ?>
+	<?php foreach ($value as $field):?>
 	<?php $count++; ?>
 	<?php if($count == 1){?>
 		<div class="row">
@@ -143,7 +143,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 									project-end-date="<?=$field->end_date?>"
 									project-project-type="<?php echo $arrCategory[(string)$field->category];?>"
 									project-status="<?php echo Project::$arrSendStatus[$field->status]; ?>"
-									project-create-date="<?=$field->create_date?>"
+									project-create-date="<?=date('d/m/Y H:i:s',  strtotime('+6 Hour',$field->create_date["sec"]));?>"
 									project-create-by="<?php echo $arrUser[(string)$field->create_by];?>"
 									title="ดูรายละเอียดโครงการ">
 									<span>รายละเอียด</span>

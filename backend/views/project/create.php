@@ -27,6 +27,8 @@ var dataUser = [
     }
 ];
 var dataTeam = [];
+var isFirstLoad = true;
+var dataAutocomplete = "";
 
 function addUserMenber(newUser) {
     dataUser.push(newUser);
@@ -393,15 +395,38 @@ function submitCreate(){
         request.send(formData);
 };
 
-$("#projectname").change(function(){
+$("#projectname").blur(function(){
+	callIsDuplicate();
+});
 
-    var projectname = ($("#projectname").val()).trim();
+$('#department').change(function(){
+	callIsDuplicate();
+	isFirstLoad = false;
+	$.ajax({
+		url: '$baseUrl/project/getproject',
+		type: 'post',
+		data: {
+            departmentId : $('select[name=department]').val()
+		},
+		dataType: "json",
+		success: function (data) {
+			console.log(data.arrProject);
+			dataAutocomplete = data.arrProject;
+		}
+  	 });
+});
 
+function callIsDuplicate(){
+	var projectname = ($("#projectname").val()).trim();
+	var departmentId = $('select[name=department]').val();
         if(projectname != ""){
             $.ajax({
                    url: '$baseUrl/project/duplicate',
                    type: 'post',
-                   data: {searchname: projectname},
+                   data: {
+                   		searchname: projectname,
+                   		departmentId : departmentId
+					},
                    dataType: "json",
                    success: function (data) {
                       console.log(data.isDuplicate);
@@ -419,7 +444,7 @@ $("#projectname").change(function(){
             $("#error-name").hide();
             $("#next").show();
         }
-});
+}
 
 $("#projectname").keyup(function(){
     var value=($(this).val()).trim();
@@ -496,15 +521,26 @@ $("#from,#to").prop("readonly", true);
 
 $( "#projectname" ).autoComplete({
     minChars: 1,
+    cache: false,
     source: function(term, suggest){
         term = term.toLowerCase();
-        var choices = $arrProject;
+        var choices = getDataAutocomplete();
         var suggestions = [];
         for (i=0;i<choices.length;i++)
             if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
         suggest(suggestions);
     }
 });
+
+function getDataAutocomplete(){
+	var data = "";
+	if(isFirstLoad){
+        data = $arrProject
+	}else{
+        data = dataAutocomplete;
+	}
+    return data;
+}
 EOT;
 
 $this->registerJs($str2, View::POS_END);
@@ -616,11 +652,11 @@ $this->registerJs($str2, View::POS_END);
                                                                       'selected optionkk',  
                                                                        $arrDepartment,
                                                                        ['class' => 'form-control', 'id' => 'department',
-                                                                       		['options' =>
-	                                                                       		[
-	                                                                       				(string)$departmentId => ['selected' => true]
-	                                                                       		]
-                                                                       		]
+                                                                       	'options' =>
+	                                                                       	[
+	                                                                       		(string)$departmentId => ['selected' => true]
+	                                                                       	]
+                                                                       	
                                                                     	]
                                                                     )
                                                                 ?>

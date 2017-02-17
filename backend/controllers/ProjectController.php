@@ -72,7 +72,8 @@ class ProjectController extends Controller
 		}
 		if(!empty($userId)){
 			if(!empty($type)){
-				$query->andwhere(array('member.userId' => $userId,'member.type' =>  (int)$type));
+				$query->andwhere(['member.userId' => $userId]);
+				$query->andwhere(['member.type' =>  (int)$type]);
 			}
 			else{
 				$query->andwhere(array('member.userId' => $userId));
@@ -159,7 +160,7 @@ class ProjectController extends Controller
     		$teamModel = new Team();
     		$teamModel->teamName = $teamName;
     		$teamModel->description = $teamName;
-    		$teamModel->createDate = "";
+    		$teamModel->createDate = new \MongoDate();
     		$teamModel->createBy = $userId;
     		
     		$teamMember = [];
@@ -206,7 +207,7 @@ class ProjectController extends Controller
     		$model->department = new ObjectID($department);
     		$model->member = $member;
     		$model->create_by = new ObjectID($userId);
-//     		$model->create_date = new \MongoDate();
+    		$model->create_date = new \MongoDate();
 //     		(new \DateTime())->format('d/m/Y H:i:s');
     	}
     	if($model->save()){
@@ -246,7 +247,7 @@ class ProjectController extends Controller
     	$listCategory = Category::findAllCategoryByStatus(self::STATUS_ACTIVE);
     	$arrCategory = ArrayHelper::map($listCategory,function ($categoryModel){return  (string)$categoryModel->_id;},'category_name');
 		
-    	$project = Project::find()->all();
+    	$project = Project::findAllProjectByProjectNameAndDepartmentId("", Yii::$app->user->identity->departmentId);
     	$arrProject = [];
     	if($project){
     		foreach ($project as $obj){
@@ -361,7 +362,8 @@ class ProjectController extends Controller
 		if (Yii::$app->request->isAjax) {
 		    $data = Yii::$app->request->post();
 		    $projectname = explode(":", $data['searchname']);
-		    $search = Project::findAllProjectByProjectName($projectname[0]);
+		    $departmentId = explode(":", $data['departmentId']);
+		    $search = Project::findAllProjectByProjectNameAndDepartmentId($projectname[0], new ObjectID($departmentId[0]));
 		    if($search){
 		    	$isDuplicate = true;
 		    }else{
@@ -371,6 +373,27 @@ class ProjectController extends Controller
 		    return [
 		        'isDuplicate' => $isDuplicate,
 		    ];
+		}
+	}
+	
+	public function actionGetproject()
+	{
+		if (Yii::$app->request->isAjax) {
+			$data = Yii::$app->request->post();
+			$departmentId = explode(":", $data['departmentId']);
+			$project = Project::findAllProjectByProjectNameAndDepartmentId("", new ObjectID($departmentId[0]));
+			
+			$arrProject = [];
+			if($project){
+				foreach ($project as $obj){
+					$arrProject[] = $obj->project_name;
+				}
+			}
+			
+			\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			return [
+					'arrProject' => $arrProject,
+			];
 		}
 	}
 	
