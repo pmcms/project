@@ -161,7 +161,7 @@ class ProjectController extends Controller
     		$teamModel = new Team();
     		$teamModel->teamName = $teamName;
     		$teamModel->description = $teamName;
-    		$teamModel->createDate = new \MongoDate();
+    		$teamModel->createDate = new MongoDate();
     		$teamModel->createBy = $userId;
     		
     		$teamMember = [];
@@ -200,16 +200,15 @@ class ProjectController extends Controller
     	if ($model == null){
     		$model = new Project();
     		$model->project_name = $name;
-    		$model->start_date = $startdate;
-    		$model->end_date = $enddate;
+    		$model->start_date = new MongoDate(strtotime($startdate));
+    		$model->end_date = new MongoDate(strtotime($enddate));
     		$model->description =  $description;
     		$model->status = self::STATUS_ACTIVE;
     		$model->category = new ObjectID($categoty);
     		$model->department = new ObjectID($department);
     		$model->member = $member;
     		$model->create_by = new ObjectID($userId);
-    		$model->create_date = new \MongoDate();
-//     		(new \DateTime())->format('d/m/Y H:i:s');
+    		$model->create_date = new MongoDate();
     	}
     	if($model->save()){
     		$message = true;

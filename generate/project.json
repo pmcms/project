@@ -1,16 +1,27 @@
 {
     "_id" : ObjectId("5881838d37d61b1ca0000488"),
     "project_name" : "ระบบการจัดการสมาชิก",
-    "start_date" : "2017-01-20 16:27:00",
-    "end_date" : "2017-04-20 16:27:47",
+    "start_date" : {
+        "sec" : 1484900820,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1492673220,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "3",
-    "create_date" : "2017-01-20 16:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 3,
+    "create_date" : {
+        "sec" : 1484900820,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
@@ -18,21 +29,37 @@
 {
     "_id" : ObjectId("588183a237d61b1ca0000489"),
     "project_name" : "การจัดงานท่องเที่ยว 9 จังหวัด",
-    "start_date" : "2017-01-20 16:27:00",
-    "end_date" : "2017-04-20 16:27:47",
+    "start_date" : {
+        "sec" : 1484900820,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1492673220,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbc76f57895703f01617"),
-    "status" : "4",
-    "create_date" : "2017-01-20 16:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 4,
+    "create_date" : {
+        "sec" : 1484900820,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b42337d61b1ca000048e"),
-            "id_team" : ObjectId("5881c0476f57895703f0161d")
+            "userId" : ObjectId("5881b42337d61b1ca000048e"),
+            "teamId" : ObjectId("5881c0476f57895703f0161d"),
+            "type" : 2
         }, 
         {
-            "id_user" : ObjectId("5881b58637d61b1ca0000494"),
-            "id_team" : ObjectId("5881c0476f57895703f0161d")
+            "userId" : ObjectId("5881b58637d61b1ca0000494"),
+            "teamId" : ObjectId("5881c0476f57895703f0161d"),
+            "type" : 2
+        },
+        {
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
@@ -40,25 +67,42 @@
 {
     "_id" : ObjectId("5881835237d61b1ca0000486"),
     "project_name" : "ระบบการจัดการบุคคล",
-    "start_date" : "2017-01-20 16:27:00",
-    "end_date" : "2017-04-20 16:27:47",
+    "start_date" : {
+        "sec" : 1484900820,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1492673267,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "2",
-    "create_date" : "2017-01-20 16:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 2,
+    "create_date" : {
+        "sec" : 1484900867,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b42337d61b1ca000048e"),
-            "id_team" : ObjectId("5881bf376f57895703f0161a")
+            "userId" : ObjectId("5881b42337d61b1ca000048e"),
+            "teamId" : ObjectId("5881bf376f57895703f0161a"),
+            "type" : 3
         }, 
         {
-            "id_user" : ObjectId("5881b44337d61b1ca000048f"),
-            "id_team" : ObjectId("5881bf376f57895703f0161a")
+            "userId" : ObjectId("5881b44337d61b1ca000048f"),
+            "teamId" : ObjectId("5881bf376f57895703f0161a"),
+            "type" : 2
         }, 
         {
-            "id_user" : ObjectId("5881b55d37d61b1ca0000493"),
-            "id_team" : ObjectId("5881bf376f57895703f0161a")
+            "userId" : ObjectId("5881b55d37d61b1ca0000493"),
+            "teamId" : ObjectId("5881bf376f57895703f0161a"),
+            "type" : 2
+        },
+        {
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
@@ -66,25 +110,42 @@
 {
     "_id" : ObjectId("58818bb637d61b1ca000048b"),
     "project_name" : "ระบบการจัดการทีม",
-    "start_date" : "2017-01-20 16:27:00",
-    "end_date" : "2017-04-20 16:27:47",
+    "start_date" : {
+        "sec" : 1484900820,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1492673267,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-20 16:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1484900867,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b5c637d61b1ca0000496"),
-            "id_team" : ObjectId("5881bfc76f57895703f0161b")
+            "userId" : ObjectId("5881b5c637d61b1ca0000496"),
+            "teamId" : ObjectId("5881bfc76f57895703f0161b"),
+            "type" : 3
         }, 
         {
-            "id_user" : ObjectId("5881b44337d61b1ca000048f"),
-            "id_team" : ObjectId("5881bfc76f57895703f0161b")
+            "userId" : ObjectId("5881b44337d61b1ca000048f"),
+            "teamId" : ObjectId("5881bfc76f57895703f0161b"),
+            "type" : 2
         }, 
         {
-            "id_user" : ObjectId("5881b42337d61b1ca000048e"),
-            "id_team" : ObjectId("5881bfc76f57895703f0161b")
+            "userId" : ObjectId("5881b42337d61b1ca000048e"),
+            "teamId" : ObjectId("5881bfc76f57895703f0161b"),
+            "type" : 2
+        },
+        {
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
@@ -92,29 +153,43 @@
 {
     "_id" : ObjectId("5881833f37d61b1ca0000485"),
     "project_name" : "ระบบการจัดการโครงการ",
-    "start_date" : "2017-01-20 16:27:00",
-    "end_date" : "2017-04-20 16:27:47",
+    "start_date" : {
+        "sec" : 1484900820,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1492673267,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-20 16:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1484900867,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d"),
-            "id_team" : ObjectId("5881bd1b6f57895703f01619")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "teamId" : ObjectId("5881bd1b6f57895703f01619"),
+            "type" : 1
         }, 
         {
-            "id_user" : ObjectId("5881b42337d61b1ca000048e"),
-            "id_team" : ObjectId("5881bd1b6f57895703f01619")
+            "userId" : ObjectId("5881b42337d61b1ca000048e"),
+            "teamId" : ObjectId("5881bd1b6f57895703f01619"),
+            "type" : 2
         }, 
         {
-            "id_user" : ObjectId("5881b44337d61b1ca000048f"),
-            "id_team" : ObjectId("5881bd1b6f57895703f01619")
+            "userId" : ObjectId("5881b44337d61b1ca000048f"),
+            "teamId" : ObjectId("5881bd1b6f57895703f01619"),
+            "type" : 2
         }, 
         {
-            "id_user" : ObjectId("5881b46337d61b1ca0000490"),
-            "id_team" : ObjectId("5881bd1b6f57895703f01619")
+            "userId" : ObjectId("5881b46337d61b1ca0000490"),
+            "teamId" : ObjectId("5881bd1b6f57895703f01619"),
+            "type" : 3
         }
     ]
 }
@@ -122,16 +197,27 @@
 {
     "_id" : ObjectId("588f0211ef86835bdb033f39"),
     "project_name" : "ระบบจัดการแบบสอบถาม",
-    "start_date" : "2017-02-01 16:27:00",
-    "end_date" : "2017-05-25 16:27:47",
+    "start_date" : {
+        "sec" : 1485937620,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1495697267,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-30 16:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1485764867,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
@@ -139,16 +225,27 @@
 {
     "_id" : ObjectId("588f0286ef86835bdb033f3a"),
     "project_name" : "ระบบสร้งซีเรีบลคีย์",
-    "start_date" : "2017-02-05 09:00:00",
-    "end_date" : "2017-03-10 17:00:00",
+    "start_date" : {
+        "sec" : 1486256400,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1489136400,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-15 13:30:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1484458247,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
@@ -156,16 +253,27 @@
 {
     "_id" : ObjectId("588f02d6ef86835bdb033f3b"),
     "project_name" : "ระบบจัดการโครงการ",
-    "start_date" : "2017-03-1 10:00:00",
-    "end_date" : "2017-03-31 18:00:00",
+    "start_date" : {
+        "sec" : 1488333600,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1490950800,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-02-14 10:00:00",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1487037600,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
@@ -173,203 +281,346 @@
 {
     "_id" : ObjectId("588f033eef86835bdb033f3c"),
     "project_name" : "ระบบจัดการปฎิทิน",
-    "start_date" : "2017-06-01 09:00:00",
-    "end_date" : "2017-12-31 23:59:59",
+    "start_date" : {
+        "sec" : 1496275200,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1514735999,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-05-01 12:00:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1493607647,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f03bdef86835bdb033f3d"),
     "project_name" : "ระบบจัดการสมาชิก",
-    "start_date" : "2017-02-01 09:00:00",
-    "end_date" : "2017-04-15 17:00:00",
+    "start_date" : {
+        "sec" : 1485910800,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1492243200,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-30 16:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1485764867,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f0469ef86835bdb033f3e"),
     "project_name" : "ระบบเติมเงินโทรศัพท์ออนไลน์",
-    "start_date" : "2017-01-01 09:00:00",
-    "end_date" : "2017-02-07 09:00:00",
+    "start_date" : {
+        "sec" : 1483232400,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1486429200,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-20 16:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 2,
+    "create_date" : {
+        "sec" : 1484900867,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f04ffef86835bdb033f3f"),
     "project_name" : "ระบบจัดการห้องสมุด",
-    "start_date" : "2017-01-05 09:00:00",
-    "end_date" : "2017-01-20 09:00:00",
+    "start_date" : {
+        "sec" : 1483578000,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1484874000,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-01 10:00:00",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 2,
+    "create_date" : {
+        "sec" : 1483236000,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f0521ef86835bdb033f40"),
     "project_name" : "ระบบจองห้อง",
-    "start_date" : "2017-01-31 09:00:00",
-    "end_date" : "2017-02-20 17:00:00",
+    "start_date" : {
+        "sec" : 1485824400,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1487581200,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-05 11:00:27",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 2,
+    "create_date" : {
+        "sec" : 1483585227,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f0613ef86835bdb033f41"),
     "project_name" : "ระบบศูนย์บริการการศึกษา",
-    "start_date" : "2017-11-01 09:00:00",
-    "end_date" : "2017-11-30 17:00:00",
+    "start_date" : {
+        "sec" : 1509498000,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1512032400,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-04-13 13:27:53",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1492057673,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f0653ef86835bdb033f42"),
     "project_name" : "ระบบรับสมัครนักศึกษา",
-    "start_date" : "2017-04-01 09:00:00",
-    "end_date" : "2017-12-01 17:00:00",
+    "start_date" : {
+        "sec" : 1491004800,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1512118800,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-03-30 14:43:21",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1490852601,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f06b3ef86835bdb033f43"),
     "project_name" : "ระบบหอพักนักศึกษา",
-    "start_date" : "2017-04-20 09:00:00",
-    "end_date" : "2017-07-20 17:00:00",
+    "start_date" : {
+        "sec" : 1492646400,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1500537600,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-02-18 11:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1487388467,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f0723ef86835bdb033f44"),
     "project_name" : "ระบบฝากไฟล์",
-    "start_date" : "2017-03-12 09:00:00",
-    "end_date" : "2017-03-31 17:00:00",
+    "start_date" : {
+        "sec" : 1489280400,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1490947200,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-02-15 09:27:47",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1487122067,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f0759ef86835bdb033f45"),
     "project_name" : "ระบบแจ้งซ่อม",
-    "start_date" : "2017-01-15 09:00:00",
-    "end_date" : "2017-04-20 17:00:00",
+    "start_date" : {
+        "sec" : 1484442000,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1492675200,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-03 11:11:25",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1483413085,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
+
 
 {
     "_id" : ObjectId("588f07a2ef86835bdb033f46"),
     "project_name" : "ระบบจัดการร้านอาหาร",
-    "start_date" : "2017-05-05 09:00:00",
-    "end_date" : "2017-06-30 09:00:00",
+    "start_date" : {
+        "sec" : 1493942400,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1498780800,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-03-17 11:05:20",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1489719920,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
 
+
 {
     "_id" : ObjectId("588f081aef86835bdb033f47"),
     "project_name" : "ระบบร้านขายยา",
-    "start_date" : "2017-02-06 09:00:00",
-    "end_date" : "2017-03-31 09:00:00",
+    "start_date" : {
+        "sec" : 1486342800,
+        "usec" : 0
+    },
+    "end_date" : {
+        "sec" : 1490918400,
+        "usec" : 0
+    },
     "description" : "",
     "category" : ObjectId("5881bbfa6f57895703f01618"),
-    "status" : "1",
-    "create_date" : "2017-01-12 13:16:47",
+    "departmentId" : ObjectId("5890ab36847cea4ab49ce198"),
+    "status" : 1,
+    "create_date" : {
+        "sec" : 1484198207,
+        "usec" : 0
+    },
     "create_by" : ObjectId("5881b3f937d61b1ca000048d"),
     "member" : [ 
         {
-            "id_user" : ObjectId("5881b3f937d61b1ca000048d")
+            "userId" : ObjectId("5881b3f937d61b1ca000048d"),
+            "type" : 1
         }
     ]
 }
