@@ -360,11 +360,23 @@ $('#nameUser').keyup(function(){
 function submitCreate(){
 
 		var isCreateTeam = $("#want").is(':checked');
+		var startDate = $('input[id=from]').val();
+			startDate = startDate.split('/');
+			startDate = startDate[2]+"-"+startDate[1]+"-"+startDate[0];
+		var startTime = $('input[id=fromTime]').val();
+			startTime = startTime.split(':');
+			startTime = (startTime[0]-6)+":"+startTime[1];
+		var endDate = $('input[id=to]').val();
+			endDate = endDate.split('/');
+			endDate = endDate[2]+"-"+endDate[1]+"-"+endDate[0];
+		var endTime = $('input[id=toTime]').val();
+			endTime = endTime.split(':');
+			endTime = (endTime[0]-6)+":"+endTime[1];
         
         var formData = new FormData();
         formData.append('name', $('input[name=projectname]').val());
-        formData.append('startdate', $('input[id=from]').val()+" "+$('input[id=fromTime]').val());
-        formData.append('enddate', $('input[id=to]').val()+" "+$('input[id=toTime]').val());
+        formData.append('startdate', startDate+" "+startTime);
+        formData.append('enddate', endDate+" "+endTime);
         formData.append('description', $('textarea[name=description]').val());
         formData.append('member', JSON.stringify(getMember()));
         formData.append('category', $('select[name=category]').val());
@@ -591,7 +603,7 @@ $this->registerJs($str2, View::POS_END);
                                                                 <span class="required"> * </span>
                                                             </label>
                                                             <div class="col-md-5">
-                                                                <input type="text" class="form-control" name="projectname" placeholder="ชื่อโครงการ" id="projectname" maxlength="30"/>
+                                                                <input type="text" class="form-control" name="projectname" placeholder="ชื่อโครงการ" id="projectname" maxlength="50"/>
                                                                 <span id="error-name" class="error-date"></span>
                                                             </div>
                                                         </div>
@@ -780,7 +792,7 @@ $this->registerJs($str2, View::POS_END);
                                                         <div class="col-md-12" >
                                                             <div class="row">
                                                                 <label class="col-md-3 control-label" style="align:right;">
-                                                                    ต้องการสร้างทีมใหม่หรือไม่
+                                                                   	 ต้องการสร้างทีมใหม่หรือไม่
                                                                 </label>
                                                                 <div class="col-md-3" >
                                                                     <input type="radio" name="want" id="want"/>    

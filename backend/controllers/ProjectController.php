@@ -153,7 +153,7 @@ class ProjectController extends Controller
     	$teamName = $request->post('teamName', null);
     	$model = null;
     	
-    	$userId = Yii::$app->user->identity->_id;
+    	$currentId = Yii::$app->user->identity->_id;
     	$member = json_decode($member);
     	$nummberMember = sizeof($member);
     	
@@ -162,7 +162,7 @@ class ProjectController extends Controller
     		$teamModel->teamName = $teamName;
     		$teamModel->description = $teamName;
     		$teamModel->createDate = new MongoDate();
-    		$teamModel->createBy = $userId;
+    		$teamModel->createBy = $currentId;
     		
     		$teamMember = [];
     		for ($i = 0; $i < $nummberMember; $i++) {
@@ -207,7 +207,7 @@ class ProjectController extends Controller
     		$model->category = new ObjectID($categoty);
     		$model->department = new ObjectID($department);
     		$model->member = $member;
-    		$model->create_by = new ObjectID($userId);
+    		$model->create_by = new ObjectID($currentId);
     		$model->create_date = new MongoDate();
     	}
     	if($model->save()){
