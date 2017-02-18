@@ -129,7 +129,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 						</div>
 						<div class="pull-right text-muted">
 							<small>
-								<?php echo "วันที่สิ้นสุด"." : ".$field->end_date; ?>
+								<?php echo "วันที่สิ้นสุด"." : ".date('d/m/Y H:i:s',  strtotime('+6 Hour',$field->end_date["sec"])); ?>
 							</small>
 						</div>
 					</div></a>
@@ -139,8 +139,8 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 								<a href="javascript:;" class="project-detail" 
 									project-name="<?=$field->project_name?>"
 									project-description="<?=$field->description?>"
-									project-start-date="<?=$field->start_date?>"
-									project-end-date="<?=$field->end_date?>"
+									project-start-date="<?=date('d/m/Y H:i:s',  strtotime('+6 Hour',$field->start_date["sec"]));?>"
+									project-end-date="<?=date('d/m/Y H:i:s',  strtotime('+6 Hour',$field->end_date["sec"]))?>"
 									project-project-type="<?php echo $arrCategory[(string)$field->category];?>"
 									project-status="<?php echo Project::$arrSendStatus[$field->status]; ?>"
 									project-create-date="<?=date('d/m/Y H:i:s',  strtotime('+6 Hour',$field->create_date["sec"]));?>"

@@ -8,6 +8,7 @@
     "role" : "user",
     "firstname" : "แอดมิน",
     "lastname" : "แอดมิน",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
     "created_at" : 1484895225,
     "updated_at" : 1484895225
 }
@@ -125,6 +126,7 @@
     "role" : "user",
     "firstname" : "ยูเซอร์์",
     "lastname" : "โนพาวเวอร์",
+    "departmentId" : ObjectId("5890aac1847cea4ab49ce196"),
     "created_at" : 1484895686,
     "updated_at" : 1484895686
 }
