@@ -140,7 +140,7 @@ $(document).on('click', "a.right-member-team", function() {
     $("#question").html('คุณต้องลบผู้ใช้งานออกจากทีม \"'+teamName+'\" หรือลบผู้ใฃ้งานออกจากโครงการ');
     $("#choice1").html('ลบออกจากทีม \"'+teamName+'\"');
     $("#choice2").html("ลบออกจากโครงการ");
-	$('#question').modal('show');
+	$('#myModal').modal('show');
 });
 
 
@@ -197,7 +197,7 @@ $(document).on('click', "a.right-user", function() {
     $("#question").html('คุณต้องลบผู้ใช้งานออกจากผู้ใช้งานในโครงการหรือลบผู้ใฃ้งานออกจากโครงการ');
     $("#choice1").html("ลบผู้ใช้งานออกจากผู้ใช้งานในโครงการ");
     $("#choice2").html("ลบออกจากโครงการ");
-	$('#question').modal('show');
+	$('#myModal').modal('show');
 });
 
 function lenderTeamMember(){
@@ -260,7 +260,7 @@ function showColumnTeam(teamName){
 //          debugger;
                 row = $(this);
                 var id = row.find("td:first").text();
-                if (id.includes(teamName) == true) {
+                if (id == teamName) {
                     row.removeClass('hiden');
                     row.show();
                     return false;
@@ -278,7 +278,7 @@ function showColumnUser(userName){
 //          debugger;
                 row = $(this);
                 var id = row.find("td:first").text();
-                if (id.includes(userName) == true) {
+                if (id == userName) {
                     row.removeClass('hiden');
                     row.show();
                     return false;
@@ -294,7 +294,7 @@ function hideColumnTeam(teamName){
         if (index !== 0) {
             row = $(this);
             var rowTeamName = row.find("td:first").text();
-            if (teamName.includes(rowTeamName) == true) {
+            if (teamName == rowTeamName) {
                 row.addClass('hiden');
                 row.hide();
                 return false;
@@ -309,7 +309,7 @@ function hideColumnUser(userName){
         if (index !== 0) {
             row = $(this);
             var rowUserName = row.find("td:first").text();
-            if (userName.includes(rowUserName) == true) {
+            if (userName == rowUserName) {
                 row.addClass('hiden');
                 row.hide();
                 return false;
@@ -346,13 +346,16 @@ $('#nameUser').keyup(function(){
         if (index !== 0) {
 //      debugger;
             row = $(this);
-            var id = row.find("td:first").text();
-            if (id.includes(value) == true) {
-                row.show();
-            }
-            else {
-                row.hide();
-            }
+            var strClass = $(this).attr('class');
+            if(strClass == undefined){
+	            var id = row.find("td:first").text();
+	            if (id.includes(value) == true) {
+	                row.show();
+	            }
+	            else {
+	                row.hide();
+	            }
+	      	}
         }
     });
 });
@@ -396,11 +399,27 @@ function submitCreate(){
                 if(typeof(response) == "string"){
                     response = JSON.parse(request.responseText);
                     if(response.success == true){
+	        			$("#img").html('<img src="$baseUrl/createasset/img/checkmark.png" height="15px"></img>');
                     	$("#resultValue").html('บันทึกสำเร็จ');
+                    	$("#isDuplicateProject").html('');
+                    	$("#isDuplicateTeam").html('');
                     	$('#result').modal('show');
-//                     	window.location.assign("$baseUrl/project");
+                    	$('#result').on('hidden.bs.modal', function () {
+                    		window.location.assign("$baseUrl/project");
+                    	});
                     }else{
+                    	$("#img").html('<img src="$baseUrl/createasset/img/cross.png" height="17px"></img>');
                     	$("#resultValue").html('บันทึกไม่สำเร็จ');
+                    	if(response.isDuplicateProject == true){
+                    		$("#isDuplicateProject").html('&nbsp;&nbsp;&nbsp;&nbsp;- ฃื่อโครงการซ้ำ เนื่องจากผู้ใช้งานท่านอื่นได้ใช้ชื่อโครงการนี้แล้ว');
+                    	}else{
+                    		$("#isDuplicateProject").html('');
+                    	}
+                    	if(response.isDuplicateTeam == true){
+                    		$("#isDuplicateTeam").html('&nbsp;&nbsp;&nbsp;&nbsp;- ฃื่อทีมซ้ำ เนื่องจากผู้ใช้งานท่านอื่นได้ใช้ชื่อทีมนี้แล้ว');
+                    	}else{
+                    		$("#isDuplicateTeam").html('');
+                    	}
                     	$('#result').modal('show');
                     	console.log(response);
                     }
@@ -845,7 +864,7 @@ $this->registerJs($str2, View::POS_END);
                 <!-- END CONTENT BODY -->
             </div>
     <!-- END CONTENT -->
-    <div class="modal fade" id="question" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-target=".bs-example-modal-sm">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-target=".bs-example-modal-sm">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	     <!-- ********** BODY MODAL ********** -->
@@ -874,8 +893,16 @@ $this->registerJs($str2, View::POS_END);
 	     <!-- ********** BODY MODAL ********** -->
 	      <div class="modal-body">
 	        <section class="content-modal">
-	        	<span id="resultValue"></span><br>
+	        	<span id="img"></span>
+	        	<span id="resultValue" style="font-size:16px"></span></h3>
 		    </section>
+		    <div>
+		    	<span id="isDuplicateProject"></span></br>
+		    	<span id="isDuplicateTeam"></span>
+		    </div>
+		    <div class="text-right">
+				 <button id="" class="btn btn-primary" data-dismiss="modal" aria-label="Close">ตกลง</button>
+			</div>
 	      </div>
 	    </div>
 	  </div>

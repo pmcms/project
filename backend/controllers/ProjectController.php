@@ -199,6 +199,7 @@ class ProjectController extends Controller
     			$teamModel = new Team();
     			$teamModel->teamName = $teamName;
     			$teamModel->description = $teamName;
+    			$teamModel->status = self::STATUS_ACTIVE;
     			$teamModel->createDate = new MongoDate();
     			$teamModel->createBy = $currentId;
     	   
