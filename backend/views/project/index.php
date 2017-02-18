@@ -125,7 +125,23 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 							</tr>
 						</table>
 						<div class="text-left">
-							<?php echo $field->project_name; ?>
+						<?php if((int)$arrdate1[(string)$field->_id] == 0):
+							 ?><font>
+						 <?php elseif((int)$arrtask1[(string)$field->_id] == 0):
+							 ?><font>
+						<?php elseif((int)($arrdate1[(string)$field->_id]/(int)$arrdate1[(string)$field->_id])*100 >= ((int)$arrtask2[(string)$field->_id]/(int)$arrtask1[(string)$field->_id])*100):
+							 ?><font color="orange">
+						<?php 
+							elseif (((int)(($arrdate1[(string)$field->_id]/(int)$arrdate1[(string)$field->_id])*100)/2 >= ((int)$arrtask2[(string)$field->_id]/(int)$arrtask1[(string)$field->_id])*100)):
+							?><font color="red">
+						<?php 
+						else:
+						?>
+						<font >
+						<?php endif;?>
+						
+						
+								<?php echo $field->project_name; ?></font>
 						</div>
 						<div class="pull-right text-muted">
 							<small>
