@@ -155,68 +155,90 @@ class ProjectController extends Controller
     	$member = json_decode($member);
     	$nummberMember = sizeof($member);
     	
+    	//checkDuplicateProjectName
+    	$isDuplicateProject = false;
+    	$project = Project::findAllProjectByProjectNameAndDepartmentId($name,new ObjectID($department));
+    	if($project){
+    		$isDuplicateProject = true;
+    	}
+    	//checkDupplicateTeamName
+    	$isDuplicateTeam = false;
     	if($isCreateTeam){
-    		$teamModel = new Team();
-    		$teamModel->teamName = $teamName;
-    		$teamModel->description = $teamName;
-    		$teamModel->createDate = new MongoDate();
-    		$teamModel->createBy = $currentId;
-    		
-    		$teamMember = [];
-    		for ($i = 0; $i < $nummberMember; $i++) {
-    			$teamMember[$i]['userId'] = new ObjectID($member[$i]->userId);
+    		$team = Team::findOne(['teamName' => $teamName]);
+    		if($team){
+    			$isDuplicateTeam = true;
     		}
-    		$teamModel->member = $teamMember;
-    		
-    		$teamModel->save();
-    		
-    		$newTeamQuery = Team::findOne(['teamName' => $teamName]);
-    		
-    		$newTeamId = $newTeamQuery->_id;
-    		
-    		$projectMember = [];
-    		for ($i = 0; $i < $nummberMember; $i++) {
-    			$projectMember[$i]['userId'] = new ObjectID($member[$i]->userId);
-    			$projectMember[$i]['teamId'] = new ObjectID($newTeamId);
-    		}
-    		$member = $projectMember;
-    	}else{
-    		// add Member
-    		for ($i = 0; $i < $nummberMember; $i++) {
-    			$userId = $member[$i]->userId;
-    			$member[$i]->userId = new ObjectID($userId);
-    		
-    			$team = $member[$i]->team;
-    			$nummberTeam = sizeof($team);
-    			for ($j = 0; $j < $nummberTeam; $j++) {
-    				$member[$i]->team[$j]->teamId = new ObjectID($team[$j]->teamId);
-    			}
-    		}	
     	}
     	
-    	
-    	if ($model == null){
-    		$model = new Project();
-    		$model->project_name = $name;
-    		$model->start_date = new MongoDate(strtotime($startdate));
-    		$model->end_date = new MongoDate(strtotime($enddate));
-    		$model->description =  $description;
-    		$model->status = self::STATUS_ACTIVE;
-    		$model->category = new ObjectID($categoty);
-    		$model->department = new ObjectID($department);
-    		$model->member = $member;
-    		$model->create_by = new ObjectID($currentId);
-    		$model->create_date = new MongoDate();
-    	}
-    	if($model->save()){
-    		$message = true;
-    		$retData['success'] = true;
+    	if($isDuplicateProject == false && $isDuplicateTeam == false){
+	    	if($isCreateTeam){
+	    		$teamModel = new Team();
+	    		$teamModel->teamName = $teamName;
+	    		$teamModel->description = $teamName;
+	    		$teamModel->createDate = new MongoDate();
+	    		$teamModel->createBy = $currentId;
+	    		
+	    		$teamMember = [];
+	    		for ($i = 0; $i < $nummberMember; $i++) {
+	    			$teamMember[$i]['userId'] = new ObjectID($member[$i]->userId);
+	    		}
+	    		$teamModel->member = $teamMember;
+	    		
+	    		$teamModel->save();
+	    		
+	    		$newTeamQuery = Team::findOne(['teamName' => $teamName]);
+	    		
+	    		$newTeamId = $newTeamQuery->_id;
+	    		
+	    		$projectMember = [];
+	    		for ($i = 0; $i < $nummberMember; $i++) {
+	    			$projectMember[$i]['userId'] = new ObjectID($member[$i]->userId);
+	    			$projectMember[$i]['teamId'] = new ObjectID($newTeamId);
+	    		}
+	    		$member = $projectMember;
+	    	}else{
+	    		// add Member
+	    		for ($i = 0; $i < $nummberMember; $i++) {
+	    			$userId = $member[$i]->userId;
+	    			$member[$i]->userId = new ObjectID($userId);
+	    		
+	    			$team = $member[$i]->team;
+	    			$nummberTeam = sizeof($team);
+	    			for ($j = 0; $j < $nummberTeam; $j++) {
+	    				$member[$i]->team[$j]->teamId = new ObjectID($team[$j]->teamId);
+	    			}
+	    		}	
+	    	}
+	    	
+	    	
+	    	if ($model == null){
+	    		$model = new Project();
+	    		$model->project_name = $name;
+	    		$model->start_date = new MongoDate(strtotime($startdate));
+	    		$model->end_date = new MongoDate(strtotime($enddate));
+	    		$model->description =  $description;
+	    		$model->status = self::STATUS_ACTIVE;
+	    		$model->category = new ObjectID($categoty);
+	    		$model->departmentId = new ObjectID($department);
+	    		$model->member = $member;
+	    		$model->create_by = new ObjectID($currentId);
+	    		$model->create_date = new MongoDate();
+	    	}
+	    	
+	    	if($model->save()){
+	    		$message = true;
+	    		$retData['success'] = true;
+	    	}else{
+	    		$message = false;
+	    		$retData['success'] = false;
+	    	}
     	}else{
-    		$message = false;
-    		$retData = ['success' => false];
+    		$retData['success'] = false;
     	}
+    	
+    	$retData['isDuplicateProject'] = $isDuplicateProject;
+    	$retData['isDuplicateTeam'] = $isDuplicateTeam;
 //     	Yii::$app->session->setFlash('alert', $message);
-    	 
     	echo json_encode($retData);
     
     }

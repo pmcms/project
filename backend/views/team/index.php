@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'teamName',
             'description',
             'status',
-            'createDate',
+//             'createDate',
             // 'createBy',
             // 'member',
 

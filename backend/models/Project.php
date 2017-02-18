@@ -45,7 +45,7 @@ class Project extends \yii\mongodb\ActiveRecord
             'status',
             'create_date',
             'create_by',
-        	'department',
+        	'departmentId',
             'member',
         ];
     }
@@ -56,7 +56,7 @@ class Project extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['project_name', 'start_date', 'end_date', 'description', 'category', 'status', 'create_date', 'create_by', 'department', 'member'], 'safe']
+            [['project_name', 'start_date', 'end_date', 'description', 'category', 'status', 'create_date', 'create_by', 'departmentId', 'member'], 'safe']
         ];
     }
 
