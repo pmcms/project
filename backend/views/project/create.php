@@ -140,7 +140,7 @@ $(document).on('click', "a.right-member-team", function() {
     $("#question").html('คุณต้องลบผู้ใช้งานออกจากทีม \"'+teamName+'\" หรือลบผู้ใฃ้งานออกจากโครงการ');
     $("#choice1").html('ลบออกจากทีม \"'+teamName+'\"');
     $("#choice2").html("ลบออกจากโครงการ");
-	$('.modal').modal('show');
+	$('#question').modal('show');
 });
 
 
@@ -197,7 +197,7 @@ $(document).on('click', "a.right-user", function() {
     $("#question").html('คุณต้องลบผู้ใช้งานออกจากผู้ใช้งานในโครงการหรือลบผู้ใฃ้งานออกจากโครงการ');
     $("#choice1").html("ลบผู้ใช้งานออกจากผู้ใช้งานในโครงการ");
     $("#choice2").html("ลบออกจากโครงการ");
-	$('.modal').modal('show');
+	$('#question').modal('show');
 });
 
 function lenderTeamMember(){
@@ -360,11 +360,23 @@ $('#nameUser').keyup(function(){
 function submitCreate(){
 
 		var isCreateTeam = $("#want").is(':checked');
+		var startDate = $('input[id=from]').val();
+			startDate = startDate.split('/');
+			startDate = startDate[2]+"-"+startDate[1]+"-"+startDate[0];
+		var startTime = $('input[id=fromTime]').val();
+			startTime = startTime.split(':');
+			startTime = (startTime[0]-6)+":"+startTime[1];
+		var endDate = $('input[id=to]').val();
+			endDate = endDate.split('/');
+			endDate = endDate[2]+"-"+endDate[1]+"-"+endDate[0];
+		var endTime = $('input[id=toTime]').val();
+			endTime = endTime.split(':');
+			endTime = (endTime[0]-6)+":"+endTime[1];
         
         var formData = new FormData();
         formData.append('name', $('input[name=projectname]').val());
-        formData.append('startdate', $('input[id=from]').val()+" "+$('input[id=fromTime]').val());
-        formData.append('enddate', $('input[id=to]').val()+" "+$('input[id=toTime]').val());
+        formData.append('startdate', startDate+" "+startTime);
+        formData.append('enddate', endDate+" "+endTime);
         formData.append('description', $('textarea[name=description]').val());
         formData.append('member', JSON.stringify(getMember()));
         formData.append('category', $('select[name=category]').val());
@@ -383,11 +395,14 @@ function submitCreate(){
                 var response = request.responseText;
                 if(typeof(response) == "string"){
                     response = JSON.parse(request.responseText);
-                    if(response.success = true){
-                    	alert("บันทึกสำเร็จ");
-                    	window.location.assign("$baseUrl/project");
+                    if(response.success == true){
+                    	$("#resultValue").html('บันทึกสำเร็จ');
+                    	$('#result').modal('show');
+//                     	window.location.assign("$baseUrl/project");
                     }else{
-                    	alert("บันทึกไม่สำเร็จ");
+                    	$("#resultValue").html('บันทึกไม่สำเร็จ');
+                    	$('#result').modal('show');
+                    	console.log(response);
                     }
                 }
             }
@@ -591,7 +606,7 @@ $this->registerJs($str2, View::POS_END);
                                                                 <span class="required"> * </span>
                                                             </label>
                                                             <div class="col-md-5">
-                                                                <input type="text" class="form-control" name="projectname" placeholder="ชื่อโครงการ" id="projectname" maxlength="30"/>
+                                                                <input type="text" class="form-control" name="projectname" placeholder="ชื่อโครงการ" id="projectname" maxlength="50"/>
                                                                 <span id="error-name" class="error-date"></span>
                                                             </div>
                                                         </div>
@@ -780,7 +795,7 @@ $this->registerJs($str2, View::POS_END);
                                                         <div class="col-md-12" >
                                                             <div class="row">
                                                                 <label class="col-md-3 control-label" style="align:right;">
-                                                                    ต้องการสร้างทีมใหม่หรือไม่
+                                                                   	 ต้องการสร้างทีมใหม่หรือไม่
                                                                 </label>
                                                                 <div class="col-md-3" >
                                                                     <input type="radio" name="want" id="want"/>    
@@ -830,7 +845,7 @@ $this->registerJs($str2, View::POS_END);
                 <!-- END CONTENT BODY -->
             </div>
     <!-- END CONTENT -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-target=".bs-example-modal-sm">
+    <div class="modal fade" id="question" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-target=".bs-example-modal-sm">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	     <!-- ********** BODY MODAL ********** -->
@@ -847,6 +862,19 @@ $this->registerJs($str2, View::POS_END);
 				 	<button id="accept" class="btn btn-primary" data-dismiss="modal" aria-label="Close">ตกลง</button>
 				 	<button id="cancel" class="btn btn-default" data-dismiss="modal" aria-label="Close">ยกเลิก</button>
 				</div>
+		    </section>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<!-- 	result from save -->
+	<div class="modal fade" id="result" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-target=".bs-example-modal-sm">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	     <!-- ********** BODY MODAL ********** -->
+	      <div class="modal-body">
+	        <section class="content-modal">
+	        	<span id="resultValue"></span><br>
 		    </section>
 	      </div>
 	    </div>
