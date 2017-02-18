@@ -72,9 +72,7 @@ class ProjectController extends Controller
 		}
 		if(!empty($userId)){
 			if(!empty($type)){
-				
 				$query->andwhere(['member' => ['$elemMatch' => ['userId' => $userId,'type' => (int)$type]]]);
-			
 			}
 			else{
 				$query->andwhere(array('member.userId' => $userId));
