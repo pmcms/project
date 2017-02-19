@@ -125,19 +125,23 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 							</tr>
 						</table>
 						<div class="text-left">
-						<?php if((int)$arrdate1[(string)$field->_id] == 0):
+						<?php if($arrdate1[(string)$field->_id] == 0):
 							 ?><font>
-						 <?php elseif((int)$arrtask1[(string)$field->_id] == 0):
+						 <?php elseif($arrtask1[(string)$field->_id] == 0):
 							 ?><font>
-						<?php elseif((int)($arrdate1[(string)$field->_id]/(int)$arrdate1[(string)$field->_id])*100 >= ((int)$arrtask2[(string)$field->_id]/(int)$arrtask1[(string)$field->_id])*100):
-							 ?><font color="orange">
+						<?php elseif(($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100 
+								< 
+								($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100):
+							 ?><font>
 						<?php 
-							elseif (((int)(($arrdate1[(string)$field->_id]/(int)$arrdate1[(string)$field->_id])*100)/2 >= ((int)$arrtask2[(string)$field->_id]/(int)$arrtask1[(string)$field->_id])*100)):
-							?><font color="red">
+							elseif ((($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100)/2 
+									<= 
+									($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100):
+							?><font color="orange">
 						<?php 
 						else:
 						?>
-						<font >
+						<font color="red">
 						<?php endif;?>
 						
 						

@@ -123,21 +123,26 @@ class ProjectController extends Controller
     	$date1 = null;
     	$date2 = null;
     	$date3 = null;
+    	$date4 = null;
+    	$date5 = null;
     	$arrdate1 = [];
     	$arrdate2 = [];
     	$arrtask1 = [];
     	$arrtask2 = [];
     	if($projectdate){
     		foreach ($projectdate as $obj){
-    			$date1 = date('Y/m/d',  strtotime('+6 Hour',$obj->start_date["sec"]));
-    			$date2 = date('Y/m/d',  strtotime('+6 Hour',$obj->end_date["sec"]));
-    			$date3 = date('Y/m/d ',  strtotime('+6 Hour',$now->sec));
-    			$arrdate1[(string)$obj->_id] =(int)$date2-(int)$date1;
-    			$arrdate2[(string)$obj->_id] = (int)$date3-(int)$date1;
-    			$arrtask1[(string)$obj->_id] = (int)Task::find()->where(['project'=>$obj->_id])->count();
-    			$arrtask2[(string)$obj->_id] = (int)Task::find()->where(['project'=>$obj->_id, 'type'=>1])->count();
+    			$date1 = date_create(date('Y/m/d',  strtotime('+6 Hour',$obj->start_date["sec"])));
+    			$date2 = date_create(date('Y/m/d',  strtotime('+6 Hour',$obj->end_date["sec"])));
+    			$date3 = date_create(date('Y/m/d ',  strtotime('+6 Hour',$now->sec)));
+    			$date4 = date_diff($date1,$date2);
+    			$date5 = date_diff($date1,$date3);
+    			$arrdate1[(string)$obj->_id] = (int)$date4->days;
+    			$arrdate2[(string)$obj->_id] = (int)$date5->days;
+    			$arrtask1[(string)$obj->_id] = Task::find()->where(['project'=>$obj->_id])->count();
+    			$arrtask2[(string)$obj->_id] = Task::find()->where(['project'=>$obj->_id, 'status'=> 1])->count();
     		}
     	}
+    	
     	
     	if($alert != null){
     		$alert = ($alert)?true:false;
