@@ -208,7 +208,7 @@ function lenderTeamMember(){
     $.each(dataTeam, function(index, value) {
         lender = lender.concat('<tr height=20><td colspan="2"><b>'+
                  value.name+'</b></td>'+
-                 '<td width="50%"><div class="text-right">'+
+                 '<td width="20%"><div class="text-right">'+
                  '<a href="javascript:;" type="button" class="right-team btn red btn-outline" style="padding:6px 10px 6px !important; font-size:15px;"'+
                  'arr-id=\"'+value.teamId+'\"'+
                  'arr-name=\"'+value.name+"\""+'>'+
@@ -218,7 +218,7 @@ function lenderTeamMember(){
         $.each(value.member, function(indexMember, valueMember) {
             lender = lender.concat('<tr height=20><td style=\"text-align:center\">&nbsp;&nbsp;</td>'+
                     '<td>&nbsp;'+valueMember.name+'</td>'+
-                    '<td width="50%"><div class="text-right">'+
+                    '<td width="20%"><div class="text-right">'+
                     '<a href="javascript:;" type="button" class="right-member-team btn red btn-outline" style="padding:6px 10px 6px !important;font-size:15px;"'+
                     'arr-id=\"'+valueMember.userId+'\" '+
                     'arr-team-id=\"'+value.teamId+'\"'+
@@ -361,7 +361,10 @@ $('#nameUser').keyup(function(){
 });
 
 function submitCreate(){
-
+	
+	var isDuplicate = $('#duplicateTeamname').is(":visible");
+	
+	if(!isDuplicate){
 		var isCreateTeam = $("#want").is(':checked');
 		var startDate = $('input[id=from]').val();
 			startDate = startDate.split('/');
@@ -412,13 +415,20 @@ function submitCreate(){
                     	$("#resultValue").html('บันทึกไม่สำเร็จ');
                     	if(response.isDuplicateProject == true){
                     		$("#isDuplicateProject").html('&nbsp;&nbsp;&nbsp;&nbsp;- ฃื่อโครงการซ้ำ เนื่องจากผู้ใช้งานท่านอื่นได้ใช้ชื่อโครงการนี้แล้ว');
-                    	}else{
+                    		$("#error-name").html("ชื่อโครงการซ้ำ");
+                    		$('#error-name').show();
+                    		$('#next').hide();
+						}else{
                     		$("#isDuplicateProject").html('');
+                    		$('#error-name').hide();
                     	}
                     	if(response.isDuplicateTeam == true){
                     		$("#isDuplicateTeam").html('&nbsp;&nbsp;&nbsp;&nbsp;- ฃื่อทีมซ้ำ เนื่องจากผู้ใช้งานท่านอื่นได้ใช้ชื่อทีมนี้แล้ว');
+                    		$("#duplicateTeamname").html('ชื่อทีมซ้ำ');
+                    		$("#duplicateTeamname").show();
                     	}else{
                     		$("#isDuplicateTeam").html('');
+                    		$("#duplicateTeamname").hide();
                     	}
                     	$('#result').modal('show');
                     	console.log(response);
@@ -427,6 +437,7 @@ function submitCreate(){
             }
         };
         request.send(formData);
+ 	}
 };
 
 $("#projectname").blur(function(){
@@ -575,6 +586,10 @@ function getDataAutocomplete(){
 	}
     return data;
 }
+
+$('#teamname').change(function(){
+	$('#duplicateTeamname').hide();
+})
 EOT;
 
 $this->registerJs($str2, View::POS_END);
@@ -832,7 +847,8 @@ $this->registerJs($str2, View::POS_END);
                                                                 </label>
                                                                 <div class="col-md-4" >
                                                                     <input class="form-control" type="text"  name="newteamname" id="teamname" placeholder="ชื่อทีม" disabled/>
-                                                                    <span id="teamrequire" class="error-date"><span>
+                                                                    <span id="teamrequire" class="error-date"></span>
+                                                                    <span id="duplicateTeamname" class="error-date" style="display: none;"></span>
                                                                 </div>
                                                             </div><br> <br> <br>
                                                         </div>

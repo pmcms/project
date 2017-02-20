@@ -55,6 +55,7 @@ $(function(){
             $("#nowant").click(function(){
                 $("#teamname").prop('disabled', true);
                 $("#teamrequire").hide();
+                $("#duplicateTeamname").hide();
             });
 
             $("#teamname").click(function(){
