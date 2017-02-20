@@ -191,14 +191,14 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 		<?php } ?>
 	<?php endforeach; 
 	else:?>
-		ไม่พบรายการโครงการ
+		<p align="center" style="font-size:160%;">ไม่พบรายการโครงการ</p>
 		<?php endif;?>
 			<div class="row">
 				<div class="col-md-12 col-sm-12">
 					<?php $lastRecordNo = (($pagination->page+1) * $pagination->limit); 
 					if ($lastRecordNo > $pagination->totalCount) $lastRecordNo = $pagination->totalCount?>
 					<div class="dataTables_info" role="status" aria-live="polite" style="padding-left: 10px;">
-						รายการที่  <?= $pagination->offset + 1?> ถึง   <?= $lastRecordNo ?> จาก  <?= $pagination->totalCount?> รายการ
+						รายการที่ <?php if($value != null):?> <?= $pagination->offset + 1?><?php else:?><?= $pagination->offset?><?php endif;?> ถึง   <?= $lastRecordNo ?> จาก  <?= $pagination->totalCount?> รายการ
 					</div>
 					<div class="dataTables_paginate paging_bootstrap_full_number text-center">
 						<?= LinkPager::widget(['pagination' => $pagination,]);?>
