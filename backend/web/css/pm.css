@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 .box-height{
-	height: 70px;
+	height: 90px;
 }
 .skin-green-light .main-header .navbar {
     background-color: #690 !important;
@@ -69,4 +69,7 @@ label.error, .error-date {
 .form-control[readonly] {
     background-color: #fff;
     opacity: 1;
+}
+.box-body-height {
+	height: 50px;
 }

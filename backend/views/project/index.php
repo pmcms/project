@@ -111,11 +111,10 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 		<?php } ?>
 			<div class="col-md-4">
 				<div class="box box-solid">
-				<a href="javascript:;" title="เข้าสู่งานในโครงการ">  
-					<div class="box-header with-border box-height">
-						<table style="width:100%" class="col-md-12">
+					<div class="box-body-height">
+						<table style="width:95%; margin: 10px" class="col-md-12">
 							<tr>
-								<td >
+								<td width="85%">
 									<small class="text-muted">
 										<?php 
 										$date1 =0;
@@ -128,37 +127,49 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 											$date2 =($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100;
 										endif;
 										
-										echo "ผู้สร้าง"." : ".$arrUser[(string)$field->create_by]; ?>
+										?>
 									</small>
+									
+									<?php if($arrdate1[(string)$field->_id] == 0):
+									 ?><font>
+									 <?php elseif($arrtask1[(string)$field->_id] == 0):
+										 ?><font>
+									<?php elseif(($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100 
+											< 
+											($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100):
+										 ?><font>
+									<?php 
+										elseif ((($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100)/2 
+												<= 
+												($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100):
+										?><font color="orange">
+									<?php 
+									else:
+									?>
+								<font color="red">
+								<?php endif;?>
+						
+								<?php echo $field->project_name; ?></font>
 								</td>
-								<td align="right">
+								<td align="right" style="vertical-align: top;">
 									<span ><?php echo $lebel[$field->status]; ?></span>
 								</td>
 							</tr>
 						</table>
+					</div>  
+					<div class="box-header with-border box-height">
+						
 						<div class="text-left">
-						<?php if($arrdate1[(string)$field->_id] == 0):
-							 ?><font>
-						 <?php elseif($arrtask1[(string)$field->_id] == 0):
-							 ?><font>
-						<?php elseif(($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100 
-								< 
-								($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100):
-							 ?><font>
-						<?php 
-							elseif ((($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100)/2 
-									<= 
-									($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100):
-							?><font color="orange">
-						<?php 
-						else:
-						?>
-						<font color="red">
-						<?php endif;?>
-						
-						
-								<?php echo $field->project_name; ?></font>
-								
+							<div>
+								<small>
+									<?php echo "ตำแหน่ง"." : "; ?>
+								</small>
+							</div>
+							<div>
+								<small>
+									<?php echo "วันที่สิ้นสุด"." : ".date('d/m/Y H:i:s',  strtotime('+6 Hour',$field->end_date["sec"])); ?>
+								</small>
+							</div>
 							<div class="progress-group">
 										<small>
                    							 <span class="progress-text">progress</span>
@@ -169,14 +180,10 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
                    					</div>
                  			</div>
 						</div>
-						<div class="pull-right text-muted">
-							<small>
-								<?php echo "วันที่สิ้นสุด"." : ".date('d/m/Y H:i:s',  strtotime('+6 Hour',$field->end_date["sec"])); ?>
-							</small>
-						</div>
+						
 								
-					</div></a>
-					<div class="box-body-height">
+					</div>
+					<div class="box-body-height" style="height: 25px;">
 						<div class="">
 							<div class="text-right">
 								<a href="javascript:;" class="project-detail" 
