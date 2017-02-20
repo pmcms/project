@@ -122,7 +122,8 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 										if($arrdate1[(string)$field->_id] != 0 ):
 										$date1=($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100;
 										
-										elseif ($arrtask1[(string)$field->_id] != 0):
+										endif;
+										if ($arrtask1[(string)$field->_id] != 0):
 											$date2 =($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100;
 										endif;
 										
