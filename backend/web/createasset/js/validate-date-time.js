@@ -33,7 +33,12 @@ $(function(){
                         $("#requireDate").show();
                         $("#requireDate").html("<p><font color=\"red\">วันที่เริ่มต้นหรือวันที่สิ้นสุดไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง</font></p>");
                     }else{
-                        $("#next").show();
+                    	var isShowErrorName = $('#error-name').text();
+                    	if(isShowErrorName != ""){
+                    		$('#next').hide();
+                    	}else{
+                    		$('#next').show();
+                    	}
                         $("#requireDate").hide();
                     }
                 }

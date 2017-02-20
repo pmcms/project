@@ -30,6 +30,15 @@ var dataTeam = [];
 var isFirstLoad = true;
 var dataAutocomplete = "";
 
+$(document).on('click', "a#back", function() {
+    var isShowErrorName = $('#error-name').text();
+	if(isShowErrorName != ""){
+		$('#next').hide();
+	}else{
+		$('#next').show();
+	}
+});
+
 function addUserMenber(newUser) {
     dataUser.push(newUser);
 //  child.removeClass('fa fa-plus').addClass('fa fa-minus');
@@ -414,7 +423,7 @@ function submitCreate(){
                     	$("#img").html('<img src="$baseUrl/createasset/img/cross.png" height="17px"></img>');
                     	$("#resultValue").html('บันทึกไม่สำเร็จ');
                     	if(response.isDuplicateProject == true){
-                    		$("#isDuplicateProject").html('&nbsp;&nbsp;&nbsp;&nbsp;- ฃื่อโครงการซ้ำ เนื่องจากผู้ใช้งานท่านอื่นได้ใช้ชื่อโครงการนี้แล้ว');
+                    		$("#isDuplicateProject").html('&nbsp;&nbsp;&nbsp;&nbsp;- ฃื่อโครงการซ้ำ เนื่องจากในขณะเดียวกันนี้มีผู้ใช้งานท่านอื่นใช้ชื่อโครงการนี้แล้ว');
                     		$("#error-name").html("ชื่อโครงการซ้ำ");
                     		$('#error-name').show();
                     		$('#next').hide();
@@ -446,6 +455,7 @@ $("#projectname").blur(function(){
 
 $('#department').change(function(){
 	callIsDuplicate();
+	checkErrorName();
 	isFirstLoad = false;
 	$.ajax({
 		url: '$baseUrl/project/getproject',
@@ -858,7 +868,7 @@ $this->registerJs($str2, View::POS_END);
                                             <div class="form-actions">
                                                 <div class="row">
                                                     <div class="col-md-offset-3 col-md-9">
-                                                        <a href="javascript:;" class="btn default button-previous disabled" style="display: ">
+                                                        <a href="javascript:;" class="btn default button-previous disabled" style="display: " id="back">
                                                             <i class="fa fa-angle-left"></i> กลับ </a>
                                                         <a href="javascript:;" class="btn btn-outline green button-next" id="next"> ถัดไป
                                                             <i class="fa fa-angle-right"></i>
