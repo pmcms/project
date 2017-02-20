@@ -158,12 +158,23 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 						
 						
 								<?php echo $field->project_name; ?></font>
+								
+							<div class="progress-group">
+										<small>
+                   							 <span class="progress-text">progress</span>
+                   						 	 <span class="progress-number"><?php echo $date2;?></span>
+                   						</small>
+                    				<div class="progress sm">
+                   				   		<div class="progress-bar progress-bar-aqua" style="width: <?php echo $date2;?>%"></div>
+                   					</div>
+                 			</div>
 						</div>
 						<div class="pull-right text-muted">
 							<small>
 								<?php echo "วันที่สิ้นสุด"." : ".date('d/m/Y H:i:s',  strtotime('+6 Hour',$field->end_date["sec"])); ?>
 							</small>
 						</div>
+								
 					</div></a>
 					<div class="box-body-height">
 						<div class="">
