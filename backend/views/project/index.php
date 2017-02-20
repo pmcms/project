@@ -115,8 +115,11 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 						<table style="width:95%; margin: 10px" class="col-md-12">
 							<tr>
 								<td width="85%">
-									<small class="text-muted">
+									
 										<?php 
+										if($field->status ==3 || $field->status ==4):
+										?><font>
+										<?php else:
 										$date1 =0;
 										$date2 =0;
 										if($arrdate1[(string)$field->_id] != 0 ):
@@ -128,26 +131,27 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 										endif;
 										
 										?>
-									</small>
+									
 									
 									<?php if($arrdate1[(string)$field->_id] == 0):
 									 ?><font>
 									 <?php elseif($arrtask1[(string)$field->_id] == 0):
 										 ?><font>
-									<?php elseif(($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100 
+									<?php elseif($date1 
 											< 
-											($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100):
+											$date2):
 										 ?><font>
 									<?php 
-										elseif ((($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100)/2 
+										elseif ($date1/2 
 												<= 
-												($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100):
+												$date2):
 										?><font color="orange">
 									<?php 
 									else:
 									?>
 								<font color="red">
-								<?php endif;?>
+								<?php endif;
+								endif;?>
 						
 								<?php echo $field->project_name; ?></font>
 								</td>
@@ -162,7 +166,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 						<div class="text-left">
 							<div>
 								<small>
-									<?php echo "ตำแหน่ง"." : "; ?>
+									<?php echo "ตำแหน่ง"." : ".Project::$arrType[(int)$arrtype[(string)$field->_id]];?>
 								</small>
 							</div>
 							<div>
@@ -172,11 +176,12 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 							</div>
 							<div class="progress-group">
 										<small>
-                   							 <span class="progress-text">progress</span>
-                   						 	 <span class="progress-number"><?php echo $date2;?></span>
+                   							 <span class="progress-text">progress <?php echo (int)$date1."% วัน";?></span>
+                   							 
+                   						 	 <span class="progress-number"><?php echo (int)$date2;?>%</span>
                    						</small>
                     				<div class="progress sm">
-                   				   		<div class="progress-bar progress-bar-aqua" style="width: <?php echo $date2;?>%"></div>
+                   				   		<div class="progress-bar progress-bar-aqua" style="width: <?php echo (int)$date2;?>%"></div>
                    					</div>
                  			</div>
 						</div>

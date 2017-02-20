@@ -119,6 +119,7 @@ class ProjectController extends Controller
     		}
     	}
     	$projectdate = Project::find()->all();
+    	$projecttype = Project::find(['member.userId' => $userId])->all();
     	$now = new \MongoDate();
     	$date1 = null;
     	$date2 = null;
@@ -129,17 +130,36 @@ class ProjectController extends Controller
     	$arrdate2 = [];
     	$arrtask1 = [];
     	$arrtask2 = [];
+    	$arrtype = [];
     	if($projectdate){
     		foreach ($projectdate as $obj){
     			$date1 = date_create(date('Y/m/d',  strtotime('+6 Hour',$obj->start_date["sec"])));
     			$date2 = date_create(date('Y/m/d',  strtotime('+6 Hour',$obj->end_date["sec"])));
     			$date3 = date_create(date('Y/m/d ',  strtotime('+6 Hour',$now->sec)));
+    			if($date1 <= $date3){
     			$date4 = date_diff($date1,$date2);
     			$date5 = date_diff($date1,$date3);
     			$arrdate1[(string)$obj->_id] = (int)$date4->days;
     			$arrdate2[(string)$obj->_id] = (int)$date5->days;
     			$arrtask1[(string)$obj->_id] = Task::find()->where(['project'=>$obj->_id])->count();
     			$arrtask2[(string)$obj->_id] = Task::find()->where(['project'=>$obj->_id, 'status'=> 1])->count();
+    			}
+    			else{
+    				$arrdate1[(string)$obj->_id] = 0;
+    				$arrdate2[(string)$obj->_id] = 0;
+    			}
+    			$arrtask1[(string)$obj->_id] = Task::find()->where(['project'=>$obj->_id])->count();
+    			$arrtask2[(string)$obj->_id] = Task::find()->where(['project'=>$obj->_id, 'status'=> 1])->count();
+    			
+    		}
+    	}
+    	if($projecttype){
+    		foreach ($projecttype as $obj2){
+    			foreach ($obj2->member as $obj3){
+    				if($obj3['userId'] == $userId){
+    					$arrtype[(string)$obj2->_id] = (int)$obj3['type'];
+    			    		}
+    				}
     		}
     	}
     	
@@ -160,6 +180,7 @@ class ProjectController extends Controller
         		'arrdate2' => $arrdate2,
         		'arrtask1' => $arrtask1,
         		'arrtask2' => $arrtask2,
+        		'arrtype' => $arrtype,
         ]);
     }
     
