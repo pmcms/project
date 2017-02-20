@@ -110,13 +110,23 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 		<?php } ?>
 			<div class="col-md-4">
 				<div class="box box-solid">
-				<a href="javascript:;" title="เข้าสู่งานในโครงการ">  
+				<a href="<?php echo $baseUrl."/index.php?r=task"?>" title="เข้าสู่งานในโครงการ">  
 					<div class="box-header with-border box-height">
 						<table style="width:100%" class="col-md-12">
 							<tr>
 								<td >
 									<small class="text-muted">
-										<?php echo "ผู้สร้าง"." : ".$arrUser[(string)$field->create_by]; ?>
+										<?php 
+										$date1 =0;
+										$date2 =0;
+										if($arrdate1[(string)$field->_id] != 0 ):
+										$date1=($arrdate2[(string)$field->_id]/$arrdate1[(string)$field->_id])*100;
+										
+										elseif ($arrtask1[(string)$field->_id] != 0):
+											$date2 =($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100;
+										endif;
+										
+										echo "ผู้สร้าง"." : ".$arrUser[(string)$field->create_by]."   วัน  :".(int)$date1."   งาน  :".(int)$date2; ?>
 									</small>
 								</td>
 								<td align="right">
@@ -202,7 +212,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 	        	<a class="btn-sm" href="javascript:;" title="เข้าสู่งานในโครงการ">
 					<i class="fa fa-folder-open-o"></i>
 				</a>
-				<a class="btn-sm" href="javascript:;" title="แก้ไขโครงการ">
+				<a class="btn-sm" href="<?php echo $baseUrl."/project/update";?>" title="แก้ไขโครงการ">
 					<i class="fa fa-edit"></i>
 				</a>
 				<a class="btn-sm" href="javascript:;" title="ลบโครงการ">
@@ -211,7 +221,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 				<a class="btn-sm" href="javascript:;" title="ยกเลิกโครงการ">
 					<i class="fa fa-ban"></i>
 				</a>
-				<a class="btn-sm" href="javascript:;" title="ตั้งค่าโครงการ">
+				<a class="btn-sm" href="<?php echo $baseUrl."/project/setting";?>" title="ตั้งค่าโครงการ">
 					<i class="fa fa-cogs"></i>
 				</a>
 	        </div>
@@ -221,7 +231,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 	        <section class="content-modal">
 		          <div class="nav-tabs-custom">
 		            <ul class="nav nav-tabs">
-		              <li class="active"><a href="#fa-icons" data-toggle="tab">รายละเอียด</a></li>
+		              <li class="active"><a href="#fa-icons" data-toggle="tab">รายละเอียดโครงการ</a></li>
 		              <li><a href="#comment" data-toggle="tab">Comment</a></li>
 		              <li><a href="#log" data-toggle="tab">Log</a></li>
 		            </ul>
@@ -229,54 +239,62 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 		            <div class="tab-content">
 		              <!-- Font Awesome Icons -->
 		              <div class="tab-pane active" id="fa-icons">
-		              		<div class="row">
-                                <label class="control-label col-md-3 text-right">รายละเอียด : </label>
-                                <div class="col-md-9">
-                                    <span id="modal-description"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="control-label col-md-3 text-right">วันที่เริ่มต้น : </label>
-                                <div class="col-md-9">
-                                    <span id="modal-start-date"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="control-label col-md-3 text-right">วันที่สิ้นสุด : </label>
-                                <div class="col-md-9">
-                                    <span id="modal-end-date"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="control-label col-md-3 text-right">ประเภทโครงการ : </label>
-                                <div class="col-md-9">
-                                    <span id="modal-project-type"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="control-label col-md-3 text-right">แผนก : </label>
-                                <div class="col-md-9">
-                                    <span id=""></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="control-label col-md-3 text-right">ผู้สร้าง : </label>
-                                <div class="col-md-9">
-                                    <span id="modal-create-by"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="control-label col-md-3 text-right">วันที่สร้าง : </label>
-                                <div class="col-md-9">
-                                    <span id="modal-create-date"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="control-label col-md-3 text-right">สถานะ : </label>
-                                <div class="col-md-9">
-                                    <span id="modal-status"></span>
-                                </div>
-                            </div>
+							<div class="row">
+								<div class="col-md-3 text-right">
+									<label class="control-label">รายละเอียด : </label>
+								</div>
+								<div class="col-md-9">
+									<span id="modal-description"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 text-right">
+									<label class="control-label">วันที่เริ่มต้น : </label>
+								</div>
+								<div class="col-md-9">
+									<span id="modal-start-date"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 text-right">
+									<label class="control-label">วันที่สิ้นสุด : </label>
+								</div>
+								<div class="col-md-9">
+									<span id="modal-end-date"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 text-right">
+									<label class="control-label">ประเภทโครงการ : </label>
+								</div>
+								<div class="col-md-9">
+									<span id="modal-project-type"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 text-right">
+									<label class="control-label">ผู้สร้าง : </label>
+								</div>
+								<div class="col-md-9">
+									<span id="modal-create-by"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 text-right">
+									<label class="control-label">วันที่สร้าง : </label>
+								</div>
+								<div class="col-md-9">
+									<span id="modal-create-date"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 text-right">
+									<label class="control-label">สถานะ : </label>
+								</div>
+								<div class="col-md-9">
+									<span id="modal-status"></span>
+								</div>
+							</div>
 		              </div>
 		              <!-- /#fa-icons -->
 						
