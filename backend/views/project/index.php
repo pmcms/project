@@ -128,7 +128,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 											$date2 =($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100;
 										endif;
 										
-										echo "ผู้สร้าง"." : ".$arrUser[(string)$field->create_by]."   วัน  :".(int)$date1."   งาน  :".(int)$date2; ?>
+										echo "ผู้สร้าง"." : ".$arrUser[(string)$field->create_by]; ?>
 									</small>
 								</td>
 								<td align="right">
