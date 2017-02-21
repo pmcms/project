@@ -78,7 +78,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 					<div class="col-md-3">
 						<table width="100%" style="border: 1px solid #e0dede; background-color: #f4f4f4;">
 							<tr>
-								<td width="100px" style="text-align: center;"><span>ชื่อโครงการ</span></td>
+								<td width="90px" style="text-align: center;"><span>ชื่อโครงการ</span></td>
 								<td><?php echo Html::textInput('name', $name, ['id'=> 'project_name', 'class'=> 'form-control', 'placeholder'=> 'ชื่อโครงการ', 'onchange'=>'this.form.submit()']);?></td>
 							</tr>
 						</table>
@@ -87,7 +87,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 					<div class="col-md-3">
 						<table width="100%" style="border: 1px solid #e0dede; background-color: #f4f4f4;">
 							<tr>
-								<td width="100px" style="text-align: center;"><span>สถานะ</span></td>
+								<td width="90px" style="text-align: center;"><span>สถานะ</span></td>
 								<td><?php echo Html::dropDownList('status', $status, [0=>'ทั้งหมด']+ Project::$arrSendStatus , ['id'=> 'status', 'class'=> 'form-control','onchange'=>'this.form.submit()'])?></td>
 							</tr>
 						</table>
@@ -95,7 +95,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 					<div class="col-md-3">
 						<table width="100%" style="border: 1px solid #e0dede; background-color: #f4f4f4;">
 							<tr>
-								<td width="100px" style="text-align: center;"><span>จัดเรียง</span></td>
+								<td width="90px" style="text-align: center;"><span>จัดเรียง</span></td>
 								<td><?php echo Html::dropDownList('sort', $sort,  Project::$arrSort , ['id'=> 'sort', 'class'=> 'form-control' ,'onchange'=>'this.form.submit()'])?></td>
 							</tr>
 						</table>
@@ -103,7 +103,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 					<div class="col-md-3">
 						<table width="100%" style="border: 1px solid #e0dede; background-color: #f4f4f4;">
 							<tr>
-								<td width="100px" style="text-align: center;"><span>ตำแหน่ง</span></td>
+								<td width="90px" style="text-align: center;"><span>ตำแหน่ง</span></td>
 								<td><?php echo Html::dropDownList('type', $type,[0=>'ทั้งหมด']+ Project::$arrType, ['id'=> 'type', 'class'=> 'form-control', 'placeholder'=> 'ตำแหน่ง', 'onchange'=>'this.form.submit()']);?></td>
 							</tr>
 						</table>
