@@ -63,7 +63,7 @@ class ProjectController extends Controller
 		$query = Project::find();
 		
 		if(!empty($status)){
-			$conditions['status'] = (int)$status;
+			$conditions['status'] = $status;
 		}
 		if(!empty($conditions)){
 			$query->where($conditions);
@@ -120,6 +120,7 @@ class ProjectController extends Controller
     	}
     	$projectdate = Project::find()->all();
     	$projecttype = Project::find(['member.userId' => $userId])->all();
+    	$depart = Department::find()->all();
     	$now = new \MongoDate();
     	$date1 = null;
     	$date2 = null;
@@ -131,6 +132,7 @@ class ProjectController extends Controller
     	$arrtask1 = [];
     	$arrtask2 = [];
     	$arrtype = [];
+    	$arrdepart = [];
     	if($projectdate){
     		foreach ($projectdate as $obj){
     			$date1 = date_create(date('Y/m/d',  strtotime('+6 Hour',$obj->start_date["sec"])));
@@ -162,6 +164,11 @@ class ProjectController extends Controller
     				}
     		}
     	}
+    	if($depart){
+    		foreach ($depart as $obj){
+    			$arrdepart[(string)$obj->_id] = $obj->department_name;
+    		}
+    	}
     	
     	
     	if($alert != null){
@@ -181,6 +188,7 @@ class ProjectController extends Controller
         		'arrtask1' => $arrtask1,
         		'arrtask2' => $arrtask2,
         		'arrtype' => $arrtype,
+        		'arrdepart' => $arrdepart,
         ]);
     }
     
@@ -245,11 +253,6 @@ class ProjectController extends Controller
     			for ($i = 0; $i < $nummberMember; $i++) {
     				$projectMember[$i]['userId'] = new ObjectID($member[$i]->userId);
     				$projectMember[$i]['teamId'] = new ObjectID($newTeamId);
-    				if($currentId == $projectMember[$i]['userId']){
-    					$projectMember[$i]['type'] = 1;
-    				}else{
-    					$projectMember[$i]['type'] = 2;
-    				}
     			}
     			$member = $projectMember;
     		}else{
@@ -262,11 +265,6 @@ class ProjectController extends Controller
     				$nummberTeam = sizeof($team);
     				for ($j = 0; $j < $nummberTeam; $j++) {
     					$member[$i]->team[$j]->teamId = new ObjectID($team[$j]->teamId);
-    				}
-    				if($currentId == $member[$i]->userId){
-    					$member[$i]->type = 1;
-    				}else{
-    					$member[$i]->type = 2;
     				}
     			}
     		}

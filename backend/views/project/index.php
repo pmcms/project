@@ -29,6 +29,7 @@ $str = <<<EOT
 		var createDate = $(this).attr('project-create-date');
 		var createBy = $(this).attr('project-create-by');
 		var project = $(this).attr('project');
+		var depart = $(this).attr('project-department-name');
 		$('.modal-title').text(name);
 		$('#modal-description').text(description);
 		$('#modal-start-date').text(startDate);
@@ -37,6 +38,7 @@ $str = <<<EOT
 		$('#modal-status').text(status);
 		$('#modal-create-date').text(createDate);
 		$('#modal-create-by').text(createBy);
+		$('#modal-department-name').text(depart);
 		$('.modal').modal('show');
 	})
 
@@ -204,6 +206,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 									project-status="<?php echo Project::$arrSendStatus[$field->status]; ?>"
 									project-create-date="<?=date('d/m/Y H:i:s',  strtotime('+6 Hour',$field->create_date["sec"]));?>"
 									project-create-by="<?php echo $arrUser[(string)$field->create_by];?>"
+									project-department-name="<?php echo $arrdepart[(string)$field->departmentId];?>"
 									title="ดูรายละเอียดโครงการ">
 									<span>รายละเอียด</span>
 									<i class="fa fa-angle-right"></i>&nbsp;
@@ -298,7 +301,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
                             <div class="row">
                                 <label class="control-label col-md-3 text-right">แผนก : </label>
                                 <div class="col-md-9">
-                                    <span id=""></span>
+                                    <span id="modal-department-name"></span>
                                 </div>
                             </div>
                             <div class="row">
