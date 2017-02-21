@@ -134,8 +134,18 @@ function removeTeamMember(id, parentId){
 $(document).on('click', "a.right-team", function() {
     var id = $(this).attr('arr-id');
     var name = $(this).attr('arr-name');
+    
+    $("#acceptTeam").attr('arr-id', id);
+    $("#acceptTeam").attr('arr-team-name', name);
+    $("#questionTeam").html('ต้องการลบทีม \"'+name+'"\ ออกจากโครงการ');
+    $('#modalTeam').modal('show'); 
+});
+
+$('#acceptTeam').click(function(){
+	var id = $(this).attr('arr-id');
+    var name = $(this).attr('arr-team-name');
     showColumnTeam(name);
-    removeTeam(id); 
+    removeTeam(id);
 });
 
 
@@ -147,7 +157,7 @@ $(document).on('click', "a.right-member-team", function() {
 
     $("#accept").attr('arr-id', id);
     $("#accept").attr('arr-team-id', parentId);
-    $("#question").html('คุณต้องลบ \"'+userName+'"\ ออกจากทีม \"'+teamName+'\" หรือลบผู้ใฃ้งานออกจากโครงการ');
+    $("#question").html('คุณการต้องลบ \"'+userName+'"\ ออกจากทีม \"'+teamName+'\" หรือลบผู้ใฃ้งานออกจากโครงการ');
     $("#choice1").html('ลบออกจากทีม \"'+teamName+'\"');
     $("#choice2").html("ลบออกจากโครงการ");
 	$('#myModal').modal('show');
@@ -204,8 +214,8 @@ $(document).on('click', "a.right-user", function() {
     var parentId = "";
     $("#accept").attr('arr-id', id);
     $("#accept").attr('arr-team-id', parentId);
-    $("#question").html('คุณต้องลบ \"'+name+'\" ออกจากผู้ใช้งานในโครงการหรือลบผู้ใฃ้งานออกจากโครงการ');
-    $("#choice1").html("ลบผู้ใช้งานออกจากผู้ใช้งานในโครงการ");
+    $("#question").html('คุณต้องการลบ \"'+name+'\" ออกจากผู้ใช้งานในโครงการหรือลบผู้ใฃ้งานออกจากโครงการ');
+    $("#choice1").html("ลบออกจากผู้ใช้งานในโครงการ");
     $("#choice2").html("ลบออกจากโครงการ");
 	$('#myModal').modal('show');
 });
@@ -935,4 +945,22 @@ $this->registerJs($str2, View::POS_END);
 	    </div>
 	  </div>
 	</div>
+	
+	<div class="modal fade" id="modalTeam" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-target=".bs-example-modal-sm">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	     <!-- ********** BODY MODAL ********** -->
+	      <div class="modal-body">
+	        <section class="content-modal">
+	        	<span id="questionTeam">คุณต้องการลบออกจากทีมหรือออกจากโครงการ</span><br>
+				<div class="text-right">
+				 	<button id="acceptTeam" class="btn btn-primary" data-dismiss="modal" aria-label="Close">ตกลง</button>
+				 	<button id="cancel" class="btn btn-default" data-dismiss="modal" aria-label="Close">ยกเลิก</button>
+				</div>
+		    </section>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 </div>
