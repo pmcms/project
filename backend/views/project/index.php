@@ -131,7 +131,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 										if($field->status ==3 || $field->status ==4):
 										?><font color="gray" style="font-weight: bold">
 										<?php elseif ($field->status ==2):?>
-										<font >
+										<font color="gray" style="font-weight: bold">
 										<?php 
 										else:
 										
