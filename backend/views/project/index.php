@@ -127,7 +127,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 										$date2 =($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100;
 										endif;
 										if($field->status ==3 || $field->status ==4):
-										?><font color="gray">
+										?><font color="gray" style="font-weight: bold">
 										<?php elseif ($field->status ==2):?>
 										<font >
 										<?php 
@@ -138,22 +138,22 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 									
 									
 									<?php if($arrdate1[(string)$field->_id] == 0):
-									 ?><font>
+									 ?><font style="font-weight: bold">
 									 <?php elseif($arrtask1[(string)$field->_id] == 0):
-										 ?><font>
+										 ?><font style="font-weight: bold">
 									<?php elseif($date1 
 											< 
 											$date2):
-										 ?><font>
+										 ?><font style="font-weight: bold">
 									<?php 
 										elseif ($date1/2 
 												<= 
 												$date2):
-										?><font color="orange">
+										?><font color="orange" style="font-weight: bold">
 									<?php 
 									else:
 									?>
-								<font color="red">
+								<font color="red" style="font-weight: bold">
 								<?php endif;
 								endif;?>
 						
