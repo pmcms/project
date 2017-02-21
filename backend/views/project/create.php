@@ -143,10 +143,11 @@ $(document).on('click', "a.right-member-team", function() {
 	var id = $(this).attr('arr-id');
 	var parentId = $(this).attr('arr-team-id');
 	var teamName = $(this).attr('arr-team-name');
+	var userName = $(this).attr('arr-user-name');
 
     $("#accept").attr('arr-id', id);
     $("#accept").attr('arr-team-id', parentId);
-    $("#question").html('คุณต้องลบผู้ใช้งานออกจากทีม \"'+teamName+'\" หรือลบผู้ใฃ้งานออกจากโครงการ');
+    $("#question").html('คุณต้องลบ \"'+userName+'"\ ออกจากทีม \"'+teamName+'\" หรือลบผู้ใฃ้งานออกจากโครงการ');
     $("#choice1").html('ลบออกจากทีม \"'+teamName+'\"');
     $("#choice2").html("ลบออกจากโครงการ");
 	$('#myModal').modal('show');
@@ -203,7 +204,7 @@ $(document).on('click', "a.right-user", function() {
     var parentId = "";
     $("#accept").attr('arr-id', id);
     $("#accept").attr('arr-team-id', parentId);
-    $("#question").html('คุณต้องลบผู้ใช้งานออกจากผู้ใช้งานในโครงการหรือลบผู้ใฃ้งานออกจากโครงการ');
+    $("#question").html('คุณต้องลบ \"'+name+'\" ออกจากผู้ใช้งานในโครงการหรือลบผู้ใฃ้งานออกจากโครงการ');
     $("#choice1").html("ลบผู้ใช้งานออกจากผู้ใช้งานในโครงการ");
     $("#choice2").html("ลบออกจากโครงการ");
 	$('#myModal').modal('show');
@@ -231,7 +232,8 @@ function lenderTeamMember(){
                     '<a href="javascript:;" type="button" class="right-member-team btn red btn-outline" style="padding:6px 10px 6px !important;font-size:15px;"'+
                     'arr-id=\"'+valueMember.userId+'\" '+
                     'arr-team-id=\"'+value.teamId+'\"'+
-                    'arr-team-name=\"'+value.name+'\">'+
+                    'arr-team-name=\"'+value.name+'\"'+
+                    'arr-user-name=\"'+valueMember.name+'\"'+'>'+
                     '<i class=\"fa fa-minus\"></i>'+
                     '</a></div></td></tr>');
         });

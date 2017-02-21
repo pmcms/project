@@ -4,9 +4,13 @@
  * (c) 2014, Chupurnov Valeriy.
  */
 (function( $ ) {
-	var date = new Date();
-	y = date.getFullYear();
-	minYear = y-2;
+//	var date = new Date();
+//	y = date.getFullYear();
+//	minYear = y-2;
+	var newdate = new Date();
+	newdate.setMonth(newdate.getMonth() - 3);
+	var	minDate = new Date(newdate);
+	minYear = minDate.getFullYear();
 	'use strict';
 	var default_options  = {
 		i18n:{
