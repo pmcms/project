@@ -688,6 +688,7 @@ $this->registerJs($str2, View::POS_END);
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <input type="text" id="toTime" class="form-control date-picker" name="stoptime" placeholder="เวลาสิ้นสุด" value="18:00"/>
+                                                            	<span id="requireDate" class="error-date"></span>
                                                             </div>
                                                         </div>
                                                         <div class="row">

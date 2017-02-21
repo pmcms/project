@@ -31,7 +31,7 @@ $(function(){
                     if((to.getTime()-from.getTime()) < 0){
                         $("#next").hide();
                         $("#requireDate").show();
-                        $("#requireDate").html("<p><font color=\"red\">วันที่เริ่มต้นหรือวันที่สิ้นสุดไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง</font></p>");
+                        $("#requireDate").html("<p><font color=\"red\">ช่วงเวลาไม่ถูกต้อง</font></p>");
                     }else{
                     	var isShowErrorName = $('#error-name').text();
                     	if(isShowErrorName != ""){
