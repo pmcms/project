@@ -14,10 +14,16 @@
             </div>
         </form>
         <!-- /.search form -->
-        
+
         <!-- Menu  -->
         <ui class="sidebar-menu">
         	<li class="header">MAIN NAVIGATION</li>
+          <li>
+        		<a href="<?php echo $baseUrl."/category"; ?>">
+        			<i class="fa fa-file"></i>
+        			<span>ประเภทโครงการ</span>
+        		</a>
+        	</li>
         	<li>
         		<a href="<?php echo $baseUrl."/team"; ?>">
         			<i class="fa fa-file"></i>
