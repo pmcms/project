@@ -63,7 +63,7 @@ class ProjectController extends Controller
 		$query = Project::find();
 		
 		if(!empty($status)){
-			$conditions['status'] = $status;
+			$conditions['status'] = (int)$status;
 		}
 		if(!empty($conditions)){
 			$query->where($conditions);
