@@ -117,9 +117,6 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 								<td width="85%">
 									
 										<?php 
-										if($field->status ==3 || $field->status ==4):
-										?><font>
-										<?php else:
 										$date1 =0;
 										$date2 =0;
 										if($arrdate1[(string)$field->_id] != 0 ):
@@ -127,8 +124,15 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 										
 										endif;
 										if ($arrtask1[(string)$field->_id] != 0):
-											$date2 =($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100;
+										$date2 =($arrtask2[(string)$field->_id]/$arrtask1[(string)$field->_id])*100;
 										endif;
+										if($field->status ==3 || $field->status ==4):
+										?><font color="gray">
+										<?php elseif ($field->status ==2):?>
+										<font >
+										<?php 
+										else:
+										
 										
 										?>
 									

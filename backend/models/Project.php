@@ -145,7 +145,7 @@ class Project extends \yii\mongodb\ActiveRecord
     		self::SORT_END_DATE => "วันที่สิ้นสุด"
     );
     public static $arrType = array(
-    		self::TYPE_PROJECT_MANAGER => "ProjectManager",
+    		self::TYPE_PROJECT_MANAGER => "Project Manager",
     		self::TYPE_DEVELOPER => "Developer",
     		self::TYPE_REPORTER => "Reporter"
     		
