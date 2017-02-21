@@ -111,7 +111,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 	<?php if($count == 1){?>
 		<div class="row">
 		<?php } ?>
-			<div class="col-md-4">
+			<div class="col-lg-4">
 				<div class="box box-solid">
 					<div class="box-body-height">
 						<table style="width:95%; margin: 10px" class="col-md-12">
