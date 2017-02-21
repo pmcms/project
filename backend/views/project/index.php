@@ -182,7 +182,7 @@ $this->registerJs($str, View::POS_LOAD, 'form-js');
 							</div>
 							<div class="progress-group">
 										<small>
-                   							 <span class="progress-text">progress <?php echo (int)$date1."% วัน";?></span>
+                   							 <span class="progress-text">progress</span>
                    							 
                    						 	 <span class="progress-number"><?php echo (int)$date2;?>%</span>
                    						</small>
