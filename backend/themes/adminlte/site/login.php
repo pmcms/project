@@ -45,7 +45,7 @@ $fieldOptions2 = [
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-                <?= Html::submitButton('เข้าสู่ระบบ', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('เข้าสู่ระบบ', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button', 'style'=>'padding: 6px 1px']) ?>
             </div>
             <!-- /.col -->
         </div>

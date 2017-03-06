@@ -20,13 +20,13 @@
         	<li class="header">MAIN NAVIGATION</li>
           <li>
         		<a href="<?php echo $baseUrl."/category"; ?>">
-        			<i class="fa fa-file"></i>
+        			<i class="fa fa-bookmark"></i>
         			<span>ประเภทโครงการ</span>
         		</a>
         	</li>
         	<li>
         		<a href="<?php echo $baseUrl."/team"; ?>">
-        			<i class="fa fa-file"></i>
+        			<i class="fa fa-users"></i>
         			<span>ทีม</span>
         		</a>
         	</li>

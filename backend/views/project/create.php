@@ -441,6 +441,7 @@ function submitCreate(){
                     		$('#next').hide();
 						}else{
                     		$("#isDuplicateProject").html('');
+                    		$('#error-name').html('');
                     		$('#error-name').hide();
                     	}
                     	if(response.isDuplicateTeam == true){
@@ -503,6 +504,7 @@ function callIsDuplicate(){
                           $("#next").hide();
                       }else{
                           $("#error-name").hide();
+                          $('#error-name').html('');
                           $("#next").show();
                       }
                    }
