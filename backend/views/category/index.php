@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
+use backend\models\Project;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -13,20 +15,31 @@ $this->params['breadcrumbs'][] = $this->title;
   <p class="text-right">
       <?= Html::a('สร้างประเภทโครงการ', ['create'], ['class' => 'btn btn-success']) ?>
   </p>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="input-group">
-        <span class="input-group-addon label-gray">ประเภทโครงการ</span>
-        <input type="text" id="category" class="form-control" name="name" placeholder="ประเภทโครงการ" onchange="this.form.submit()">
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="input-group">
-        <span class="input-group-addon label-gray">สถานะ</span>
-        <input type="text" id="status_cat" class="form-control" name="name" placeholder="สถานะ" onchange="this.form.submit()">
-      </div>
-    </div>
-  </div><br>
+  <div class="box box-solid">
+		<div class="box-header with-border">
+			<?php $form = ActiveForm::begin(); ?>
+				<div class="row">
+					<div class="col-md-6">
+						<table width="100%" style="border: 1px solid #e0dede; background-color: #f4f4f4;">
+							<tr>
+								<td width="130px" style="text-align: center;"><span>ชื่อประเภทโครงการ</span></td>
+								<td><?php echo Html::textInput('name', '', ['id'=> 'project_name', 'class'=> 'form-control', 'placeholder'=> 'ชื่อโครงการ', 'onchange'=>'this.form.submit()']);?></td>
+							</tr>
+						</table>
+					</div>
+					
+					<div class="col-md-6">
+						<table width="100%" style="border: 1px solid #e0dede; background-color: #f4f4f4;">
+							<tr>
+								<td width="130px" style="text-align: center;"><span>สถานะ</span></td>
+								<td><?php echo Html::dropDownList('status', '', [0=>'ทั้งหมด']+ Project::$arrSendStatus , ['id'=> 'status', 'class'=> 'form-control','onchange'=>'this.form.submit()'])?></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			<?php ActiveForm::end(); ?>
+		</div>
+	</div>
   <div class="panel">
               <div class="panel-heading">
 
@@ -51,9 +64,10 @@ $this->params['breadcrumbs'][] = $this->title;
                   </td> -->
                   <td>
                      <p>
-                        <?= Html::a('แก้ไข', ['update', 'id' => (string)$field->_id], ['class' => 'btn fa fa-edit']) ?>
-                        <?= Html::a('ลบ', ['delete', 'id' => (string)$field->_id], [
-                            'class' => 'btn  fa fa-archive',
+                     	<?= Html::a('', ['view', 'id' => (string)$field->_id], ['class' => 'btn btn-info fa fa-eye']) ?>
+                        <?= Html::a('', ['update', 'id' => (string)$field->_id], ['class' => 'btn btn-warning fa fa-edit']) ?>
+                        <?= Html::a('', ['delete', 'id' => (string)$field->_id], [
+                            'class' => 'btn btn-danger  fa fa-archive',
                             'data' => [
                                 'confirm' => 'ต้องการลบประเภทโครงการใช่หรือไม่?',
                                 'method' => 'post',

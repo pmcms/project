@@ -202,7 +202,7 @@
 
 {
     "_id" : ObjectId("588f0286ef86835bdb033f3a"),
-    "project_name" : "ระบบสร้งซีเรีบลคีย์",
+    "project_name" : "ระบบสร้างซีเรีบลคีย์",
     "start_date" : {
         "sec" : 1486256400,
         "usec" : 0
